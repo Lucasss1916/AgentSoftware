@@ -128,25 +128,25 @@ proxy-groups:
       - TW
       - EU
       - AU
-  - icon: https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/HK.png
+  - icon: https://fastly.jsdelivr.net/gh/clash-verge-rev/clash-verge-rev.github.io@main/docs/assets/icons/flags/hk.svg
     include-all: true
     filter: (?i)香港|Hong Kong|HK|🇭🇰
     name: HK
     type: url-test
     interval: 300
-  - icon: https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/SG.png
+  - icon: https://fastly.jsdelivr.net/gh/clash-verge-rev/clash-verge-rev.github.io@main/docs/assets/icons/flags/sg.svg
     include-all: true
     filter: (?i)新加坡|Singapore|sg|🇸🇬
     name: SG
     type: url-test
     interval: 300
-  - icon: https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/JP.png
+  - icon: https://fastly.jsdelivr.net/gh/clash-verge-rev/clash-verge-rev.github.io@main/docs/assets/icons/flags/jp.svg
     include-all: true
     filter: (?i)日本|Japan|jp|🇯🇵
     name: JP
     type: url-test
     interval: 300
-  - icon: https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/TW.png
+  - icon: https://fastly.jsdelivr.net/gh/clash-verge-rev/clash-verge-rev.github.io@main/docs/assets/icons/flags/tw.svg
     include-all: true
     filter: (?i)台湾|Taiwan|taiwan|tw|tw
     name: TW
@@ -170,7 +170,7 @@ proxy-groups:
     name: AU
     type: url-test
     interval: 300
-  - icon: https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/US.png
+  - icon: https://fastly.jsdelivr.net/gh/clash-verge-rev/clash-verge-rev.github.io@main/docs/assets/icons/flags/us.svg 
     include-all: true
     filter: (?i)美国|USA|us-|🇺🇸
     name: US

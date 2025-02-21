@@ -170,7 +170,7 @@ proxy-groups:
     name: AU
     type: url-test
     interval: 300
-  - icon: https://fastly.jsdelivr.net/gh/clash-verge-rev/clash-verge-rev.github.io@main/docs/assets/icons/flags/us.svg 
+  - icon: https://fastly.jsdelivr.net/gh/clash-verge-rev/clash-verge-rev.github.io@main/docs/assets/icons/flags/us.svg
     include-all: true
     filter: (?i)美国|USA|us-|🇺🇸
     name: US

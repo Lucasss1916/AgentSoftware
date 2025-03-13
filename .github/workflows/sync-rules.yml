@@ -22,8 +22,23 @@ jobs:
         with:
           python-version: '3.10'
 
-      - name: Validate Clash Rules
+      - name: Convert Rules
         run: |
+          echo "当前目录: $(pwd)"
+          echo "Loon规则文件列表:"
+          ls -R sources/loon-rules/
+          
+          # 创建输出目录（如果不存在）并执行转换
+          mkdir -p sources/clash-rules
+          python scripts/convert_loon_to_clash.py \
+            --input sources/loon-rules/*.list \
+            --output sources/clash-rules/clash-rules.yaml
+          
+          echo "生成文件检查:"
+          ls -l sources/clash-rules/
+          
+          - name: Validate Clash Rules
+            run: |
           echo "检查 Clash 规则文件..."
           if ls sources/clash-rules/*.yaml 1> /dev/null 2>&1; then
             echo "发现 Clash 文件，开始验证..."
@@ -42,10 +57,13 @@ jobs:
             echo "未找到 Loon 规则文件，跳过验证。"
           fi
 
-      - name: Auto Commit Updates
+
+      - name: Commit Changes
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          git config --global user.name "GitHub Actions"
-          git config --global user.email "actions@github.com"
-          git add --all
-          git commit -m "自动更新规则文件" || echo "无变更可提交。"
-          git push
+          git config user.name "GitHub Actions"
+          git config user.email "actions@github.com"
+          git add sources/clash-rules/
+          git diff --cached --quiet || git commit -m "自动转换Loon规则为Clash格式"
+          git push origin main

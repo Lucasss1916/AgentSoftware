@@ -36,11 +36,14 @@ def process_loon_dir(input_dir_path, output_dir_path):
         for file in files:
             if file.endswith('.list'):
                 input_path = Path(root) / file
-                # 使用Path对象处理路径
+                # 计算相对路径，保持目录层级
                 relative_path = input_path.relative_to(input_dir)
+                # 构造输出子目录路径
                 output_subdir = output_dir / relative_path.parent
+                # 创建目录
                 output_subdir.mkdir(parents=True, exist_ok=True)
-                output_path = output_subdir.parent / f"{relative_path.stem}.yaml"
+                # 构造输出文件路径（替换后缀为.yaml）
+                output_path = output_subdir / f"{relative_path.stem}.yaml"
 
                 valid_rules = []
                 with open(input_path, 'r', encoding='utf-8') as f_in:

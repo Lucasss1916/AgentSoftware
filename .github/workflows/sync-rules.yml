@@ -5,8 +5,8 @@ on:
     branches: [ main ]
   pull_request:
     paths:
-      - 'sources/clash-rules/**/*.yaml'
-      - 'sources/loon-rules/**/*.list'
+      - 'sources/clash-rules/*.yaml'
+      - 'sources/loon-rules/*.list'
 
 jobs:
   validate-and-update:

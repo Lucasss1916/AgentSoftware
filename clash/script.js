@@ -310,7 +310,7 @@ function main(config) {
             type: "http",
         },
         videorule: {
-            url: "https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/refs/heads/main/loon/rule/myvideorule.list",
+            url: "https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/refs/heads/main/sources/clash-rules/myvideorule.yaml",
             path: "./ruleset/myvideorule.yaml",
             behavior: "classical",
             interval: 86400,

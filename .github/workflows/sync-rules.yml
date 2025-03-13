@@ -34,7 +34,7 @@ jobs:
           # 确保脚本目录存在
           mkdir -p scripts  
 
-          python scripts/convert_loon_to_clash.py \
+          python convert_loon_to_clash.py \
             --input 'sources/loon-rules/*.list' \
             --output 'sources/clash-rules/clash-converted.yaml'
 

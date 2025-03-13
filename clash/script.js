@@ -27,6 +27,12 @@ function main(config) {
             proxies: ["DIRECT","HK","SG", "JP", "US","TW","EU","AU","KR"],
         },
         {
+            icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Emby.png",
+            name: "影视",  
+            type: "select",
+            proxies: ["DIRECT","HK","SG", "JP", "US","TW","EU","AU","KR"],
+        },
+        {
             icon: "https://raw.githubusercontent.com/Orz-3/mini/master/Color/github.png",
             name: "Github",  
             type: "select",
@@ -287,38 +293,30 @@ function main(config) {
             format: "yaml",
             type: "http",
         },
-        AppleRules: {
-            url: "https://github.com/Lucasss1916/clash/raw/refs/heads/main/rule/AppleRules.yaml",
-            path: "./ruleset/AppleRules.yaml",
+        Apple: {
+            url: "https://raw.githubusercontent.com/jnlaoshu/MySelf/main/Egern/Rule/Apple.yaml",
+            path: "./ruleset/Apple.yaml",
             behavior: "classical",   
             interval: 86400,
             format: "yaml",
             type: "http",
         },
-        AppleAPIRules: {
-            url: "https://github.com/Lucasss1916/clash/raw/refs/heads/main/rule/AppleAPIRules.yaml",
-            path: "./ruleset/AppleAPIRules.yaml",
+        AppleProxy: {
+            url: "https://raw.githubusercontent.com/jnlaoshu/MySelf/main/Egern/Rule/AppleProxy.yaml",
+            path: "./ruleset/AppleProxy.yaml",
             behavior: "classical",
             interval: 86400,
             format: "yaml",
             type: "http",
         },
-        AppleNoChinaCDNRules: {
-            url: "https://github.com/Lucasss1916/clash/raw/refs/heads/main/rule/AppleNoChinaCDNRules.yaml",
-            path: "./ruleset/AppleNoChinaCDNRules.yaml",
+        videorule: {
+            url: "https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/refs/heads/main/loon/rule/myvideorule.list",
+            path: "./ruleset/myvideorule.yaml",
             behavior: "classical",
             interval: 86400,
-            format: "yaml",
+            format: "list",
             type: "http",
-        },
-        AppleCDNRules: {
-            url: "https://github.com/Lucasss1916/clash/raw/refs/heads/main/rule/AppleCDNRules.yaml",
-            path: "./ruleset/AppleCDNRules.yaml",
-            behavior: "classical",
-            interval: 86400,
-            format: "yaml",
-            type: "http",
-        },
+        }
     });
 
     config["rules"] = [
@@ -334,11 +332,9 @@ function main(config) {
         "RULE-SET,claude,AIGC",
         "RULE-SET,steam,Steam",
         "RULE-SET,steamcn,DIRECT",
-        
-        "RULE-SET,AppleNoChinaCDNRules,PROXY",
-        "RULE-SET,AppleRules,Apple",
-        "RULE-SET,AppleAPIRules,Apple",
-        "RULE-SET,AppleCDNRules,Apple",
+        "RULE-SET,videorule,影视"
+        "RULE-SET,AppleProxy,PROXY",
+        "RULE-SET,Apple,Apple",
 
         "RULE-SET,telegram_domain,Telegram",
         "RULE-SET,telegram_ip,Telegram",

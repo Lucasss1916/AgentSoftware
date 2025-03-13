@@ -30,7 +30,7 @@ jobs:
           
           # 创建输出目录（如果不存在）并执行转换
           mkdir -p sources/clash-rules
-          python scripts/convert_loon_to_clash.py \
+          python convert_loon_to_clash.py \
             --input sources/loon-rules/*.list \
             --output sources/clash-rules/clash-rules.yaml
           

@@ -22,28 +22,28 @@ jobs:
 
       - name: Validate Clash Rules
         run: |
-          echo "Checking for Clash rule files..."
+          echo "检查 Clash 规则文件..."
           if ls sources/clash-rules/*.yaml 1> /dev/null 2>&1; then
-            echo "Found Clash files. Validating..."
-            python scripts/validate_clash.py sources/clash-rules/*.yaml
+            echo "发现 Clash 文件，开始验证..."
+            python validate_clash.py sources/clash-rules/*.yaml
           else
-            echo "No Clash rule files found. Skipping validation."
+            echo "未找到 Clash 规则文件，跳过验证。"
           fi
 
       - name: Validate Loon Rules
         run: |
-          echo "Checking for Loon rule files..."
+          echo "检查 Loon 规则文件..."
           if ls sources/loon-rules/*.list 1> /dev/null 2>&1; then
-            echo "Found Loon files. Validating..."
-            python scripts/validate_loon.py sources/loon-rules/*.list
+            echo "发现 Loon 文件，开始验证..."
+            python validate_loon.py sources/loon-rules/*.list
           else
-            echo "No Loon rule files found. Skipping validation."
+            echo "未找到 Loon 规则文件，跳过验证。"
           fi
 
-      - name: Commit Updates (Optional)
+      - name: Auto Commit Updates
         run: |
           git config --global user.name "GitHub Actions"
           git config --global user.email "actions@github.com"
           git add --all
-          git commit -m "Auto-update rules" || true
+          git commit -m "自动更新规则文件" || echo "无变更可提交。"
           git push

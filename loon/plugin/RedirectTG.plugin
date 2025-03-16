@@ -5,34 +5,12 @@
 #!select = enabled,true,false
 #!tag = Telegram第三方客户端跳转
 
-[Argument]                             # 参数说明（可选，增强插件可读性）
+[Argument] 
 custom_client = select,Turrit,SwiftGram,tag=选择客户端,desc=选择目标客户端
-enable_switch = select,true,false,tag=启用跳转开关,desc=是否启用功能
 
-
-[rewrite]                            # URL 重写规则（可保留）
-
-[host]                               # 主机重定向规则（可保留）
-
-[script]
- PercyScript
-(function() {
-    // 从插件配置中读取设置
-    const enabled = $persistentStore.read("enabled") === "true";   // 是否启用
-    const client  = $persistentStore.read("client_type") || "Turrit"; // 默认 Turrit
-    // 构建客户端 Scheme
-    const scheme = `${client.toLowerCase()}://`;    // turrit:// 或 swiftgram://
-    // 只处理启用状态且请求 URL 包含 t.me 的情况
-    if ( enabled && current.request.url.includes("t.me") ) {
-        // 完整路径（包含查询参数，如 ?param=value）
-        const fullPath = current.request.url.replace("https://", "")
-                                           .replace("http://", "");
-        // 重定向到客户端 Scheme
-        return {
-            redirect: scheme + fullPath
-        };
-    }
-
+[Rewrite]
+# 拦截所有 t.me 的 HTTP/HTTPS 请求
+^https?://t\.me/.*$ type=redirect,to={custom_client}://t.me/$1
 
 [mitm]
 hostname = t.me

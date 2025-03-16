@@ -2,7 +2,7 @@
 #!desc= 将 t.me 链接跳转到指定的 Telegram 第三方客户端SwiftGram
 #!author= lucasss1916
 #!tag = Telegram第三方客户端跳转
-
+#!icon= https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Telegram.png
 
 [Rewrite]
 ^https?://t\.me(.*) 302 swiftgramapp://t.me$1

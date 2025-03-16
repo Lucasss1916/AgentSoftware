@@ -3,15 +3,15 @@
 #!author= lucasss1916
 #!tag = Telegram第三方客户端跳转
 
-[Argument] 
-custom_client = select,"Turrit","swiftgramapp",tag=选择客户端,desc=选择目标客户端
+#!name= Telegram客户端动态跳转插件
+#!desc= 根据选择的客户端跳转对应 URL Schema
+#!author= 作者名
+#!select = Redirect_Scheme,turrit,swiftgramapp  # 参数名称为 Redirect_Scheme
+
+[General] 
 
 [Rewrite]
-#if $custom_client == "Turrit"
-^https?://t\.me(.*) 302 turrit://t.me$1
-#else
-^https?://t\.me(.*) 302 swiftgramapp://t.me$1
-#end
+http-request ^https?://t\.me/?(.*) script-path=https://github.com/Lucasss1916/AgentSoftware/edit/main/loon/plugin/redirect_telegram.js
 
-[Mitm]
-hostname = t.me, *.cloudfront.net
+[MitM]
+hostname = t.me

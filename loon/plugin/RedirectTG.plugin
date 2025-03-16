@@ -2,10 +2,6 @@
 #!desc= 将 t.me 链接跳转到指定的 Telegram 第三方客户端（Turrit/SwiftGram）
 #!author= lucasss1916
 #!tag = Telegram第三方客户端跳转
-
-#!name= Telegram客户端动态跳转插件
-#!desc= 根据选择的客户端跳转对应 URL Schema
-#!author= 作者名
 #!select = Redirect_Scheme,turrit,swiftgramapp  # 参数名称为 Redirect_Scheme
 
 [General] 

@@ -1,7 +1,6 @@
 #!name= Telegram 客户端跳转
 #!desc= 将 t.me 链接跳转到指定的 Telegram 第三方客户端（Turrit/SwiftGram）
 #!author= lucasss1916
-#!select = client_type,Turrit,SwiftGram
 #!tag = Telegram第三方客户端跳转
 
 [Argument] 

@@ -9,7 +9,7 @@ custom_client = select,Turrit,SwiftGram,tag=选择客户端,desc=选择目标客
 
 [Rewrite]
 # 拦截所有 t.me 的 HTTP/HTTPS 请求
-^https?://t\.me/.*$ type=redirect,to={custom_client}://t.me/$1
+^https?://t\.me/.*$ type=redirect,to=Turrit://t.me/$1
 
 [mitm]
 hostname = t.me

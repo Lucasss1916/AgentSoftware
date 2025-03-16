@@ -11,7 +11,7 @@
 [General] 
 
 [Rewrite]
-http-request ^https?://t\.me/?(.*) script-path=https://github.com/Lucasss1916/AgentSoftware/edit/main/loon/plugin/redirect_telegram.js
+http-request ^https?://t\.me/?(.*) script-path=https://github.com/Lucasss1916/AgentSoftware/edit/main/loon/plugin/redirectTG.js
 
 [MitM]
 hostname = t.me

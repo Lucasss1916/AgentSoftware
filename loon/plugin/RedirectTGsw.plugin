@@ -1,0 +1,11 @@
+#!name= Telegram 客户端跳转SW
+#!desc= 将 t.me 链接跳转到指定的 Telegram 第三方客户端SwiftGram
+#!author= lucasss1916
+#!tag = Telegram第三方客户端跳转
+
+
+[Rewrite]
+^https?://t\.me(.*) 302 swiftgramapp://t.me$1
+
+[Mitm]
+hostname = t.me

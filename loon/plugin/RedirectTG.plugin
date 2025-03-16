@@ -7,7 +7,11 @@
 custom_client = select,"Turrit","swiftgramapp",tag=选择客户端,desc=选择目标客户端
 
 [Rewrite]
-^https?://t\.me(/.*)? 302 Turrit://t.me$1
+#if $custom_client == "Turrit"
+^https?://t\.me(.*) 302 turrit://t.me$1
+#else
+^https?://t\.me(.*) 302 swiftgramapp://t.me$1
+#end
 
-[mitm]
-hostname = t.me
+[Mitm]
+hostname = t.me, *.cloudfront.net

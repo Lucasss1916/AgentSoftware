@@ -4,7 +4,7 @@
 #!tag = Telegram第三方客户端跳转
 
 [Argument] 
-custom_client = select,Turrit,SwiftGram,tag=选择客户端,desc=选择目标客户端
+custom_client = select,"Turrit","swiftgramapp",tag=选择客户端,desc=选择目标客户端
 
 [Rewrite]
 ^https?://t\.me(/.*)? 302 {custom_client}://t.me$1

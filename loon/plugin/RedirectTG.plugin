@@ -1,8 +1,8 @@
 #!name= Telegram 客户端跳转
 #!desc= 将 t.me 链接跳转到指定的 Telegram 第三方客户端（Turrit/SwiftGram）。通过配置界面选择客户端并控制启用/禁用。
 #!author= lucasss1916
-#!select = client_type,Turrit,SwiftGram    # 下拉选择：选择客户端类型（Turrit/SwiftGram）
-#!select = enabled,true,false             # 下拉选择：是否启用该功能
+#!select = client_type,Turrit,SwiftGram
+#!select = enabled,true,false
 #!tag = Telegram第三方客户端跳转
 
 [Argument]                             # 参数说明（可选，增强插件可读性）
@@ -35,4 +35,4 @@ enable_switch = select,true,false,tag=启用跳转开关,desc=是否启用功能
 
 
 [mitm]
-hostname = t.me                      # 必须添加此域名才能拦截 t.me 的流量
+hostname = t.me

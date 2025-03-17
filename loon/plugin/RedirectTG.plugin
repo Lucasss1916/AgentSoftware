@@ -4,11 +4,9 @@
 #!tag = Telegram第三方客户端跳转
 #!icon= https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Telegram.png
 
-[Argument]
-arg = select,"Turrit","SwiftGram",tag=选择客户端,desc=选择turrit或者swiftgram进行跳转
 [Rewrite]
 
-^https?://t\.me(.*) 302 $arg.select://t.me$1
+^https?://t\.me(.*) 302 Turrit://t.me$1
 
 
 [Mitm]

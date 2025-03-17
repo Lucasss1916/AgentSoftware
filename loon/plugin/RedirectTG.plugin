@@ -8,7 +8,7 @@
 arg = select,"Turrit","SwiftGram",tag=选择客户端,desc=选择turrit或者swiftgram进行跳转
 [Rewrite]
 
-^https?://t\.me(.*) 302 {arg1}://t.me$1
+^https?://t\.me(.*) 302 $arg.select://t.me$1
 
 
 [Mitm]

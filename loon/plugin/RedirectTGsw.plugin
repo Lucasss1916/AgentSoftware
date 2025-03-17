@@ -5,7 +5,7 @@
 #!icon= https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Telegram.png
 
 [Rewrite]
-^https?://t\.me(.*) 302 swiftgramapp://t.me$1
+^https?://t\.me(.*) 302 swiftgram://t.me$1
 
 [Mitm]
 hostname = t.me

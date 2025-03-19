@@ -6,7 +6,7 @@
 
 [Rewrite]
 
-^https?://t\.me(.*) 302 Turrit://t.me$1
+^https?://t\.me header Turrit://t.me
 
 
 [Mitm]

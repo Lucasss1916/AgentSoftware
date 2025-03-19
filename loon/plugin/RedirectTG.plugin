@@ -6,7 +6,7 @@
 
 [Rewrite]
 
-^https?://t\.me 302 Turrit://t.me
+(https:\/\/)?t.me\/(.+) 302 turrit://resolve?domain=$2
 
 
 [Mitm]

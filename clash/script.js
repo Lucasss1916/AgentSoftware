@@ -293,17 +293,41 @@ function main(config) {
             format: "yaml",
             type: "http",
         },
-        Apple: {
-            url: "https://raw.githubusercontent.com/jnlaoshu/MySelf/main/Egern/Rule/Apple.yaml",
-            path: "./ruleset/Apple.yaml",
+        AppleCDNRules: {
+            url: "https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/refs/heads/main/sources/clash-rules/AppleCDNRules.yaml",
+            path: "./ruleset/AppleCDNRules.yaml",
             behavior: "classical",   
             interval: 86400,
             format: "yaml",
             type: "http",
         },
-        AppleProxy: {
-            url: "https://raw.githubusercontent.com/jnlaoshu/MySelf/main/Egern/Rule/AppleProxy.yaml",
-            path: "./ruleset/AppleProxy.yaml",
+        AppleAPIRules: {
+            url: "https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/refs/heads/main/sources/clash-rules/AppleAPIRules.yaml",
+            path: "./ruleset/AppleAPIRules.yaml",
+            behavior: "classical",
+            interval: 86400,
+            format: "yaml",
+            type: "http",
+        },
+        AppleNoChinaCDNRules: {
+            url: "https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/refs/heads/main/sources/clash-rules/AppleNoChinaCDNRules.yaml",
+            path: "./ruleset/AppleNoChinaCDNRules.yaml",
+            behavior: "classical",
+            interval: 86400,
+            format: "yaml",
+            type: "http",
+        },
+        AppleRules: {
+            url: "https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/refs/heads/main/sources/clash-rules/AppleRules.yaml",
+            path: "./ruleset/AppleRules.yaml",
+            behavior: "classical",
+            interval: 86400,
+            format: "yaml",
+            type: "http",
+        },
+        GFWRules: {
+            url: "https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/refs/heads/main/sources/clash-rules/GFWRules.yaml",
+            path: "./ruleset/GFWRules.yaml",
             behavior: "classical",
             interval: 86400,
             format: "yaml",
@@ -321,6 +345,13 @@ function main(config) {
 
     config["rules"] = [
         "RULE-SET,CNKI,DIRECT",
+        
+        "RULE-SET,AppleNoChinaCDNRules,PROXY",
+        "RULE-SET,AppleAPIRules,Apple",
+        "RULE-SET,AppleCDNRules,DIRECT",
+        "RULE-SET,AppleRules,DIRECT",
+        "RULE-SET,GFWRules,PROXY",
+        
         "RULE-SET,microsoft,Microsoft",  
         "RULE-SET,github,Github",   
         "RULE-SET,spotify,Spotify",
@@ -334,7 +365,6 @@ function main(config) {
         "RULE-SET,steamcn,DIRECT",
         "RULE-SET,videorule,影视",
         "RULE-SET,AppleProxy,PROXY",
-        "RULE-SET,Apple,Apple",
 
         "RULE-SET,telegram_domain,Telegram",
         "RULE-SET,telegram_ip,Telegram",

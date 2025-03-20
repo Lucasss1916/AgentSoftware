@@ -364,7 +364,6 @@ function main(config) {
         "RULE-SET,steam,Steam",
         "RULE-SET,steamcn,DIRECT",
         "RULE-SET,videorule,影视",
-        "RULE-SET,AppleProxy,PROXY",
 
         "RULE-SET,telegram_domain,Telegram",
         "RULE-SET,telegram_ip,Telegram",

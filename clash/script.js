@@ -21,6 +21,12 @@ function main(config) {
             proxies: ["HK","SG", "JP","KR", "US","TW","EU","AU"],
         },
         {
+            icon: "https://raw.githubusercontent.com/Lucasss1916/Iconrpository/main/icon108/talktone108.png",
+            name: "Talktone",
+            type: "select",
+            proxies: ["HK","SG", "JP","KR", "US","TW","EU","AU"],
+        },
+        {
             icon: "https://raw.githubusercontent.com/Orz-3/mini/master/Color/steam.png",
             name: "Steam",  
             type: "select",
@@ -333,6 +339,30 @@ function main(config) {
             format: "yaml",
             type: "http",
         },
+        TalktoneAds: {
+            url: "https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/refs/heads/main/sources/clash-rules/TalktoneAds.yaml",
+            path: "./ruleset/TalktoneAds.yaml",
+            behavior: "classical",
+            interval: 86400,
+            format: "yaml",
+            type: "http",
+        },
+        TalktoneDirect: {
+            url: "https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/refs/heads/main/sources/clash-rules/TalktoneDirect.yaml",
+            path: "./ruleset/TalktoneDirect.yaml",
+            behavior: "classical",
+            interval: 86400,
+            format: "yaml",
+            type: "http",
+        },
+        TalktoneProxy: {
+            url: "https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/refs/heads/main/sources/clash-rules/TalktoneProxy.yaml",
+            path: "./ruleset/TalktoneProxy.yaml",
+            behavior: "classical",
+            interval: 86400,
+            format: "yaml",
+            type: "http",
+        },
         videorule: {
             url: "https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/refs/heads/main/sources/clash-rules/myvideorule.yaml",
             path: "./ruleset/myvideorule.yaml",
@@ -345,6 +375,10 @@ function main(config) {
 
     config["rules"] = [
         "RULE-SET,CNKI,DIRECT",
+
+        "RULE-SET,TalktoneProxy,TalkTone",
+        "RULE-SET,TalktoneAds,REJECT",
+        "RULE-SET,TalktoneDirect,DIRECT",
         
         "RULE-SET,AppleNoChinaCDNRules,PROXY",
         "RULE-SET,AppleAPIRules,Apple",

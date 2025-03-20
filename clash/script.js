@@ -314,7 +314,7 @@ function main(config) {
             path: "./ruleset/myvideorule.yaml",
             behavior: "classical",
             interval: 86400,
-            format: "list",
+            format: "yaml",
             type: "http",
         }
     });
@@ -332,7 +332,7 @@ function main(config) {
         "RULE-SET,claude,AIGC",
         "RULE-SET,steam,Steam",
         "RULE-SET,steamcn,DIRECT",
-        "RULE-SET,videorule,影视"
+        "RULE-SET,videorule,影视",
         "RULE-SET,AppleProxy,PROXY",
         "RULE-SET,Apple,Apple",
 

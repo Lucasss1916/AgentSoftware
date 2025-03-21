@@ -172,7 +172,7 @@ function main(config) {
             type: "http",
         },
         github: {
-            url: "https://raw.githubusercontent.com/Lucasss1916/clash/refs/heads/main/rule/github.yaml",
+            url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/GitHub/GitHub.yaml",
             path: "./ruleset/github.yaml",
             behavior: "domain",
             interval: 86400,
@@ -376,7 +376,7 @@ function main(config) {
     config["rules"] = [
         "RULE-SET,CNKI,DIRECT",
 
-        "RULE-SET,TalktoneProxy,TalkTone",
+        "RULE-SET,TalktoneProxy,Talktone",
         "RULE-SET,TalktoneAds,REJECT",
         "RULE-SET,TalktoneDirect,DIRECT",
         

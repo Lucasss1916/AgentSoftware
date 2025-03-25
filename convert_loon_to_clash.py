@@ -12,7 +12,8 @@ def convert_loon_line(line):
         'IP-CIDR': ('IP-CIDR', 2),
         'USER-AGENT': ('USER-AGENT', 2),
         'URL-REGEX': ('URL-REGEX', 2),
-        'PROCESS-NAME': ('PROCESS-NAME', 2)
+        'PROCESS-NAME': ('PROCESS-NAME', 2),
+        'DOMAIN_KEYWORD':('DOMAIN_KEYWORD',2)
     }
 
     parts = [p.strip() for p in line.split(',')]

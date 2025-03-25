@@ -2,5 +2,4 @@ payload:
   - DOMAIN-SUFFIX,tanhuatv.site
   - DOMAIN-SUFFIX,embyplus.org
   - DOMAIN-SUFFIX,114514.quest
-  - DOMAIN-KEYWORD,emby.69yun69
   - IP-CIDR,95.211.168.246

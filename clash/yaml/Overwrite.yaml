@@ -1,5 +1,5 @@
 proxy-groups:
-  - icon: https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Static.png
+  - icon: https://raw.githubusercontent.com/Orz-3/mini/master/Color/Static.png
     include-all: true
     name: PROXY
     type: select
@@ -13,12 +13,12 @@ proxy-groups:
       - TW
       - EU
       - AU
-  - icon: https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Urltest.png
+  - icon: https://raw.githubusercontent.com/Orz-3/mini/master/Color/Urltest.png
     include-all: true
     name: AUTO
     type: url-test
     interval: 300
-  - icon: https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/OpenAI.png
+  - icon: https://raw.githubusercontent.com/Orz-3/mini/master/Color/OpenAI.png
     name: AIGC
     type: select
     proxies:
@@ -30,7 +30,19 @@ proxy-groups:
       - TW
       - EU
       - AU
-  - icon: https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/steam.png
+  - icon: https://raw.githubusercontent.com/Lucasss1916/Iconrpository/main/icon108/talktone108.png
+    name: Talktone
+    type: select
+    proxies:
+      - HK
+      - SG
+      - JP
+      - KR
+      - US
+      - TW
+      - EU
+      - AU
+  - icon: https://raw.githubusercontent.com/Orz-3/mini/master/Color/steam.png
     name: Steam
     type: select
     proxies:
@@ -43,7 +55,20 @@ proxy-groups:
       - EU
       - AU
       - KR
-  - icon: https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/github.png
+  - icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Emby.png
+    name: 影视
+    type: select
+    proxies:
+      - DIRECT
+      - HK
+      - SG
+      - JP
+      - US
+      - TW
+      - EU
+      - AU
+      - KR
+  - icon: https://raw.githubusercontent.com/Orz-3/mini/master/Color/github.png
     name: Github
     type: select
     proxies:
@@ -56,7 +81,7 @@ proxy-groups:
       - EU
       - AU
       - KR
-  - icon: https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Spotify.png
+  - icon: https://raw.githubusercontent.com/Orz-3/mini/master/Color/Spotify.png
     name: Spotify
     type: select
     proxies:
@@ -68,7 +93,7 @@ proxy-groups:
       - EU
       - AU
       - KR
-  - icon: https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Telegram.png
+  - icon: https://raw.githubusercontent.com/Orz-3/mini/master/Color/Telegram.png
     name: Telegram
     type: select
     proxies:
@@ -80,7 +105,7 @@ proxy-groups:
       - EU
       - AU
       - KR
-  - icon: https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Google.png
+  - icon: https://raw.githubusercontent.com/Orz-3/mini/master/Color/Google.png
     name: Google
     type: select
     proxies:
@@ -92,7 +117,7 @@ proxy-groups:
       - EU
       - AU
       - KR
-  - icon: https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Microsoft.png
+  - icon: https://raw.githubusercontent.com/Orz-3/mini/master/Color/Microsoft.png
     name: Microsoft
     type: select
     proxies:
@@ -104,19 +129,7 @@ proxy-groups:
       - TW
       - EU
       - AU
-  - icon: https://raw.githubusercontent.com/Lucasss1916/Iconrpository/main/icon108/talktone108.png
-    name: Talktone
-    type: select
-    proxies:
-      - PROXY
-      - HK
-      - SG
-      - JP
-      - US
-      - TW
-      - EU
-      - AU
-  - icon: https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Apple.png
+  - icon: https://raw.githubusercontent.com/Orz-3/mini/master/Color/Apple.png
     name: Apple
     type: select
     proxies:
@@ -128,25 +141,25 @@ proxy-groups:
       - TW
       - EU
       - AU
-  - icon: https://fastly.jsdelivr.net/gh/clash-verge-rev/clash-verge-rev.github.io@main/docs/assets/icons/flags/hk.svg
+  - icon: https://raw.githubusercontent.com/Orz-3/mini/master/Color/HK.png
     include-all: true
     filter: (?i)香港|Hong Kong|HK|🇭🇰
     name: HK
     type: url-test
     interval: 300
-  - icon: https://fastly.jsdelivr.net/gh/clash-verge-rev/clash-verge-rev.github.io@main/docs/assets/icons/flags/sg.svg
+  - icon: https://raw.githubusercontent.com/Orz-3/mini/master/Color/SG.png
     include-all: true
     filter: (?i)新加坡|Singapore|sg|🇸🇬
     name: SG
     type: url-test
     interval: 300
-  - icon: https://fastly.jsdelivr.net/gh/clash-verge-rev/clash-verge-rev.github.io@main/docs/assets/icons/flags/jp.svg
+  - icon: https://raw.githubusercontent.com/Orz-3/mini/master/Color/JP.png
     include-all: true
     filter: (?i)日本|Japan|jp|🇯🇵
     name: JP
     type: url-test
     interval: 300
-  - icon: https://fastly.jsdelivr.net/gh/clash-verge-rev/clash-verge-rev.github.io@main/docs/assets/icons/flags/tw.svg
+  - icon: https://raw.githubusercontent.com/Orz-3/mini/master/Color/TW.png
     include-all: true
     filter: (?i)台湾|Taiwan|taiwan|tw|tw
     name: TW
@@ -170,16 +183,16 @@ proxy-groups:
     name: AU
     type: url-test
     interval: 300
-  - icon: https://fastly.jsdelivr.net/gh/clash-verge-rev/clash-verge-rev.github.io@main/docs/assets/icons/flags/us.svg
+  - icon: https://raw.githubusercontent.com/Orz-3/mini/master/Color/US.png
     include-all: true
     filter: (?i)美国|USA|us-|🇺🇸
     name: US
     type: url-test
     interval: 300
 rule-providers:
-  GitHubNoResolve:
-    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Clash/GitHub/GitHub_No_Resolve.yaml
-    path: ./ruleset/GitHubNoResolve.yaml
+  CNKI:
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/CNKI/CNKI.yaml
+    path: ./ruleset/CNKI.yaml
     behavior: domain
     interval: 86400
     format: yaml
@@ -199,7 +212,7 @@ rule-providers:
     format: yaml
     type: http
   github:
-    url: https://raw.githubusercontent.com/Lucasss1916/clash/refs/heads/main/rule/github.yaml
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/GitHub/GitHub.yaml
     path: ./ruleset/github.yaml
     behavior: domain
     interval: 86400
@@ -310,87 +323,63 @@ rule-providers:
     interval: 86400
     format: yaml
     type: http
-  AppleRules:
-    url: https://github.com/Lucasss1916/clash/raw/refs/heads/main/rule/AppleRules.yaml
-    path: ./ruleset/AppleRules.yaml
-    behavior: classical
-    interval: 86400
-    format: yaml
-    type: http
-  AppleAPIRules:
-    url: https://github.com/Lucasss1916/clash/raw/refs/heads/main/rule/AppleAPIRules.yaml
-    path: ./ruleset/AppleAPIRules.yaml
-    behavior: classical
-    interval: 86400
-    format: yaml
-    type: http
-  AppleNoChinaCDNRules:
-    url: https://github.com/Lucasss1916/clash/raw/refs/heads/main/rule/AppleNoChinaCDNRules.yaml
-    path: ./ruleset/AppleNoChinaCDNRules.yaml
-    behavior: classical
-    interval: 86400
-    format: yaml
-    type: http
-  AppleCDNRules:
-    url: https://github.com/Lucasss1916/clash/raw/refs/heads/main/rule/AppleCDNRules.yaml
+  AppStore:
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Clash/AppStore/AppStore.yaml
     path: ./ruleset/AppleCDNRules.yaml
     behavior: classical
     interval: 86400
     format: yaml
     type: http
+  AppleID:
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Clash/AppleID/AppleID.yaml
+    path: ./ruleset/AppleAPIRules.yaml
+    behavior: classical
+    interval: 86400
+    format: yaml
+    type: http
+  GFWRules:
+    url: https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/refs/heads/main/sources/clash-rules/GFWRules.yaml
+    path: ./ruleset/GFWRules.yaml
+    behavior: classical
+    interval: 86400
+    format: yaml
+    type: http
+  TalktoneAds:
+    url: https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/refs/heads/main/sources/clash-rules/TalktoneAds.yaml
+    path: ./ruleset/TalktoneAds.yaml
+    behavior: classical
+    interval: 86400
+    format: yaml
+    type: http
+  TalktoneDirect:
+    url: https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/refs/heads/main/sources/clash-rules/TalktoneDirect.yaml
+    path: ./ruleset/TalktoneDirect.yaml
+    behavior: classical
+    interval: 86400
+    format: yaml
+    type: http
+  TalktoneProxy:
+    url: https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/refs/heads/main/sources/clash-rules/TalktoneProxy.yaml
+    path: ./ruleset/TalktoneProxy.yaml
+    behavior: classical
+    interval: 86400
+    format: yaml
+    type: http
+  videorule:
+    url: https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/refs/heads/main/sources/clash-rules/myvideorule.yaml
+    path: ./ruleset/myvideorule.yaml
+    behavior: classical
+    interval: 86400
+    format: yaml
+    type: http
 rules:
-  - RULE-SET,GitHubNoResolve,Github
-  - DOMAIN-SUFFIX,tktn.at,Talktone
-  - DOMAIN-SUFFIX,tktn.be,Talktone
-  - DOMAIN-SUFFIX,agkn.com,DIRECT
-  - DOMAIN-SUFFIX,cohere.com,DIRECT
-  - DOMAIN-SUFFIX,crashlytics.com,DIRECT
-  - DOMAIN-SUFFIX,inmobi.com,DIRECT
-  - DOMAIN-SUFFIX,inner-active.mobi,DIRECT
-  - DOMAIN-SUFFIX,ip-api.com,DIRECT
-  - DOMAIN-SUFFIX,kochava.com,DIRECT
-  - DOMAIN-SUFFIX,mobilefuse.com,DIRECT
-  - DOMAIN-SUFFIX,talkatone.com,DIRECT
-  - IP-CIDR,205.164.56.0/24,DIRECT,no-resolve
-  - IP-CIDR,216.172.154.0/24,DIRECT,no-resolve
-  - IP-CIDR,50.117.27.0/24,DIRECT,no-resolve
-  - IP-CIDR,63.251.124.0/24,DIRECT,no-resolve
-  - IP-CIDR,69.46.75.0/24,DIRECT,no-resolve
-  - DOMAIN-KEYWORD,googleads,REJECT-DROP
-  - DOMAIN-SUFFIX,ads.inmobi.com,REJECT-DROP
-  - DOMAIN-SUFFIX,adsappier.com,REJECT-DROP
-  - DOMAIN-SUFFIX,amazon-adsystem.com,REJECT-DROP
-  - DOMAIN-SUFFIX,appier.net,REJECT-DROP
-  - DOMAIN-SUFFIX,appiersig.com,REJECT-DROP
-  - DOMAIN-SUFFIX,bidder.criteo.com,REJECT-DROP
-  - DOMAIN-SUFFIX,c.amazon-adsystem.com,REJECT-DROP
-  - DOMAIN-SUFFIX,cdn2.inner-active.mobi,REJECT-DROP
-  - DOMAIN-SUFFIX,cr.adsappier.com,REJECT-DROP
-  - DOMAIN-SUFFIX,criteo.com,REJECT-DROP
-  - DOMAIN-SUFFIX,googleads.g.doubleclick.net,REJECT-DROP
-  - DOMAIN-SUFFIX,googleads.g.doubleclick-cn.net,REJECT-DROP
-  - DOMAIN-SUFFIX,gum.criteo.com,REJECT-DROP
-  - DOMAIN-SUFFIX,ow.pubmatic.com,REJECT-DROP
-  - DOMAIN-SUFFIX,pubmatic.com,REJECT-DROP
-  - DOMAIN-SUFFIX,sdk-dnt.ad.smaato.net,REJECT-DROP
-  - DOMAIN-SUFFIX,sdk-events.inner-active.mobi,REJECT-DROP
-  - DOMAIN-SUFFIX,smaato.net,REJECT-DROP
-  - DOMAIN-SUFFIX,tappx.com,REJECT-DROP
-  - DOMAIN-SUFFIX,wv.inner-active.mobi,REJECT-DROP
-  - DOMAIN-SUFFIX,ads.inmobi.com,REJECT
-  - DOMAIN-SUFFIX,tappx.com,REJECT
-  - DOMAIN-SUFFIX,criteo.com,REJECT
-  - DOMAIN-SUFFIX,pubmatic.com,REJECT
-  - DOMAIN-SUFFIX,smaato.net,REJECT
-  - DOMAIN-SUFFIX,amazon-adsystem.com,REJECT
-  - DOMAIN-KEYWORD,googleads,REJECT
-  - DOMAIN-SUFFIX,adsappier.com,REJECT
-  - DOMAIN-SUFFIX,appier.net,REJECT
-  - DOMAIN-SUFFIX,appiersig.com,REJECT
-  - DOMAIN-KEYWORD,swapp-image.gxapp.iydsj,REJECT
-  - DOMAIN-SUFFIX,tracker.yfanads,REJECT
-  - IP-CIDR,95.161.76.100/31,REJECT,no-resolve
-  - DOMAIN-KEYWORD,embyplus,DIRECT
+  - RULE-SET,CNKI,DIRECT
+  - RULE-SET,TalktoneProxy,Talktone
+  - RULE-SET,TalktoneAds,REJECT
+  - RULE-SET,TalktoneDirect,DIRECT
+  - RULE-SET,AppStore,Apple
+  - RULE-SET,AppleID,Apple
+  - RULE-SET,GFWRules,PROXY
   - RULE-SET,microsoft,Microsoft
   - RULE-SET,github,Github
   - RULE-SET,spotify,Spotify
@@ -402,10 +391,7 @@ rules:
   - RULE-SET,claude,AIGC
   - RULE-SET,steam,Steam
   - RULE-SET,steamcn,DIRECT
-  - RULE-SET,AppleNoChinaCDNRules,PROXY
-  - RULE-SET,AppleRules,Apple
-  - RULE-SET,AppleAPIRules,Apple
-  - RULE-SET,AppleCDNRules,Apple
+  - RULE-SET,videorule,影视
   - RULE-SET,telegram_domain,Telegram
   - RULE-SET,telegram_ip,Telegram
   - RULE-SET,google_domain,Google

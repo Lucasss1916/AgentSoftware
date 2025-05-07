@@ -300,7 +300,7 @@ function main(config) {
             type: "http",
         },
         AppStore: {
-            url: "https://kelee.one/Tool/Loon/Rule/AppStore.list",
+            url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Clash/AppStore/AppStore.yaml",
             path: "./ruleset/AppleCDNRules.yaml",
             behavior: "classical",   
             interval: 86400,
@@ -308,7 +308,7 @@ function main(config) {
             type: "http",
         },
         AppleID: {
-            url: "https://kelee.one/Tool/Loon/Rule/AppleID.list",
+            url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Clash/AppleID/AppleID.yaml",
             path: "./ruleset/AppleAPIRules.yaml",
             behavior: "classical",
             interval: 86400,

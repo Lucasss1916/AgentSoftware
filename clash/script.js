@@ -299,33 +299,17 @@ function main(config) {
             format: "yaml",
             type: "http",
         },
-        AppleCDNRules: {
-            url: "https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/refs/heads/main/sources/clash-rules/AppleCDNRules.yaml",
+        AppStore: {
+            url: "https://kelee.one/Tool/Loon/Rule/AppStore.list",
             path: "./ruleset/AppleCDNRules.yaml",
             behavior: "classical",   
             interval: 86400,
             format: "yaml",
             type: "http",
         },
-        AppleAPIRules: {
-            url: "https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/refs/heads/main/sources/clash-rules/AppleAPIRules.yaml",
+        AppleID: {
+            url: "https://kelee.one/Tool/Loon/Rule/AppleID.list",
             path: "./ruleset/AppleAPIRules.yaml",
-            behavior: "classical",
-            interval: 86400,
-            format: "yaml",
-            type: "http",
-        },
-        AppleNoChinaCDNRules: {
-            url: "https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/refs/heads/main/sources/clash-rules/AppleNoChinaCDNRules.yaml",
-            path: "./ruleset/AppleNoChinaCDNRules.yaml",
-            behavior: "classical",
-            interval: 86400,
-            format: "yaml",
-            type: "http",
-        },
-        AppleRules: {
-            url: "https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/refs/heads/main/sources/clash-rules/AppleRules.yaml",
-            path: "./ruleset/AppleRules.yaml",
             behavior: "classical",
             interval: 86400,
             format: "yaml",
@@ -380,10 +364,8 @@ function main(config) {
         "RULE-SET,TalktoneAds,REJECT",
         "RULE-SET,TalktoneDirect,DIRECT",
         
-        "RULE-SET,AppleNoChinaCDNRules,PROXY",
-        "RULE-SET,AppleAPIRules,Apple",
-        "RULE-SET,AppleCDNRules,DIRECT",
-        "RULE-SET,AppleRules,DIRECT",
+        "RULE-SET,AppStore,Apple",
+        "RULE-SET,AppleID,Apple",
         "RULE-SET,GFWRules,PROXY",
         
         "RULE-SET,microsoft,Microsoft",  

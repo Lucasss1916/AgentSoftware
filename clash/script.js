@@ -146,15 +146,6 @@ function main(config) {
         config['rule-providers'] = {};
     }
     config["rule-providers"] = Object.assign(config["rule-providers"], {
-        CNKI: {
-            url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/CNKI/CNKI.yaml",
-            path: "./ruleset/CNKI.yaml",
-            behavior: "domain",
-            interval: 86400,
-            format: "yaml",
-            type: "http",
-        },
-        
         private: {
             url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/private.yaml",
             path: "./ruleset/private.yaml",
@@ -358,15 +349,12 @@ function main(config) {
     });
 
     config["rules"] = [
-        "RULE-SET,CNKI,DIRECT",
-
         "RULE-SET,TalktoneProxy,Talktone",
         "RULE-SET,TalktoneAds,REJECT",
         "RULE-SET,TalktoneDirect,DIRECT",
         
         "RULE-SET,AppStore,Apple",
         "RULE-SET,AppleID,Apple",
-        "RULE-SET,GFWRules,PROXY",
         
         "RULE-SET,microsoft,Microsoft",  
         "RULE-SET,github,Github",   
@@ -386,6 +374,7 @@ function main(config) {
         "RULE-SET,google_domain,Google",
         "RULE-SET,google_ip,Google",
         "RULE-SET,geolocation-!cn,PROXY",
+        "RULE-SET,GFWRules,PROXY",
         "RULE-SET,cn_domain,DIRECT",
         "RULE-SET,cn_ip,DIRECT",
         "MATCH,PROXY",

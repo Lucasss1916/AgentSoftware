@@ -39,12 +39,6 @@ function main(config) {
             proxies: ["DIRECT","HK","SG", "JP", "US","TW","EU","AU","KR"],
         },
         {
-            icon: "https://raw.githubusercontent.com/Orz-3/mini/master/Color/github.png",
-            name: "Github",  
-            type: "select",
-            proxies: ["DIRECT","HK","SG", "JP", "US","TW","EU","AU","KR"],
-        },
-        {
             icon: "https://raw.githubusercontent.com/Orz-3/mini/master/Color/Spotify.png",
             name: "Spotify",
             type: "select",

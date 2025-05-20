@@ -162,14 +162,6 @@ function main(config) {
             format: "yaml",
             type: "http",
         },
-        github: {
-            url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/GitHub/GitHub.yaml",
-            path: "./ruleset/github.yaml",
-            behavior: "domain",
-            interval: 86400,
-            format: "yaml",
-            type: "http",
-        },
         microsoft: {  
             url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Microsoft/Microsoft.yaml",
             path: "./ruleset/microsoft.yaml",
@@ -356,8 +348,7 @@ function main(config) {
         "RULE-SET,AppStore,Apple",
         "RULE-SET,AppleID,Apple",
         
-        "RULE-SET,microsoft,Microsoft",  
-        "RULE-SET,github,Github",   
+        "RULE-SET,microsoft,Microsoft",    
         "RULE-SET,spotify,Spotify",
         "RULE-SET,private,DIRECT",
         "RULE-SET,bing,Microsoft",

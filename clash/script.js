@@ -15,10 +15,16 @@ function main(config) {
             interval: 300,
         },
         {
+            icon: "https://raw.githubusercontent.com/Orz-3/mini/master/Color/Static.png",
+            "include-all": true,
+            name: "SELECT",
+            type: "select",
+        },
+        {
             icon: "https://raw.githubusercontent.com/Orz-3/mini/master/Color/OpenAI.png",
             name: "AIGC",
             type: "select",
-            proxies: ["HK","SG", "JP","KR", "US","TW","EU","AU"],
+            proxies: ["SELECT","HK","SG", "JP","KR", "US","TW","EU","AU"],
         },
         {
             icon: "https://raw.githubusercontent.com/Lucasss1916/Iconrpository/main/icon108/talktone108.png",

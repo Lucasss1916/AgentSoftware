@@ -385,6 +385,13 @@ rule-providers:
     interval: 86400
     format: yaml
     type: http
+  Bard:
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/BardAI/BardAI.yaml
+    path: ./ruleset/Bard.yaml
+    behavior: classical
+    interval: 86400
+    format: yaml
+    type: http
   claude:
     url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Claude/Claude.yaml
     path: ./ruleset/claude.yaml
@@ -481,7 +488,7 @@ rules:
   - RULE-SET,private,DIRECT
   - RULE-SET,bing,Microsoft
   - RULE-SET,copilot,AIGC
-  - RULE-SET,bard,AIGC
+  - RULE-SET,Bard,AIGC
   - RULE-SET,openai,AIGC
   - RULE-SET,claude,AIGC
   - RULE-SET,videorule,影视

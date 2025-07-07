@@ -153,34 +153,8 @@ proxy-groups:
       - TW
       - EU
       - AU
-  - icon: https://raw.githubusercontent.com/Orz-3/mini/master/Color/steam.png
-    name: Steam
-    type: select
-    proxies:
-      - DIRECT
-      - HK
-      - SG
-      - JP
-      - US
-      - TW
-      - EU
-      - AU
-      - KR
   - icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Emby.png
     name: 影视
-    type: select
-    proxies:
-      - DIRECT
-      - HK
-      - SG
-      - JP
-      - US
-      - TW
-      - EU
-      - AU
-      - KR
-  - icon: https://raw.githubusercontent.com/Orz-3/mini/master/Color/github.png
-    name: Github
     type: select
     proxies:
       - DIRECT
@@ -402,20 +376,6 @@ rule-providers:
   openai:
     url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/OpenAI/OpenAI.yaml
     path: ./ruleset/openai.yaml
-    behavior: classical
-    interval: 86400
-    format: yaml
-    type: http
-  steam:
-    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Steam/Steam.yaml
-    path: ./ruleset/steam.yaml
-    behavior: classical
-    interval: 86400
-    format: yaml
-    type: http
-  steamcn:
-    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/SteamCN/SteamCN.yaml
-    path: ./ruleset/steamcn.yaml
     behavior: classical
     interval: 86400
     format: yaml

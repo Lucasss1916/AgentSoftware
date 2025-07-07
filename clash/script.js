@@ -266,14 +266,6 @@ function main(config) {
             format: "yaml",
             type: "http",
         },
-        steamcn: {
-            url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/SteamCN/SteamCN.yaml",
-            path: "./ruleset/steamcn.yaml",
-            behavior: "classical",
-            interval: 86400,
-            format: "yaml",
-            type: "http",
-        },
         spotify: {
             url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Spotify/Spotify.yaml",
             path: "./ruleset/Spotify.yaml",
@@ -357,7 +349,6 @@ function main(config) {
         "RULE-SET,openai,AIGC",
         "RULE-SET,claude,AIGC",
         "RULE-SET,steam,Steam",
-        "RULE-SET,steamcn,DIRECT",
         "RULE-SET,videorule,影视",
 
         "RULE-SET,telegram_domain,Telegram",

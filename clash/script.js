@@ -33,12 +33,6 @@ function main(config) {
             proxies: ["HK","SG", "JP","KR", "US","TW","EU","AU"],
         },
         {
-            icon: "https://raw.githubusercontent.com/Orz-3/mini/master/Color/steam.png",
-            name: "Steam",  
-            type: "select",
-            proxies: ["DIRECT","HK","SG", "JP", "US","TW","EU","AU","KR"],
-        },
-        {
             icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Emby.png",
             name: "影视",  
             type: "select",
@@ -258,14 +252,6 @@ function main(config) {
             format: "yaml",
             type: "http",
         },
-        steam: {
-            url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Steam/Steam.yaml",
-            path: "./ruleset/steam.yaml",
-            behavior: "classical",
-            interval: 86400,
-            format: "yaml",
-            type: "http",
-        },
         spotify: {
             url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Spotify/Spotify.yaml",
             path: "./ruleset/Spotify.yaml",
@@ -348,7 +334,6 @@ function main(config) {
         "RULE-SET,bard,AIGC",  
         "RULE-SET,openai,AIGC",
         "RULE-SET,claude,AIGC",
-        "RULE-SET,steam,Steam",
         "RULE-SET,videorule,影视",
 
         "RULE-SET,telegram_domain,Telegram",

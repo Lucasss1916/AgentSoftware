@@ -68,5 +68,5 @@ def process_clash_dir(input_dir, output_dir):
                 print(f"Converted {input_path} ➔ {output_path}")
 
 if __name__ == '__main__':
-    process_clash_dir('sources/clash-rules', 'sources/loon-rules')
+    process_clash_dir('clash/rule', 'loon/rule')
 

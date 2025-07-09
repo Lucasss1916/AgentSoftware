@@ -61,4 +61,4 @@ def process_loon_dir(input_dir_path, output_dir_path):
                 print(f"Converted {input_path} → {output_path}")
 
 if __name__ == "__main__":
-    process_loon_dir('sources/loon-rules', 'sources/clash-rules')
+    process_loon_dir('loon/rule', 'clash/rule')

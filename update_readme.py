@@ -1,6 +1,6 @@
 from pathlib import Path
 
-REPO_BASE = "https://raw.githubusercontent.com/YOUR_USERNAME/YOUR_REPO/main"
+REPO_BASE = "https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main"
 
 def generate_section(dir_path, title):
     files = list(Path(dir_path).glob('**/*'))

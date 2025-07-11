@@ -40,7 +40,15 @@ jobs:
 
           echo "生成文件检查:"
           ls -l clash/rule/
+          
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
 
+      - name: Install dependencies
+        run: pip install pyyaml
+        
       # 转换 Loon → Egern（新增步骤）
       - name: Convert Loon → Egern
         run: |

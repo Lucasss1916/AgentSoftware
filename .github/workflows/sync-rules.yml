@@ -51,10 +51,11 @@ jobs:
         
       - name: Convert Loon → Egern
         run: |
-          mkdir -p egern/rule
+          mkdir -p $GITHUB_WORKSPACE/Egern/rule
           python convert_loon_to_egern.py \
-            --input loon/rule \
-            --output egern/rule
+            --input $GITHUB_WORKSPACE/loon/rule \
+            --output $GITHUB_WORKSPACE/Egern/rule
+
 
 
       # 验证 Clash 规则（作为独立步骤）

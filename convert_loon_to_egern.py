@@ -45,11 +45,12 @@ def process_dir(input_dir_path, output_dir_path):
                 if egern_type and value:
                     egern_data[egern_type].add(value)
 
-        for egern_type, values in egern_data.items():
-            output_file = output_dir / f"{file.stem}.yaml"
-            with open(output_file, "w", encoding="utf-8") as out:
-                yaml.dump({egern_type: sorted(values)}, out, allow_unicode=True, sort_keys=False)
-            print(f"✅ {file.name} → {output_file}")
+        output_file = output_dir / f"{file.stem}.yaml"
+        with open(output_file, "w", encoding="utf-8") as out:
+            merged_dict = {k: sorted(v) for k, v in egern_data.items()}
+            yaml.dump(merged_dict, out, allow_unicode=True, sort_keys=False)
+        print(f"✅ {file.name} → {output_file}")
+
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()

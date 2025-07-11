@@ -5,9 +5,9 @@ on:
     branches: [ main ]
   pull_request:
     paths:
-      - 'sources/clash-rules/*.yaml'
-      - 'sources/loon-rules/*.list'
-
+      - 'clash/rule/*.yaml'
+      - 'loon/rule/*.list'
+      - 'Egern/rule/*.yaml'
 jobs:
   validate-and-update:
     runs-on: ubuntu-latest
@@ -28,27 +28,37 @@ jobs:
         run: |
           echo "当前目录: $(pwd)"
           echo "Loon规则文件列表:"
-          ls -R sources/loon-rules/
+          ls -R loon/rule/
 
-          mkdir -p sources/clash-rules
+          mkdir -p clash/rule
           # 确保脚本目录存在
           mkdir -p scripts  
 
           python convert_loon_to_clash.py \
-            --input 'sources/loon-rules/*.list' \
-            --output 'sources/clash-rules/clash-converted.yaml'
+            --input 'loon/rule/*.list' \
+            --output 'clash/rule/clash-converted.yaml'
 
           echo "生成文件检查:"
-          ls -l sources/clash-rules/
+          ls -l clash/rule/
+
+      # 转换 Loon → Egern（新增步骤）
+      - name: Convert Loon → Egern
+        run: |
+          echo "开始将 Loon 转换为 Egern 格式..."
+          mkdir -p egern/rule
+          python scripts/convert_loon_to_egern.py \
+            --input loon/rule \
+            --output egern/rule
+
 
       # 验证 Clash 规则（作为独立步骤）
       - name: Validate Clash Rules
         run: |
           echo "开始验证 Clash 规则..."
-          if [ -f sources/clash-rules/clash-converted.yaml ]; then
+          if [ -f clash/rule/clash-converted.yaml ]; then
             echo "检测到新生成的 Clash 文件，开始验证..."
             # 使用您的验证逻辑，例如：
-            # python validate_clash.py sources/clash-rules/*.yaml
+            # python validate_clash.py clash/rule/*.yaml
             echo "验证通过！"  # 临时占位
           else
             echo "未找到 Clash 规则文件，跳过验证。"
@@ -58,12 +68,12 @@ jobs:
       - name: Validate Loon Rules
         run: |
           echo "开始验证 Loon 规则..."
-          if [ -d "sources/loon-rules" ]; then
-            files=$(ls sources/loon-rules/*.list)
+          if [ -d "loon/rule" ]; then
+            files=$(ls loon/rule/*.list)
             if [ -n "$files" ]; then
               echo "检测到 Loon 规则文件：$files"
               # 使用您的验证逻辑，例如：
-              # python validate_loon.py sources/loon-rules/*.list
+              # python validate_loon.py loon/rule/*.list
               echo "验证通过！"  # 临时占位
             else
               echo "Loon 文件夹为空，跳过验证。"
@@ -79,6 +89,6 @@ jobs:
         run: |
           git config user.name "GitHub Actions"
           git config user.email "actions@github.com"
-          git add sources/clash-rules/
+          git add clash/rule/
           git diff --cached --quiet || git commit -m "自动转换Loon规则为Clash格式"
           git push origin main

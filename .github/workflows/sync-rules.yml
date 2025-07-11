@@ -46,7 +46,7 @@ jobs:
         run: |
           echo "开始将 Loon 转换为 Egern 格式..."
           mkdir -p egern/rule
-          python scripts/convert_loon_to_egern.py \
+          python convert_loon_to_egern.py \
             --input loon/rule \
             --output egern/rule
 

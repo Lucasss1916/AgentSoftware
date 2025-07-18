@@ -24,9 +24,9 @@
 
       
 
-proxies:
-  - {name: 直连, type: direct}
-  - {name: 拒绝, type: reject}
+#proxies:
+#  - {name: 直连, type: direct}
+#  - {name: 拒绝, type: reject}
 
 # ========================
 # 主要端口设置

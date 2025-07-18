@@ -1,26 +1,26 @@
 # 机场节点订阅
 
-proxy-providers:
+#proxy-providers:
 
-  Mitce:
-    url: "机场订阅地址"
-    type: http
-    interval: 86400
-    health-check:
-      enable: true
-      url: https://www.gstatic.com/generate_204
-      interval: 300
-    proxy: 所有-智选
+#  Mitce:
+#    url: "机场订阅地址"
+#    type: http
+#    interval: 86400
+#    health-check:
+#      enable: true
+#      url: https://www.gstatic.com/generate_204
+#      interval: 300
+#    proxy: 所有-智选
     
-  69yun:
-    url: "机场订阅地址"
-    type: http
-    interval: 86400
-    health-check:
-      enable: true
-      url: https://www.gstatic.com/generate_204
-      interval: 300
-    proxy: 所有-智选
+#  69yun:
+#    url: "机场订阅地址"
+#    type: http
+#    interval: 86400
+#    health-check:
+#     enable: true
+#      url: https://www.gstatic.com/generate_204
+#      interval: 300
+#    proxy: 所有-智选
 
       
 

@@ -104,7 +104,7 @@ jobs:
               done
             done
           fi
-          done   
+          done
       - name: Commit Changes
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

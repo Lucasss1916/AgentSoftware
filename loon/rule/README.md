@@ -7,3 +7,4 @@ https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/loon/rule/Talkt
 https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/loon/rule/TalktoneDirect.list
 https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/loon/rule/TalktoneProxy.list
 https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/loon/rule/myvideorule.list
+https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/loon/rule/steamCDN.list

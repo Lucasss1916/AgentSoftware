@@ -6,3 +6,4 @@ https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/Egern/rule/Talk
 https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/Egern/rule/TalktoneDirect.yaml
 https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/Egern/rule/TalktoneProxy.yaml
 https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/Egern/rule/myvideorule.yaml
+https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/Egern/rule/steamCDN.yaml

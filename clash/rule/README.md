@@ -7,3 +7,4 @@ https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/clash/rule/Talk
 https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/clash/rule/TalktoneDirect.yaml
 https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/clash/rule/TalktoneProxy.yaml
 https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/clash/rule/myvideorule.yaml
+https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/clash/rule/steamCDN.yaml

@@ -1,0 +1,9 @@
+https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/loon/rule/AppleAPIRules.list
+https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/loon/rule/AppleCDNRules.list
+https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/loon/rule/AppleNoChinaCDNRules.List
+https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/loon/rule/AppleRules.list
+https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/loon/rule/GFWRules.list
+https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/loon/rule/TalktoneAds.list
+https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/loon/rule/TalktoneDirect.list
+https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/loon/rule/TalktoneProxy.list
+https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/loon/rule/myvideorule.list

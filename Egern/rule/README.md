@@ -1,0 +1,8 @@
+https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/Egern/rule/AppleAPIRules.yaml
+https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/Egern/rule/AppleCDNRules.yaml
+https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/Egern/rule/AppleRules.yaml
+https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/Egern/rule/GFWRules.yaml
+https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/Egern/rule/TalktoneAds.yaml
+https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/Egern/rule/TalktoneDirect.yaml
+https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/Egern/rule/TalktoneProxy.yaml
+https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/Egern/rule/myvideorule.yaml

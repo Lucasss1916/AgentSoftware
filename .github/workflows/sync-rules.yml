@@ -92,21 +92,19 @@ jobs:
         run: |
           for topdir in clash loon Egern surge quanx; do
             if [ -d "$topdir" ]; then
-              find "$topdir" -mindepth 2 -maxdepth 2 -type d | while read subdir; do
-                readme="$subdir/README.md"
-                  echo "正在处理: $readme"
-                  : > "$readme"
-                  for file in "$subdir"/*; do
-                    if [ -f "$file" ] && [ "$(basename "$file")" != "README.md" ]; then
-                      relpath=$(echo "$file" | sed 's/^.\///')
-                      echo "https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/$relpath" >> "$readme"
-                    fi
-                  done
-                  # 显示生成内容
-                  cat "$readme"
-                done
-              fi
-            done   
+            # 为第二层目录生成 README.md
+            find "$topdir" -mindepth 1 -maxdepth 1 -type d | while read subdir; do
+              readme="$subdir/README.md"
+              : > "$readme"
+              for file in "$subdir"/*; do
+                if [ -f "$file" ] && [ "$(basename "$file")" != "README.md" ]; then
+                  relpath=$(echo "$file" | sed 's/^.\///')
+                  echo "https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/$relpath" >> "$readme"
+                fi
+              done
+            done
+          fi
+          done   
       - name: Commit Changes
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

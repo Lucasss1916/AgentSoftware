@@ -88,7 +88,26 @@ jobs:
           else
             echo "Loon 目录不存在，跳过验证。"
           fi
-
+      - name: Generate README.md for second-level folders
+        run: |
+          for topdir in clash loon Egern surge quanx; do
+            # 只找第二层文件夹
+            if [ -d "$topdir" ]; then
+              find "$topdir" -mindepth 2 -maxdepth 2 -type d | while read subdir; do
+                readme="$subdir/README.md"
+                : > "$readme" # 清空或新建
+                for file in "$subdir"/*; do
+                  # 只列文件（不含目录和README自身）
+                  if [ -f "$file" ] && [ "$(basename "$file")" != "README.md" ]; then
+                    # 构造raw链接
+                    relpath=$(echo "$file" | sed 's/^.\///')
+                    echo "https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/$relpath" >> "$readme"
+                  fi
+                done
+              done
+            fi
+          done
+          
       - name: Commit Changes
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

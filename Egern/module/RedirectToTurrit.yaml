@@ -1,6 +1,12 @@
 name: RedirectToTurrit
 description: 将Telegram链接重定向至Turrit
+
 body_rewrites:
 - response_regex:
     find: (https:\/\/)?t\.me\/(.+)
     replace: turrit://resolve?domain=$2
+
+mitm:
+  hostnames:
+    includes:
+      - t.me

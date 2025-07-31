@@ -1,5 +1,10 @@
+name: RedirectTGToTurrit
+description: 重定向tg链接至turrit
+author: lucasss
+
 body_rewrites:
 - response_regex:
+    match: https://t\.me/.*
     find: (https:\/\/)?t\.me\/(.+)
     replace: turrit://resolve?domain=$2
 

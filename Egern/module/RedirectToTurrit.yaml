@@ -1,5 +1,6 @@
 name: RedirectToTurrit
 description: 将Telegram链接重定向至Turrit
+author: lucasss
 
 body_rewrites:
 - response_regex:

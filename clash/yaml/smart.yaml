@@ -108,15 +108,14 @@ proxy-groups:
   - {name: GitHub,icon: https://raw.githubusercontent.com/Orz-3/mini/master/Color/github.png,  <<: *default}
   - {name: Telegram, icon: https://raw.githubusercontent.com/Orz-3/mini/master/Color/Telegram.png,<<: *default}
   - {name: 国外媒体,icon: https://raw.githubusercontent.com/Orz-3/mini/master/Color/Google.png, <<: *default}
-  - {name: WhatsApp, <<: *default}
-  - {name: Spotify, <<: *default}
-  - {name: Apple, <<: *default}
-  - {name: Microsoft, <<: *default}
-  - {name: Steam, <<: *default}
-  - {name: Game, <<: *default}
-  - {name: Crypto, <<: *default}
-  - {name: Test, <<: *default}
-  - {name: Block, <<: *default}
+  - {name: WhatsApp, icon: https://raw.githubusercontent.com/Orz-3/mini/master/Color/Spotify.png,<<: *default}
+  - {name: Spotify,icon: https://raw.githubusercontent.com/Orz-3/mini/master/Color/Spotify.png, <<: *default}
+  - {name: Apple,icon: https://raw.githubusercontent.com/Orz-3/mini/master/Color/Apple.png, <<: *default}
+  - {name: Microsoft,icon: https://raw.githubusercontent.com/Orz-3/mini/master/Color/Microsoft.png, <<: *default}
+  - {name: Steam,icon: https://raw.githubusercontent.com/Orz-3/mini/master/Color/Steam.png, <<: *default}
+  - {name: Game,icon: https://raw.githubusercontent.com/Orz-3/mini/master/Color/GAME.png, <<: *default}
+  - {name: Test, icon: https://raw.githubusercontent.com/Orz-3/mini/master/Color/Urltest.png,<<: *default}
+  - {name: Block,icon: https://raw.githubusercontent.com/Orz-3/mini/master/Color/Adblock.png, <<: *default}
   - {name: 国外, <<: *default}
   - {name: 国内, <<: *default}
   - {name: 其他, <<: *default}

@@ -88,7 +88,7 @@ profile:
 default: &default
   type: select
   proxies:
-    - 直连
+    - DIRECT
     - 所有-手选
     - 所有-智选
     - 香港-智选
@@ -99,7 +99,7 @@ default: &default
     - 美国-智选
     - 英国-智选
     - 其他-智选
-    - 拒绝
+    - REJECT
 
 proxy-groups:
 

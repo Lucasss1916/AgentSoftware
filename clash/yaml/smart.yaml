@@ -136,22 +136,22 @@ proxy-groups:
   - name: 所有-手选
     type: select
     include-all: true
-    filter: "^((?!(直连|拒绝)).)*$"
+  # filter: "^((?!(直连|拒绝)).)*$"
 
   - name: 所有-智选
     type: smart
     include-all: true
-#   policy-priority: "香港:1.2;牛逼:0.8"
+    policy-priority: "香港:1.2"
     uselightgbm: true
     collectdata: true
     interval: 300
-    filter: "^((?!(直连|拒绝)).)*$"
+  # filter: "^((?!(直连|拒绝)).)*$"
 
   # 香港组
   - name: 香港-智选
     type: smart
     include-all: true
-#   policy-priority: "牛逼:0.8"
+    policy-priority: "HK:1.4"
     uselightgbm: true
     collectdata: true
     interval: 300
@@ -161,7 +161,7 @@ proxy-groups:
   - name: 台湾-智选
     type: smart
     include-all: true
-#   policy-priority: "牛逼:0.8"
+    policy-priority: "TW:1.4"
     uselightgbm: true
     collectdata: true
     interval: 300
@@ -171,7 +171,7 @@ proxy-groups:
   - name: 日本-智选
     type: smart
     include-all: true
-#   policy-priority: "牛逼:0.8"
+    policy-priority: "JP:1.4"
     uselightgbm: true
     collectdata: true
     interval: 300
@@ -181,7 +181,7 @@ proxy-groups:
   - name: 新加坡-智选
     type: smart
     include-all: true
-#   policy-priority: "牛逼:0.8"
+    policy-priority: "SG:1.4"
     uselightgbm: true
     collectdata: true
     interval: 300

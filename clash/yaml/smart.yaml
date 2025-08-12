@@ -104,26 +104,15 @@ default: &default
 proxy-groups:
 
   # 业务分流组
-  - {name: ChatGPT, <<: *default}
-  - {name: Claude, <<: *default}
-  - {name: Meta AI, <<: *default}
+  - {name: AIGC,icon: https://raw.githubusercontent.com/Orz-3/mini/master/Color/OpenAI.png, <<: *default}
   - {name: Perplexity, <<: *default}
   - {name: GitHub, <<: *default}
   - {name: Telegram, <<: *default}
-  - {name: Twitter(X), <<: *default}
+  - {name: 国外媒体, <<: *default}
   - {name: WhatsApp, <<: *default}
-  - {name: Facebook, <<: *default}
-  - {name: YouTube, <<: *default}
-  - {name: TikTok, <<: *default}
-  - {name: Disney, <<: *default}
-  - {name: Netflix, <<: *default}
-  - {name: HBO, <<: *default}
   - {name: Spotify, <<: *default}
-  - {name: Amazon, <<: *default}
   - {name: Apple, <<: *default}
   - {name: Microsoft, <<: *default}
-  - {name: Google, <<: *default}
-  - {name: Nvidia, <<: *default}
   - {name: Steam, <<: *default}
   - {name: Game, <<: *default}
   - {name: Crypto, <<: *default}
@@ -234,29 +223,29 @@ rules:
 
   - RULE-SET,TEST / Domain,Test
   - RULE-SET,Block / Domain,Block  
-  - RULE-SET,ChatGPT / Domain,ChatGPT
-  - RULE-SET,Claude / Domain,Claude
-  - RULE-SET,Meta AI / Domain,Meta AI
+  - RULE-SET,AIGC / Domain,ChatGPT
+  - RULE-SET,AIGC / Domain,Claude
+  - RULE-SET,AIGC / Domain,Meta AI
   - RULE-SET,Perplexity / Domain,Perplexity
   - RULE-SET,GitHub / Domain,GitHub
   - RULE-SET,Telegram / Domain,Telegram
   - RULE-SET,Telegram / IP,Telegram,no-resolve
-  - RULE-SET,Twitter / Domain,Twitter(X)
+  - RULE-SET,国外媒体 / Domain,Twitter(X)
   - RULE-SET,WhatsApp / Domain,WhatsApp
-  - RULE-SET,Facebook / Domain,Facebook
-  - RULE-SET,Amazon / Domain,Amazon
+  - RULE-SET,国外媒体 / Domain,Facebook
+  - RULE-SET,国外媒体 / Domain,Amazon
   - RULE-SET,Apple / Domain,Apple
   - RULE-SET,Apple-CN / Domain,Apple  
   - RULE-SET,Microsoft / Domain,Microsoft
   - RULE-SET,OKX / Domain,Crypto
   - RULE-SET,Bybit / Domain,Crypto
   - RULE-SET,Binance / Domain,Crypto
-  - RULE-SET,Youtube / Domain,YouTube
-  - RULE-SET,TikTok / Domain,TikTok
-  - RULE-SET,Netflix / Domain,Netflix
-  - RULE-SET,Netflix / IP,Netflix,no-resolve
-  - RULE-SET,Disney / Domain,Disney
-  - RULE-SET,HBO / Domain,HBO
+  - RULE-SET,国外媒体 / Domain,YouTube
+  - RULE-SET,国外媒体 / Domain,TikTok
+  - RULE-SET,国外媒体 / Domain,Netflix
+  - RULE-SET,国外媒体 / IP,Netflix,no-resolve
+  - RULE-SET,国外媒体 / Domain,Disney
+  - RULE-SET,国外媒体 / Domain,HBO
   - RULE-SET,Spotify / Domain,Spotify
   - RULE-SET,Steam / Domain,Steam
   - RULE-SET,Epic / Domain,Game
@@ -265,9 +254,8 @@ rules:
   - RULE-SET,UBI / Domain,Game
   - RULE-SET,PlayStation / Domain,Game
   - RULE-SET,Nintend / Domain,Game
-  - RULE-SET,Google / Domain,Google
-  - RULE-SET,Google / IP,Google,no-resolve
-  - RULE-SET,Nvidia / Domain,Nvidia
+  - RULE-SET,国外媒体 / Domain,Google
+  - RULE-SET,国外媒体 / IP,Google,no-resolve
   - RULE-SET,Proxy / Domain,国外
   - RULE-SET,Globe / Domain,国外  
   - RULE-SET,Direct / Domain,国内

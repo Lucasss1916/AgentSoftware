@@ -223,7 +223,7 @@ rules:
   - RULE-SET,Block / Domain,Block  
   - RULE-SET,ChatGPT / Domain,AIGC
   - RULE-SET,Claude / Domain,AIGC
-  - RULE-SET,Meta Ai / Domain,AIGC
+  - RULE-SET,Meta AI / Domain,AIGC
   - RULE-SET,GitHub / Domain,GitHub
   - RULE-SET,Telegram / Domain,Telegram
   - RULE-SET,Telegram / IP,Telegram,no-resolve
@@ -237,7 +237,7 @@ rules:
   - RULE-SET,OKX / Domain,国外媒体
   - RULE-SET,Bybit / Domain,国外媒体
   - RULE-SET,Binance / Domain,国外媒体
-  - RULE-SET,YouTube / Domain,国外媒体
+  - RULE-SET,Youtube / Domain,国外媒体
   - RULE-SET,TikTok / Domain,国外媒体
   - RULE-SET,Netflix / Domain,国外媒体
   - RULE-SET,Netflix / IP,国外媒体,no-resolve

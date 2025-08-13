@@ -223,7 +223,7 @@ rules:
   - RULE-SET,Block / Domain,Block  
   - RULE-SET,ChatGPT / Domain,AIGC
   - RULE-SET,Claude / Domain,AIGC
-  - RULE-SET,MetaAi / Domain,AIGC
+  - RULE-SET,Meta Ai / Domain,AIGC
   - RULE-SET,GitHub / Domain,GitHub
   - RULE-SET,Telegram / Domain,Telegram
   - RULE-SET,Telegram / IP,Telegram,no-resolve

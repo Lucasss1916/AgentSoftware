@@ -129,7 +129,7 @@ proxy-groups:
   - name: 香港-智选
     type: smart
     include-all: true
-    policy-priority: "Mitce:1.4"
+    policy-priority: "Mitce:0.7"
     uselightgbm: true
     collectdata: true
     interval: 300
@@ -139,7 +139,7 @@ proxy-groups:
   - name: 台湾-智选
     type: smart
     include-all: true
-    policy-priority: "Mitce:1.4"
+    policy-priority: "Mitce:0.7"
     uselightgbm: true
     collectdata: true
     interval: 300
@@ -149,7 +149,7 @@ proxy-groups:
   - name: 日本-智选
     type: smart
     include-all: true
-    policy-priority: "Mitce:1.4"
+    policy-priority: "Mitce:0.7"
     uselightgbm: true
     collectdata: true
     interval: 300
@@ -159,7 +159,7 @@ proxy-groups:
   - name: 新加坡-智选
     type: smart
     include-all: true
-    policy-priority: "Mitce:1.4"
+    policy-priority: "Mitce:0.7"
     uselightgbm: true
     collectdata: true
     interval: 300

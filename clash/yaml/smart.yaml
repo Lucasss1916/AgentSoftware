@@ -211,7 +211,7 @@ proxy-groups:
 rules:
 
   - RULE-SET,TEST / Domain,Test
-  - RULE-SET,TEST / Domain,MyVideo
+  - RULE-SET,MyVideo / Domain,Video
   - RULE-SET,Block / Domain,Block  
   - RULE-SET,ChatGPT / Domain,AIGC
   - RULE-SET,Claude / Domain,AIGC

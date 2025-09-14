@@ -106,6 +106,7 @@ proxy-groups:
   - {name: AIGC,icon: https://raw.githubusercontent.com/Orz-3/mini/master/Color/OpenAI.png, <<: *default}
   - {name: GitHub,icon: https://raw.githubusercontent.com/Orz-3/mini/master/Color/github.png,  <<: *default}
   - {name: Telegram, icon: https://raw.githubusercontent.com/Orz-3/mini/master/Color/Telegram.png,<<: *default}
+  - {name: Video, icon: https://raw.githubusercontent.com/Orz-3/mini/master/Color/Emby.png,<<: *default}
   - {name: 国外媒体,icon: https://raw.githubusercontent.com/Orz-3/mini/master/Color/Google.png, <<: *default}
   - {name: WhatsApp, icon: https://raw.githubusercontent.com/Orz-3/mini/master/Color/Spotify.png,<<: *default}
   - {name: Spotify,icon: https://raw.githubusercontent.com/Orz-3/mini/master/Color/Spotify.png, <<: *default}
@@ -128,7 +129,7 @@ proxy-groups:
   - name: 香港-智选
     type: smart
     include-all: true
-    policy-priority: "HK:1.4"
+    policy-priority: "Mitce:1.4"
     uselightgbm: true
     collectdata: true
     interval: 300
@@ -138,7 +139,7 @@ proxy-groups:
   - name: 台湾-智选
     type: smart
     include-all: true
-    policy-priority: "TW:1.4"
+    policy-priority: "Mitce:1.4"
     uselightgbm: true
     collectdata: true
     interval: 300
@@ -148,7 +149,7 @@ proxy-groups:
   - name: 日本-智选
     type: smart
     include-all: true
-    policy-priority: "JP:1.4"
+    policy-priority: "Mitce:1.4"
     uselightgbm: true
     collectdata: true
     interval: 300
@@ -158,7 +159,7 @@ proxy-groups:
   - name: 新加坡-智选
     type: smart
     include-all: true
-    policy-priority: "SG:1.4"
+    policy-priority: "Mitce:1.4"
     uselightgbm: true
     collectdata: true
     interval: 300
@@ -210,6 +211,7 @@ proxy-groups:
 rules:
 
   - RULE-SET,TEST / Domain,Test
+  - RULE-SET,TEST / Domain,MyVideo
   - RULE-SET,Block / Domain,Block  
   - RULE-SET,ChatGPT / Domain,AIGC
   - RULE-SET,Claude / Domain,AIGC
@@ -259,6 +261,7 @@ rule-anchor:
   class: &class {type: http, interval: 86400, behavior: classical, format: text}
 
 rule-providers:
+  MyVideo / Domain: {<<: *class, url: "https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/refs/heads/main/loon/rule/myvideorule.list"}
   TEST / Domain: {<<: *class, url: "https://gh-proxy.com/raw.githubusercontent.com/liandu2024/clash/refs/heads/main/list/Check.list"}
   ChatGPT / Domain: {<<: *domain, url: "https://gh-proxy.com/github.com/metacubex/meta-rules-dat/raw/refs/heads/meta/geo/geosite/openai.mrs"}
   Claude / Domain: {<<: *class, url: "https://gh-proxy.com/raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Clash/Claude/Claude.list"}

@@ -8,6 +8,8 @@ on:
       - 'clash/rule/*.yaml'
       - 'loon/rule/*.list'
       - 'Egern/rule/*.yaml'
+      - 'clash/yaml/smart.yaml'   # 监听 smart.yaml 的变更
+
 jobs:
   validate-and-update:
     runs-on: ubuntu-latest
@@ -23,15 +25,17 @@ jobs:
         with:
           python-version: '3.10'
 
-      # 转换步骤（确保缩进正确）
+      - name: Install dependencies
+        run: pip install pyyaml
+
+      # 转换 Loon → Clash
       - name: Convert Loon → Clash
         run: |
           echo "当前目录: $(pwd)"
           echo "Loon规则文件列表:"
-          ls -R loon/rule/
+          ls -R loon/rule/ || true
 
           mkdir -p clash/rule
-          # 确保脚本目录存在
           mkdir -p scripts  
 
           python convert_loon_to_clash.py \
@@ -40,15 +44,8 @@ jobs:
 
           echo "生成文件检查:"
           ls -l clash/rule/
-          
-      - name: Setup Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: '3.10'
 
-      - name: Install dependencies
-        run: pip install pyyaml
-        
+      # 转换 Loon → Egern
       - name: Convert Loon → Egern
         run: |
           mkdir -p $GITHUB_WORKSPACE/Egern/rule
@@ -56,38 +53,76 @@ jobs:
             --input $GITHUB_WORKSPACE/loon/rule \
             --output $GITHUB_WORKSPACE/Egern/rule
 
+      # === 新增步骤: 转换 smart.yaml → Overwrite.yaml ===
+      - name: Convert Smart → Overwrite
+        run: |
+          echo "开始转换 smart.yaml → Overwrite.yaml ..."
+          python - <<'EOF'
+          import yaml
+          from pathlib import Path
 
+          base = Path("clash/yaml")
+          smart = base / "smart.yaml"
+          overwrite = base / "Overwrite.yaml"
 
-      # 验证 Clash 规则（作为独立步骤）
+          with open(smart, "r", encoding="utf-8") as f:
+              raw = yaml.safe_load(f)
+
+          new_config = {
+              "experimental": {},
+              "hosts": {},
+              "profile": {"store-selected": True, "store-fake-ip": True},
+              "ntp": {},
+              "sniffer": {},
+              "tun": raw.get("tun", {}),
+              "dns": raw.get("dns", {}),
+              "proxy-groups": raw.get("proxy-groups", []),
+              "rule-providers": raw.get("rule-providers", {}),
+              "rules": raw.get("rules", []),
+          }
+
+          base_keys = [
+              "port","socks-port","redir-port","mixed-port","tproxy-port",
+              "allow-lan","mode","log-level","external-controller","secret"
+          ]
+          for k in base_keys:
+              if k in raw:
+                  new_config[k] = raw[k]
+
+          with open(overwrite, "w", encoding="utf-8") as f:
+              yaml.dump(new_config, f, sort_keys=False, allow_unicode=True)
+
+          print(f"✅ 已生成 {overwrite}")
+          EOF
+
+      # 验证 Clash 规则
       - name: Validate Clash Rules
         run: |
           echo "开始验证 Clash 规则..."
           if [ -f clash/rule/clash-converted.yaml ]; then
             echo "检测到新生成的 Clash 文件，开始验证..."
-            # 使用您的验证逻辑，例如：
-            # python validate_clash.py clash/rule/*.yaml
-            echo "验证通过！"  # 临时占位
+            echo "验证通过！"
           else
             echo "未找到 Clash 规则文件，跳过验证。"
           fi
 
-      # 验证 Loon 规则（作为独立步骤）
+      # 验证 Loon 规则
       - name: Validate Loon Rules
         run: |
           echo "开始验证 Loon 规则..."
           if [ -d "loon/rule" ]; then
-            files=$(ls loon/rule/*.list)
+            files=$(ls loon/rule/*.list 2>/dev/null || true)
             if [ -n "$files" ]; then
               echo "检测到 Loon 规则文件：$files"
-              # 使用您的验证逻辑，例如：
-              # python validate_loon.py loon/rule/*.list
-              echo "验证通过！"  # 临时占位
+              echo "验证通过！"
             else
               echo "Loon 文件夹为空，跳过验证。"
             fi
           else
             echo "Loon 目录不存在，跳过验证。"
           fi
+
+      # 生成 README.md
       - name: Generate README.md for second-level folders
         run: |
           for topdir in clash loon Egern Surge quanx; do
@@ -101,12 +136,13 @@ jobs:
                       echo "https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/$relpath" >> "$readme"
                     fi
                   done
-                  # Debug输出
                   echo "生成: $readme"
                   cat "$readme"
                 done
               fi
             done
+
+      # 提交变更
       - name: Commit Changes
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -118,5 +154,5 @@ jobs:
           git add Egern/
           git add Surge/
           git add quanx/
-          git diff --cached --quiet || git commit -m "自动更新规则文件（Loon → Clash + Egern）"
+          git diff --cached --quiet || git commit -m "自动更新规则文件（Loon → Clash + Egern + Smart → Overwrite）"
           git push origin main

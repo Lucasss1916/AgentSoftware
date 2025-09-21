@@ -97,7 +97,7 @@ default: &default
     - 韩国-智选
     - 美国-智选
     - 英国-智选
-    - 其他-智选
+    - 漏网之鱼
     - REJECT
 
 proxy-groups:
@@ -116,9 +116,6 @@ proxy-groups:
   - {name: Game,icon: https://raw.githubusercontent.com/Orz-3/mini/master/Color/GAME.png, <<: *default}
   - {name: Test, icon: https://raw.githubusercontent.com/Orz-3/mini/master/Color/Urltest.png,<<: *default}
   - {name: Block,icon: https://raw.githubusercontent.com/Orz-3/mini/master/Color/Adblock.png, <<: *default}
-  - {name: 国外, <<: *default}
-  - {name: 国内, <<: *default}
-  - {name: 其他, <<: *default}
 
   - name: 所有-手选
     type: select
@@ -134,6 +131,7 @@ proxy-groups:
     collectdata: true
     interval: 300
     filter: "(?=.*(广港|香港|HK|Hong Kong|🇭🇰|HongKong)).*$"
+    icon: https://fastly.jsdelivr.net/gh/Semporia/Hand-Painted-icon@master/Rounded_Rectangle/Hong_Kong.png
  
   # 台湾组
   - name: 台湾-智选
@@ -144,6 +142,7 @@ proxy-groups:
     collectdata: true
     interval: 300
     filter: "(?=.*(广台|台湾|台灣|TW|Tai Wan|🇹🇼|🇨🇳|TaiWan|Taiwan)).*$"
+    icon: https://fastly.jsdelivr.net/gh/Semporia/Hand-Painted-icon@master/Rounded_Rectangle/Taiwan.png
 
   # 日本组
   - name: 日本-智选
@@ -154,6 +153,8 @@ proxy-groups:
     collectdata: true
     interval: 300
     filter: "(?=.*(广日|日本|JP|川日|东京|大阪|泉日|埼玉|沪日|深日|🇯🇵|Japan)).*$"
+    icon: https://fastly.jsdelivr.net/gh/Semporia/Hand-Painted-icon@master/Rounded_Rectangle/Japan.png
+    
 
   # 新加坡组
   - name: 新加坡-智选
@@ -164,6 +165,7 @@ proxy-groups:
     collectdata: true
     interval: 300
     filter: "(?=.*(广新|新加坡|SG|坡|狮城|🇸🇬|Singapore)).*$"
+    icon: https://fastly.jsdelivr.net/gh/Semporia/Hand-Painted-icon@master/Rounded_Rectangle/Singapore.png
 
   # 韩国组
   - name: 韩国-智选
@@ -174,6 +176,7 @@ proxy-groups:
     collectdata: true
     interval: 300
     filter: "(?=.*(广韩|韩国|韓國|KR|首尔|春川|🇰🇷|Korea)).*$"
+    icon: https://fastly.jsdelivr.net/gh/Semporia/Hand-Painted-icon@master/Rounded_Rectangle/South_Korea.png
 
   # 美国组
   - name: 美国-智选
@@ -184,6 +187,7 @@ proxy-groups:
     collectdata: true
     interval: 300
     filter: "(?=.*(广美|美|US|纽约|波特兰|达拉斯|俄勒|凤凰城|费利蒙|拉斯|洛杉|圣何塞|圣克拉|西雅|芝加|🇺🇸|United States)).*$"
+    icon: https://fastly.jsdelivr.net/gh/Semporia/Hand-Painted-icon@master/Rounded_Rectangle/United_States.png
 
   # 英国组
   - name: 英国-智选
@@ -194,9 +198,10 @@ proxy-groups:
     collectdata: true
     interval: 300
     filter: "(?=.*(英国|英|伦敦|UK|United Kingdom|🇬🇧|London)).*$"
+    icon: https://fastly.jsdelivr.net/gh/Semporia/Hand-Painted-icon@master/Rounded_Rectangle/England.png
 
   # 其他组
-  - name: 其他-智选
+  - name: 漏网之鱼
     type: smart
     include-all: true
 #   policy-priority: "牛逼:0.8"
@@ -244,13 +249,13 @@ rules:
   - RULE-SET,Nintend / Domain,Game
   - RULE-SET,Google / Domain,国外媒体
   - RULE-SET,Google / IP,国外媒体,no-resolve
-  - RULE-SET,Proxy / Domain,国外
-  - RULE-SET,Globe / Domain,国外  
-  - RULE-SET,Direct / Domain,国内
-  - RULE-SET,China / Domain,国内
-  - RULE-SET,China / IP,国内,no-resolve
-  - RULE-SET,Private / Domain,国内
-  - MATCH,其他
+  - RULE-SET,Proxy / Domain,国外媒体
+  - RULE-SET,Globe / Domain,国外媒体  
+  - RULE-SET,Direct / Domain,DIRECT
+  - RULE-SET,China / Domain,DIRECT
+  - RULE-SET,China / IP,DIRECT,no-resolve
+  - RULE-SET,Private / Domain,DIRECT
+  - MATCH,漏网之鱼
 
 # ========================
 # 规则集提供者

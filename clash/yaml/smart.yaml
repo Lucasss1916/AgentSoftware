@@ -97,7 +97,7 @@ default: &default
     - 韩国-智选
     - 美国-智选
     - 英国-智选
-    - 漏网之鱼
+    - 其他
     - REJECT
 
 proxy-groups:
@@ -120,6 +120,7 @@ proxy-groups:
   - name: 所有-手选
     type: select
     include-all: true
+    icon: https://www.clashverge.dev/assets/icons/adjust.svg
   # filter: "^((?!(直连|拒绝)).)*$"
 
   # 香港组
@@ -201,7 +202,7 @@ proxy-groups:
     icon: https://fastly.jsdelivr.net/gh/Semporia/Hand-Painted-icon@master/Rounded_Rectangle/England.png
 
   # 其他组
-  - name: 漏网之鱼
+  - name: 其他
     type: smart
     include-all: true
 #   policy-priority: "牛逼:0.8"
@@ -255,7 +256,7 @@ rules:
   - RULE-SET,China / Domain,DIRECT
   - RULE-SET,China / IP,DIRECT,no-resolve
   - RULE-SET,Private / Domain,DIRECT
-  - MATCH,漏网之鱼
+  - MATCH,其他
 
 # ========================
 # 规则集提供者

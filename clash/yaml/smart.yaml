@@ -257,7 +257,7 @@ rules:
   - RULE-SET,China / Domain,DIRECT
   - RULE-SET,China / IP,DIRECT,no-resolve
   - RULE-SET,Private / Domain,DIRECT
-  - MATCH,其他
+  - MATCH,所有-手选
 
 # ========================
 # 规则集提供者

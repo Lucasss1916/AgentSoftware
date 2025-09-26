@@ -487,7 +487,7 @@ rules:
 - RULE-SET,China / Domain,DIRECT
 - RULE-SET,China / IP,DIRECT,no-resolve
 - RULE-SET,Private / Domain,DIRECT
-- MATCH,其他
+- MATCH,所有-手选
 port: 7890
 socks-port: 7891
 redir-port: 7892

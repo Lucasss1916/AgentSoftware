@@ -109,7 +109,6 @@ proxy-groups:
   - {name: Telegram, icon: https://raw.githubusercontent.com/Orz-3/mini/master/Color/Telegram.png,<<: *default}
   - {name: Video, icon: https://raw.githubusercontent.com/Orz-3/mini/master/Color/Emby.png,<<: *default}
   - {name: 国外媒体,icon: https://raw.githubusercontent.com/Orz-3/mini/master/Color/Google.png, <<: *default}
-  - {name: WhatsApp, icon: https://raw.githubusercontent.com/Lucasss1916/Iconrpository/main/icon108/whatsapp.png,<<: *default}
   - {name: Spotify,icon: https://raw.githubusercontent.com/Orz-3/mini/master/Color/Spotify.png, <<: *default}
   - {name: Apple,icon: https://raw.githubusercontent.com/Orz-3/mini/master/Color/Apple.png, <<: *default}
   - {name: Microsoft,icon: https://raw.githubusercontent.com/Orz-3/mini/master/Color/Microsoft.png, <<: *default}
@@ -228,7 +227,7 @@ rules:
   - RULE-SET,Telegram / Domain,Telegram
   - RULE-SET,Telegram / IP,Telegram,no-resolve
   - RULE-SET,Twitter / Domain,国外媒体
-  - RULE-SET,WhatsApp / Domain,WhatsApp
+  - RULE-SET,WhatsApp / Domain,国外媒体
   - RULE-SET,Facebook / Domain,国外媒体
   - RULE-SET,Amazon / Domain,国外媒体
   - RULE-SET,Apple / Domain,Apple

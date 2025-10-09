@@ -30,7 +30,6 @@ dns:
 proxy-groups:
 - type: select
   proxies: &id001
-  - DIRECT
   - 所有-手选
   - 香港-智选
   - 台湾-智选
@@ -40,6 +39,7 @@ proxy-groups:
   - 美国-智选
   - 英国-智选
   - 其他
+  - DIRECT
   - REJECT
   name: AIGC
   icon: https://raw.githubusercontent.com/Orz-3/mini/master/Color/OpenAI.png
@@ -91,6 +91,20 @@ proxy-groups:
   type: select
   include-all: true
   icon: https://www.clashverge.dev/assets/icons/adjust.svg
+- name: 漏网之鱼
+  type: fallback
+  icon: https://www.clashverge.dev/assets/icons/fish.svg
+  proxies:
+  - 所有-手选
+  - 香港-智选
+  - 新加坡-智选
+  - 日本-智选
+  - 台湾-智选
+  - 韩国-智选
+  - 美国-智选
+  - 英国-智选
+  - 其他
+  - DIRECT
 - name: 香港-智选
   type: smart
   include-all: true
@@ -483,7 +497,7 @@ rules:
 - RULE-SET,China / Domain,DIRECT
 - RULE-SET,China / IP,DIRECT,no-resolve
 - RULE-SET,Private / Domain,DIRECT
-- MATCH,所有-手选
+- MATCH,漏网之鱼
 port: 7890
 socks-port: 7891
 redir-port: 7892

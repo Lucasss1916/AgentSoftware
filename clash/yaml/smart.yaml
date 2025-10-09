@@ -127,7 +127,6 @@ proxy-groups:
     type: fallback
     icon: https://www.clashverge.dev/assets/icons/fish.svg
     proxies:
-    - 所有-手选
     - 香港-智选
     - 新加坡-智选
     - 日本-智选
@@ -135,6 +134,7 @@ proxy-groups:
     - 韩国-智选
     - 美国-智选
     - 英国-智选
+    - 所有-手选
     - 其他
     - DIRECT
 

@@ -3,6 +3,7 @@ https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/clash/rule/Appl
 https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/clash/rule/AppleNoChinaCDNRules.yaml
 https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/clash/rule/AppleRules.yaml
 https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/clash/rule/GFWRules.yaml
+https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/clash/rule/MyAiport.yaml
 https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/clash/rule/TalktoneAds.yaml
 https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/clash/rule/TalktoneDirect.yaml
 https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/clash/rule/TalktoneProxy.yaml

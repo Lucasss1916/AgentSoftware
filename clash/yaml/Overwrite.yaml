@@ -456,7 +456,14 @@ rule-providers:
     behavior: ipcidr
     format: mrs
     url: https://gh-proxy.com/github.com/metacubex/meta-rules-dat/raw/refs/heads/meta/geo/geoip/google.mrs
+  WeChat:
+    type: http
+    behavior: classical
+    path: ./rules/WeChat_No_Resolve.yaml
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Clash/WeChat/WeChat_No_Resolve.yaml
+    interval: 86400
 rules:
+- RULE-SET,WeChat,DIRECT
 - RULE-SET,TEST / Domain,Test
 - RULE-SET,MyVideo / Domain,Video
 - RULE-SET,Block / Domain,Block

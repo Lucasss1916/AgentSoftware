@@ -230,7 +230,7 @@ proxy-groups:
 # 规则引擎（rules）
 # ========================
 rules:
-  - DOMAIN-SUFFIX,linux.do,DIRECT
+  - DOMAIN-SUFFIX,linux.do,国外媒体
   - RULE-SET,WeChat,DIRECT
   - RULE-SET,TEST / Domain,Test
   - RULE-SET,MyVideo / Domain,Video

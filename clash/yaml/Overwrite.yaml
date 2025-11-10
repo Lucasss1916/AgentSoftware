@@ -457,6 +457,9 @@ rule-providers:
     format: mrs
     url: https://gh-proxy.com/github.com/metacubex/meta-rules-dat/raw/refs/heads/meta/geo/geoip/google.mrs
 rules:
+- PROCESS-NAME,Weixin.exe,DIRECT
+- PROCESS-NAME,plastic.exe,DIRECT
+- PROCESS-NAME,WeChatAppEx.exe,DIRECT
 - DOMAIN-SUFFIX,linux.do,国外媒体
 - RULE-SET,TEST / Domain,Test
 - RULE-SET,MyVideo / Domain,Video

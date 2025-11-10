@@ -230,6 +230,9 @@ proxy-groups:
 # 规则引擎（rules）
 # ========================
 rules:
+  - PROCESS-NAME,Weixin.exe,DIRECT
+  - PROCESS-NAME,plastic.exe,DIRECT
+  - PROCESS-NAME,WeChatAppEx.exe,DIRECT
   - DOMAIN-SUFFIX,linux.do,国外媒体
   - RULE-SET,TEST / Domain,Test
   - RULE-SET,MyVideo / Domain,Video

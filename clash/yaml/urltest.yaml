@@ -298,7 +298,7 @@ rules:
   - PROCESS-NAME,Weixin.exe,DIRECT
   - PROCESS-NAME,plastic.exe,DIRECT
   - PROCESS-NAME,WeChatAppEx.exe,DIRECT
-  - DOMAIN-SUFFIX,linux.do,国外媒体
+  - DOMAIN-SUFFIX,linux.do,香港-延时优选
   - RULE-SET,TEST / Domain,Test
   - RULE-SET,MyVideo / Domain,Video
   - RULE-SET,Block / Domain,Block  

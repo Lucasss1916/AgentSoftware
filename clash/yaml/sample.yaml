@@ -310,7 +310,7 @@ rule-anchor:
 
 rule-providers:
   AllAI / Domain: {<<: *class, url: "https://kelee.one/Tool/Loon/Lsr/AI.lsr"}
-  ApiKey: {<<: *class, url: "https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/clash/rule/Apisub.yaml"}
+  ApiKey: {<<: *class, url: "https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/loon/rule/Apisub.yaml"}
   TEST / Domain: {<<: *class, url: "https://gh-proxy.com/raw.githubusercontent.com/liandu2024/clash/refs/heads/main/list/Check.list"}
   ChatGPT / Domain: {<<: *domain, url: "https://gh-proxy.com/github.com/metacubex/meta-rules-dat/raw/refs/heads/meta/geo/geosite/openai.mrs"}
   Claude / Domain: {<<: *class, url: "https://gh-proxy.com/raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Clash/Claude/Claude.list"}

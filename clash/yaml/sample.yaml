@@ -137,6 +137,7 @@ proxy-groups:
   - {name: GitHub,icon: https://raw.githubusercontent.com/Orz-3/mini/master/Color/github.png,  <<: *default}
   - {name: Telegram, icon: https://raw.githubusercontent.com/Orz-3/mini/master/Color/Telegram.png,<<: *default}
   - {name: 国外媒体,icon: https://raw.githubusercontent.com/Orz-3/mini/master/Color/Google.png, <<: *default}
+  - {name: API,icon: https://raw.githubusercontent.com/Orz-3/mini/master/Color/Google.png, <<: *default}
   - {name: Spotify,icon: https://raw.githubusercontent.com/Orz-3/mini/master/Color/Spotify.png, <<: *default}
   - {name: Apple,icon: https://raw.githubusercontent.com/Orz-3/mini/master/Color/Apple.png, <<: *default}
   - {name: Microsoft,icon: https://raw.githubusercontent.com/Orz-3/mini/master/Color/Microsoft.png, <<: *default}
@@ -256,6 +257,7 @@ rules:
   - PROCESS-NAME,plastic.exe,DIRECT
   - PROCESS-NAME,WeChatAppEx.exe,DIRECT
   - DOMAIN-SUFFIX,linux.do,国外媒体
+  - RULE-SET,ApiKey,API
   - RULE-SET,TEST / Domain,Test
   - RULE-SET,Block / Domain,Block  
   - RULE-SET,AllAI / Domain,AIGC
@@ -308,6 +310,7 @@ rule-anchor:
 
 rule-providers:
   AllAI / Domain: {<<: *class, url: "https://kelee.one/Tool/Loon/Lsr/AI.lsr"}
+  ApiKey: {<<: *class, url: "https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/clash/rule/Apisub.yaml"}
   TEST / Domain: {<<: *class, url: "https://gh-proxy.com/raw.githubusercontent.com/liandu2024/clash/refs/heads/main/list/Check.list"}
   ChatGPT / Domain: {<<: *domain, url: "https://gh-proxy.com/github.com/metacubex/meta-rules-dat/raw/refs/heads/meta/geo/geosite/openai.mrs"}
   Claude / Domain: {<<: *class, url: "https://gh-proxy.com/raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Clash/Claude/Claude.list"}

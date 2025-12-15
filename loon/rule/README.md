@@ -1,3 +1,4 @@
+https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/loon/rule/Apisub.list
 https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/loon/rule/AppleAPIRules.list
 https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/loon/rule/AppleCDNRules.list
 https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/loon/rule/AppleNoChinaCDNRules.List

@@ -1,3 +1,4 @@
+https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/Egern/rule/Apisub.yaml
 https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/Egern/rule/AppleAPIRules.yaml
 https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/Egern/rule/AppleCDNRules.yaml
 https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/Egern/rule/AppleRules.yaml

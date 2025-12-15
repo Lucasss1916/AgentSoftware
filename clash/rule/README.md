@@ -1,3 +1,4 @@
+https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/clash/rule/Apisub.yaml
 https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/clash/rule/AppleAPIRules.yaml
 https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/clash/rule/AppleCDNRules.yaml
 https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/clash/rule/AppleNoChinaCDNRules.yaml

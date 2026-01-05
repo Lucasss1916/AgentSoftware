@@ -225,7 +225,7 @@ proxy-groups:
     interval: 30
     tolerance: 30
     include-all: true
-    filter: "(?=.*(广台|台湾|台灣|TW|Tai Wan|🇹🇼|🇨🇳|TaiWan|Taiwan)).*$"
+    filter: "(?=.*(广台|台湾|台灣|TW|Tai Wan|🇹🇼|TaiWan|Taiwan)).*$"
     icon: https://fastly.jsdelivr.net/gh/Semporia/Hand-Painted-icon@master/Rounded_Rectangle/Taiwan.png
 
   # 日本组
@@ -299,6 +299,9 @@ rules:
   - PROCESS-NAME,plastic.exe,DIRECT
   - PROCESS-NAME,WeChatAppEx.exe,DIRECT
   - DOMAIN-SUFFIX,linux.do,香港-延时优选
+  - DOMAIN-KEYWORD, adobe, REJECT
+  - DOMAIN-SUFFIX,adobe.com,REJECT
+  - DOMAIN-SUFFIX,adobe.io,REJECT
   - RULE-SET,TEST / Domain,Test
   - RULE-SET,MyVideo / Domain,Video
   - RULE-SET,Block / Domain,Block  

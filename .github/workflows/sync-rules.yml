@@ -52,6 +52,18 @@ jobs:
           python convert_loon_to_egern.py \
             --input $GITHUB_WORKSPACE/loon/rule \
             --output $GITHUB_WORKSPACE/Egern/rule
+      # 转换 Loon → Quantumult X
+      - name: Convert Loon → Quantumult X
+        run: |
+          echo "开始转换 Loon → Quantumult X ..."
+          mkdir -p $GITHUB_WORKSPACE/quanx/rule
+
+          python convert_loon_to_qx.py \
+            --input $GITHUB_WORKSPACE/loon/rule \
+            --output $GITHUB_WORKSPACE/quanx/rule
+
+          echo "Quantumult X 规则生成完成："
+          ls -l $GITHUB_WORKSPACE/quanx/rule
 
       # === 新增步骤: 转换 smart.yaml → Overwrite.yaml ===
       - name: Convert Smart → Overwrite

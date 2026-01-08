@@ -44,7 +44,7 @@ def process_dir(input_dir_path, output_dir_path):
                 if rule:
                     qx_rules.append(rule)
 
-        output_file = output_dir / f"{file.stem}.conf"
+        output_file = output_dir / f"{file.stem}.list"
         with open(output_file, "w", encoding="utf-8") as out:
             out.write("\n".join(qx_rules))
 

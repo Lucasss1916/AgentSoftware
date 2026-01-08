@@ -1,2 +1,13 @@
 https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/quanx/rule/AD.list
+https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/quanx/rule/Apisub.list
+https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/quanx/rule/AppleAPIRules.list
+https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/quanx/rule/AppleCDNRules.list
+https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/quanx/rule/AppleRules.list
+https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/quanx/rule/GFWRules.list
+https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/quanx/rule/MyAiport.list
+https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/quanx/rule/TalktoneAds.list
+https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/quanx/rule/TalktoneDirect.list
+https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/quanx/rule/TalktoneProxy.list
+https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/quanx/rule/myvideorule.list
 https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/quanx/rule/prevent_dns.list
+https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/quanx/rule/steamCDN.list

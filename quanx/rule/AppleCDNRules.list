@@ -1,0 +1,17 @@
+HOST,iosapps.itunes.apple.com
+USER-AGENT,com.apple.appstored*
+HOST,osxapps.itunes.apple.com
+HOST,oscdn.apple.com
+HOST,supportdownload.apple.com
+HOST,appldnld.apple.com
+HOST,swcdn.apple.com
+HOST,apptrailers.itunes.apple.com
+HOST,updates-http.cdn-apple.com
+HOST,updates.cdn-apple.com
+HOST-SUFFIX,mzstatic.com
+HOST,aod.itunes.apple.com
+HOST,mvod.itunes.apple.com
+HOST,streamingaudio.itunes.apple.com
+HOST,download.developer.apple.com
+HOST,downloaddispatch.itunes.apple.com
+HOST,app-site-association.cdn-apple.com

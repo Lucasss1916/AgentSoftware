@@ -183,7 +183,7 @@ proxy-groups:
     interval: 30
     tolerance: 30
     include-all: true
-    filter: "(?=.*(广台|台湾|台灣|TW|Tai Wan|🇹🇼|🇨🇳|TaiWan|Taiwan)).*$"
+    filter: "(?=.*(广台|台湾|台灣|TW|Tai Wan|🇹🇼|TaiWan)).*$"
     icon: https://fastly.jsdelivr.net/gh/Semporia/Hand-Painted-icon@master/Rounded_Rectangle/Taiwan.png
 
   # 日本组

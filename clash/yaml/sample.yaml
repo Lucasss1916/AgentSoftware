@@ -253,6 +253,9 @@ proxy-groups:
 # 规则引擎（rules）
 # ========================
 rules:
+  - DOMAIN-KEYWORD,adobe,REJECT
+  - DOMAIN-SUFFIX,adobe.com,REJECT
+  - DOMAIN-SUFFIX,adobe.io,REJECT
   - PROCESS-NAME,Weixin.exe,DIRECT
   - PROCESS-NAME,plastic.exe,DIRECT
   - PROCESS-NAME,WeChatAppEx.exe,DIRECT

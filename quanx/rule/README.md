@@ -3,6 +3,7 @@ https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/quanx/rule/Apis
 https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/quanx/rule/AppleAPIRules.list
 https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/quanx/rule/AppleCDNRules.list
 https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/quanx/rule/AppleRules.list
+https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/quanx/rule/DirectDomain.list
 https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/quanx/rule/GFWRules.list
 https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/quanx/rule/MyAiport.list
 https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/quanx/rule/TalktoneAds.list

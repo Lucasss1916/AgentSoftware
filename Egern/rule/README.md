@@ -4,6 +4,7 @@ https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/Egern/rule/Appl
 https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/Egern/rule/AppleRules.yaml
 https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/Egern/rule/DirectDomain.yaml
 https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/Egern/rule/GFWRules.yaml
+https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/Egern/rule/HKProxyDomain.yaml
 https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/Egern/rule/MyAiport.yaml
 https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/Egern/rule/TalktoneAds.yaml
 https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/Egern/rule/TalktoneDirect.yaml

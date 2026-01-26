@@ -5,6 +5,7 @@ https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/loon/rule/Apple
 https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/loon/rule/AppleRules.list
 https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/loon/rule/DirectDomain.list
 https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/loon/rule/GFWRules.list
+https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/loon/rule/HKProxyDomain.list
 https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/loon/rule/MyAiport.list
 https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/loon/rule/TalktoneAds.list
 https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/loon/rule/TalktoneDirect.list

@@ -1,8 +1,11 @@
+let body = $response.body;
+
 try {
-    let obj = JSON.parse($response.body);
+    let obj = JSON.parse(body);
     if (obj.responses && obj.responses.length >= 2 && !('etag' in obj.responses[0].headers)) {
         const now = Math.floor(Date.now() / 1000);
         const userdata = JSON.parse(obj.responses[0].body);
+        
         if (!userdata.shopItems) userdata.shopItems = [];
         userdata.shopItems.push({
             id: 'gold_subscription',
@@ -17,16 +20,21 @@ try {
                 type: 'gold'
             }
         });
+        
         userdata.subscriberLevel = 'GOLD';
+        
         if (!userdata.trackingProperties) userdata.trackingProperties = {};
         userdata.trackingProperties.has_item_immersive_subscription = true;
         userdata.trackingProperties.has_item_premium_subscription = true;
         userdata.trackingProperties.has_item_live_subscription = true;
         userdata.trackingProperties.has_item_gold_subscription = true;
         userdata.trackingProperties.has_item_max_subscription = true;
+        
         obj.responses[0].body = JSON.stringify(userdata);
+        body = JSON.stringify(obj);
     }
-    $done({ body: JSON.stringify(obj) })
 } catch (e) {
-    $done({});
+    console.log('Error modifying response:', e);
 }
+
+$done({ body });

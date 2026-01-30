@@ -1,6 +1,6 @@
 /**
- * Duolingo Max - 抓包调试版
- * 用于分析 API 返回的数据结构
+ * Duolingo Max - 全面抓包版
+ * 拦截所有 duolingo 请求，找到用户数据
  */
 
 const isRequest = typeof $request !== "undefined" && typeof $response === "undefined";
@@ -15,6 +15,7 @@ if (isRequest) {
     
 } else {
     let body = $response.body;
+    let url = $request.url;
     
     if (!body || body.length === 0) {
         $done({});
@@ -24,47 +25,52 @@ if (isRequest) {
     try {
         let obj = JSON.parse(body);
         
+        // 方式1: 检查 responses 数组结构
         if (obj.responses && Array.isArray(obj.responses)) {
-            console.log('[Duolingo] ========== 开始分析 ==========');
-            console.log('[Duolingo] responses 数量: ' + obj.responses.length);
-            
             obj.responses.forEach((item, index) => {
-                console.log(`[Duolingo] --- responses[${index}] ---`);
-                
                 if (item.body) {
-                    // 打印 body 的前 500 个字符，看看里面有什么
-                    console.log(`[Duolingo] body 预览: ${item.body.substring(0, 500)}`);
-                    
-                    // 尝试解析并列出所有顶级字段
                     try {
                         let innerObj = JSON.parse(item.body);
                         let keys = Object.keys(innerObj);
-                        console.log(`[Duolingo] 字段列表: ${keys.join(', ')}`);
                         
-                        // 检查是否有用户相关字段
-                        if (innerObj.id || innerObj.username || innerObj.email) {
-                            console.log('[Duolingo] ⭐ 发现用户数据！');
-                            console.log('[Duolingo] id: ' + innerObj.id);
-                            console.log('[Duolingo] username: ' + innerObj.username);
+                        // 检查是否包含用户/订阅相关字段
+                        if (keys.includes('subscriberLevel') || 
+                            keys.includes('shopItems') || 
+                            keys.includes('username') ||
+                            keys.includes('hasPlus') ||
+                            keys.includes('streak')) {
+                            
+                            console.log('[Duolingo] ⭐⭐⭐ 找到用户数据！⭐⭐⭐');
+                            console.log('[Duolingo] URL: ' + url);
+                            console.log('[Duolingo] Index: ' + index);
+                            console.log('[Duolingo] 字段: ' + keys.slice(0, 20).join(', '));
                             console.log('[Duolingo] subscriberLevel: ' + innerObj.subscriberLevel);
                             console.log('[Duolingo] hasPlus: ' + innerObj.hasPlus);
+                            console.log('[Duolingo] username: ' + innerObj.username);
                         }
-                        
-                    } catch (e) {
-                        console.log(`[Duolingo] body 不是 JSON`);
-                    }
-                } else {
-                    console.log(`[Duolingo] 无 body`);
+                    } catch (e) {}
                 }
             });
+        }
+        
+        // 方式2: 直接检查顶级对象
+        let topKeys = Object.keys(obj);
+        if (topKeys.includes('subscriberLevel') || 
+            topKeys.includes('shopItems') || 
+            topKeys.includes('username') ||
+            topKeys.includes('hasPlus')) {
             
-            console.log('[Duolingo] ========== 分析结束 ==========');
+            console.log('[Duolingo] ⭐⭐⭐ 顶级用户数据！⭐⭐⭐');
+            console.log('[Duolingo] URL: ' + url);
+            console.log('[Duolingo] 字段: ' + topKeys.slice(0, 20).join(', '));
+            console.log('[Duolingo] subscriberLevel: ' + obj.subscriberLevel);
+            console.log('[Duolingo] hasPlus: ' + obj.hasPlus);
         }
         
         $done({ body });
         
     } catch (e) {
-        console.log('[Duolingo] 解析失败: ' + e.message);
+        // 非 JSON 响应，忽略
         $done({ body });
     }
 }

@@ -1,62 +1,77 @@
 {
-  "id": "duolingo_max_enhanced",
+  "id": "DuolingoMaxEnhanced.sub",
   "name": "Duolingo Max Enhanced (Surge)",
-  "author": "Takagivegeta",
-  "repo": "https://github.com/<YOUR_GH_USER>/<YOUR_REPO>",
-  "keys": [
-    "duolingo_xp_boost",
-    "duolingo_multiplier",
-    "duolingo_timer_switch",
-    "duolingo_timer_mins",
-    "duolingo_unlock_all",
-    "duolingo_instant_clear"
-  ],
-  "settings": [
+  "author": "Lucasss1916",
+  "icon": "https://avatars.githubusercontent.com/u/86992887?v=4&size=64",
+  "repo": "",
+  "apps": [
     {
-      "id": "duolingo_xp_boost",
-      "name": "XP Boost",
-      "type": "boolean",
-      "val": false,
-      "desc": "Multiply XP-like fields in some responses (best-effort)."
-    },
-    {
-      "id": "duolingo_multiplier",
-      "name": "XP Multiplier",
-      "type": "select",
-      "val": "2",
-      "items": [
-        { "key": "2", "val": "2x" },
-        { "key": "3", "val": "3x" }
+      "id": "duolingo_max_enhanced",
+      "name": "Duolingo Max Enhanced 参数面板",
+      "author": "Takagivegeta",
+      "repo": "",
+      "icons": [
+        "https://github.com/TAKAGIVEGETA/MyScripts/blob/main/lingoDuo/lingoDuo.png?raw=true",
+        "https://github.com/TAKAGIVEGETA/MyScripts/blob/main/lingoDuo/lingoDuo.png?raw=true"
       ],
-      "desc": "Used when XP Boost is enabled."
-    },
-    {
-      "id": "duolingo_timer_switch",
-      "name": "Challenge Timer Enhance",
-      "type": "boolean",
-      "val": false,
-      "desc": "Enable custom timer for live-ops challenges."
-    },
-    {
-      "id": "duolingo_timer_mins",
-      "name": "Challenge Minutes",
-      "type": "number",
-      "val": 60,
-      "desc": "Minutes for challenge timer when enabled."
-    },
-    {
-      "id": "duolingo_unlock_all",
-      "name": "Unlock All Levels",
-      "type": "boolean",
-      "val": false,
-      "desc": "Best-effort unlock flags in course data."
-    },
-    {
-      "id": "duolingo_instant_clear",
-      "name": "Instant Clear",
-      "type": "boolean",
-      "val": false,
-      "desc": "Best-effort mark session as completed."
+      "keys": [
+        "duolingo_xp_boost",
+        "duolingo_multiplier",
+        "duolingo_timer_switch",
+        "duolingo_timer_mins",
+        "duolingo_unlock_all",
+        "duolingo_instant_clear"
+      ],
+      "settings": [
+        {
+          "id": "duolingo_xp_boost",
+          "name": "经验加倍",
+          "val": false,
+          "type": "boolean",
+          "desc": "开启后练习经验按倍数放大（脚本读取 duolingo_xp_boost）"
+        },
+        {
+          "id": "duolingo_multiplier",
+          "name": "选择经验倍数",
+          "val": "2",
+          "type": "select",
+          "items": [
+            { "key": "2", "val": "2x" },
+            { "key": "3", "val": "3x" }
+          ],
+          "desc": "经验倍数（脚本读取 duolingo_multiplier）"
+        },
+        {
+          "id": "duolingo_timer_switch",
+          "name": "限时挑战时间增强",
+          "val": false,
+          "type": "boolean",
+          "desc": "开启后按自定义分钟数覆盖挑战时长（脚本读取 duolingo_timer_switch）"
+        },
+        {
+          "id": "duolingo_timer_mins",
+          "name": "自定义挑战时长(分钟)",
+          "val": 60,
+          "type": "text",
+          "autoGrow": true,
+          "rows": 1,
+          "desc": "填数字，例如 60（脚本读取 duolingo_timer_mins）"
+        },
+        {
+          "id": "duolingo_unlock_all",
+          "name": "解锁所有关卡",
+          "val": false,
+          "type": "boolean",
+          "desc": "Best-effort 解锁当前课程关卡（脚本读取 duolingo_unlock_all）"
+        },
+        {
+          "id": "duolingo_instant_clear",
+          "name": "直接通关",
+          "val": false,
+          "type": "boolean",
+          "desc": "开启后尝试将部分关卡标记完成（脚本读取 duolingo_instant_clear）"
+        }
+      ]
     }
   ]
 }

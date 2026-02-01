@@ -1,0 +1,62 @@
+{
+  "id": "duolingo_max_enhanced",
+  "name": "Duolingo Max Enhanced (Surge)",
+  "author": "Takagivegeta",
+  "repo": "https://github.com/<YOUR_GH_USER>/<YOUR_REPO>",
+  "keys": [
+    "duolingo_xp_boost",
+    "duolingo_multiplier",
+    "duolingo_timer_switch",
+    "duolingo_timer_mins",
+    "duolingo_unlock_all",
+    "duolingo_instant_clear"
+  ],
+  "settings": [
+    {
+      "id": "duolingo_xp_boost",
+      "name": "XP Boost",
+      "type": "boolean",
+      "val": false,
+      "desc": "Multiply XP-like fields in some responses (best-effort)."
+    },
+    {
+      "id": "duolingo_multiplier",
+      "name": "XP Multiplier",
+      "type": "select",
+      "val": "2",
+      "items": [
+        { "key": "2", "val": "2x" },
+        { "key": "3", "val": "3x" }
+      ],
+      "desc": "Used when XP Boost is enabled."
+    },
+    {
+      "id": "duolingo_timer_switch",
+      "name": "Challenge Timer Enhance",
+      "type": "boolean",
+      "val": false,
+      "desc": "Enable custom timer for live-ops challenges."
+    },
+    {
+      "id": "duolingo_timer_mins",
+      "name": "Challenge Minutes",
+      "type": "number",
+      "val": 60,
+      "desc": "Minutes for challenge timer when enabled."
+    },
+    {
+      "id": "duolingo_unlock_all",
+      "name": "Unlock All Levels",
+      "type": "boolean",
+      "val": false,
+      "desc": "Best-effort unlock flags in course data."
+    },
+    {
+      "id": "duolingo_instant_clear",
+      "name": "Instant Clear",
+      "type": "boolean",
+      "val": false,
+      "desc": "Best-effort mark session as completed."
+    }
+  ]
+}

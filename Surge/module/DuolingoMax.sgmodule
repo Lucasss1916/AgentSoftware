@@ -1,14 +1,20 @@
-#!name=Duolingo Max 解锁 增强版（Surge）
-#!desc=Duolingo iOS 解锁/增强：无限体力、去广告、视频通话等；附 BoxJS 参数面板（需脚本支持持久化参数读取）
-#!author=Lucasss1916
-#!homepage=https://github.com/Lucasss1916/AgentSoftware
+#!name=Duolingo Max + 增强版 (本地)
+#!desc=集成 Max 解锁(远程)与自定义增强(本地)。功能包括：秒过课程、经验倍数、无限时间、Max解锁。
+#!author=Lucasss1916 & Gemini
 #!icon=https://avatars.githubusercontent.com/u/86992887?v=4&size=64
 
 [Script]
+# 1. Max 解锁 (保持原远程脚本，用于解锁无限红心、去广告等)
 lingoDuo-xaM = type=http-response, pattern=^https?:\/\/(ios-api-[a-z0-9-]+|api\d+)\.duolingo\.c(n|om)\/2023-05-23\/batch, script-path=https://raw.githubusercontent.com/TAKAGIVEGETA/MyScripts/main/lingoDuo/lingoDuo-xaM.js, requires-body=true, max-size=-1, timeout=60
-duolingo_timer = type=http-response,pattern=^https?:\/\/(ios-api-[a-z0-9-]+|api\d+)\.duolingo\.c(n|om)\/.*\/live-ops-challenges,script-path=https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/quanx/rewrite/Duolingotime-modifier.js,requires-body=true, max-size=-1, timeout=60
 
-duolingo_clear = type=http-response,pattern=^https?:\/\/(ios-api-[a-z0-9-]+|api\d+)\.duolingo\.c(n|om)\/.*\/sessions,script-path=https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/quanx/rewrite/Duolingotime-modifier.js,requires-body=true, max-size=-1, timeout=60
+# 2. 核心增强功能 (指向你的本地文件 duolingotime-modifier.js)
+# 这里加入了 argument 参数，你可以根据需要修改：
+# clear=true (开启秒过)
+# xp=2 (经验翻倍，填1不翻倍)
+# time=60 (限时挑战改为60分钟，填0不改)
+# unlock=false (是否尝试解锁关卡)
+
+duolingo_core = type=http-response, pattern=^https?:\/\/(ios-api-[a-z0-9-]+|api\d+)\.duolingo\.c(n|om)\/.*\/(sessions|live-ops-challenges), script-path=duolingotime-modifier.js, requires-body=true, max-size=-1, timeout=60, argument=clear=true&xp=1&time=60
 
 [MITM]
 hostname = %APPEND% ios-api-*.duolingo.com, ios-api-*.duolingo.cn, api*.duolingo.com, api*.duolingo.cn

@@ -10,7 +10,7 @@ lingoDuo-xaM = type=http-response, pattern=^https?:\/\/(ios-api-[a-z0-9-]+|api\d
 # 2. 核心增强功能 (指向您的 GitHub 路径)
 # argument说明: 
 # time=60 (分钟) -> 脚本内会自动转为 3600秒
-duolingo_core = type=http-response, pattern=^https?:\/\/(ios-api-[a-z0-9-]+|api\d+)\.duolingo\.c(n|om)\/.*\/(sessions|live-ops-challenges), script-path=https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/quanx/rewrite/Duolingotime-modifier.js, requires-body=true, max-size=-1, timeout=60, argument=clear=true&xp=1&time=60
+duolingo_core = type=http-response, pattern=^https?:\/\/(ios-api-[a-z0-9-]+|api\d+)\.duolingo\.c(n|om)\/.*\/(sessions|live-ops-challenges), script-path=https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/quanx/rewrite/Duolingotime-modifier.js, requires-body=true, max-size=-1, timeout=60, argument=clear=false&xp=1&time=60
 
 [MITM]
 hostname = %APPEND% ios-api-*.duolingo.com, ios-api-*.duolingo.cn, api*.duolingo.com, api*.duolingo.cn

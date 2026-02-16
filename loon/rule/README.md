@@ -1,4 +1,3 @@
-https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/loon/rule/Apisub.list
 https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/loon/rule/DirectDomain.list
 https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/loon/rule/ProxyDomain.list
 https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/loon/rule/TalktoneAds.list

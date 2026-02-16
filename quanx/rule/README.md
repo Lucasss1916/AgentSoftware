@@ -7,6 +7,7 @@ https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/quanx/rule/Dire
 https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/quanx/rule/GFWRules.list
 https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/quanx/rule/HKProxyDomain.list
 https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/quanx/rule/MyAiport.list
+https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/quanx/rule/ProxyDomain.list
 https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/quanx/rule/TalktoneAds.list
 https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/quanx/rule/TalktoneDirect.list
 https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/quanx/rule/TalktoneProxy.list

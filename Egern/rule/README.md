@@ -6,6 +6,7 @@ https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/Egern/rule/Dire
 https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/Egern/rule/GFWRules.yaml
 https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/Egern/rule/HKProxyDomain.yaml
 https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/Egern/rule/MyAiport.yaml
+https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/Egern/rule/ProxyDomain.yaml
 https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/Egern/rule/TalktoneAds.yaml
 https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/Egern/rule/TalktoneDirect.yaml
 https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/Egern/rule/TalktoneProxy.yaml

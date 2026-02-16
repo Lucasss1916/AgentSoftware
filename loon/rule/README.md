@@ -1,8 +1,5 @@
 https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/loon/rule/Apisub.list
-https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/loon/rule/AppleAPIRules.list
-https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/loon/rule/AppleCDNRules.list
 https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/loon/rule/AppleNoChinaCDNRules.List
-https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/loon/rule/AppleRules.list
 https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/loon/rule/DirectDomain.list
 https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/loon/rule/ProxyDomain.list
 https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/loon/rule/TalktoneAds.list

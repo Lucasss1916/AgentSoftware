@@ -4,7 +4,6 @@ https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/loon/rule/Apple
 https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/loon/rule/AppleNoChinaCDNRules.List
 https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/loon/rule/AppleRules.list
 https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/loon/rule/DirectDomain.list
-https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/loon/rule/GFWRules.list
 https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/loon/rule/ProxyDomain.list
 https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/loon/rule/TalktoneAds.list
 https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/loon/rule/TalktoneDirect.list

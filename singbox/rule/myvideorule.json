@@ -1,0 +1,27 @@
+{
+  "version": 2,
+  "rules": [
+    {
+      "domain_suffix": [
+        "embyplus.org",
+        "69yun69.com",
+        "114514.quest",
+        "nubebelle.vip",
+        "heisi.org",
+        "mebimmer.de",
+        "shrekmedia.org",
+        "3767483.xyz",
+        "910427.xyz",
+        "zn.al",
+        "5msky.com",
+        "dpdns.org",
+        "emby.wtf",
+        "emos.lol",
+        "yxh20190608-my.sharepoint.com",
+        "emby.dnscf.dpdns.org",
+        "101514.xyz",
+        "hgemby.qzz.io"
+      ]
+    }
+  ]
+}

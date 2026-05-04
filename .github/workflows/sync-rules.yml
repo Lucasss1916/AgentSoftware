@@ -65,6 +65,19 @@ jobs:
           echo "Quantumult X 规则生成完成："
           ls -l $GITHUB_WORKSPACE/quanx/rule
 
+      # 转换 Loon → sing-box rule-set (JSON, version 2)
+      - name: Convert Loon → sing-box rule-set
+        run: |
+          echo "开始转换 Loon → sing-box ..."
+          mkdir -p $GITHUB_WORKSPACE/singbox/rule
+
+          python convert_clash_to_singbox.py \
+            $GITHUB_WORKSPACE/loon/rule \
+            --out-dir $GITHUB_WORKSPACE/singbox/rule
+
+          echo "sing-box rule-set 生成完成："
+          ls -l $GITHUB_WORKSPACE/singbox/rule
+
       # === 新增步骤: 转换 smart.yaml → Overwrite.yaml ===
       - name: Convert Smart → Overwrite
         run: |
@@ -137,7 +150,7 @@ jobs:
       # 生成 README.md
       - name: Generate README.md for second-level folders
         run: |
-          for topdir in clash loon Egern Surge quanx; do
+          for topdir in clash loon Egern Surge quanx singbox; do
               if [ -d "$topdir" ]; then
                 find "$topdir" -mindepth 1 -maxdepth 1 -type d | while read subdir; do
                   readme="$subdir/README.md"
@@ -166,5 +179,6 @@ jobs:
           git add Egern/
           git add Surge/
           git add quanx/
-          git diff --cached --quiet || git commit -m "自动更新规则文件（Loon → Clash + Egern + Smart → Overwrite）"
+          git add singbox/
+          git diff --cached --quiet || git commit -m "自动更新规则文件（Loon → Clash + Egern + QX + sing-box + Smart → Overwrite）"
           git push origin main

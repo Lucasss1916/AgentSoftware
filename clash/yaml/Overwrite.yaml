@@ -539,5 +539,5 @@ tproxy-port: 7895
 allow-lan: true
 mode: rule
 log-level: info
-external-controller: 0.0.0.0:9090   # 建议非局域网控制场景改为 127.0.0.1:9090
-secret: 'anv4SIzOSEWGMXcIoT-hGT-5LigNk9v0'
+external-controller: 0.0.0.0:9090
+secret: anv4SIzOSEWGMXcIoT-hGT-5LigNk9v0

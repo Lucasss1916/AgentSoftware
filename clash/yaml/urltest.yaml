@@ -277,7 +277,7 @@ rules:
   - PROCESS-NAME,Weixin.exe,DIRECT
   - PROCESS-NAME,plastic.exe,DIRECT
   - PROCESS-NAME,WeChatAppEx.exe,DIRECT
-  - RULE_SET,DirectDomain / Domain,DIRECT
+  - RULE-SET,DirectDomain / Domain,DIRECT
   - DOMAIN-SUFFIX,linux.do,香港-延时优选
   - DOMAIN-KEYWORD,adobe,REJECT
   - DOMAIN-SUFFIX,adobe.com,REJECT

@@ -277,6 +277,7 @@ rules:
   - PROCESS-NAME,Weixin.exe,DIRECT
   - PROCESS-NAME,plastic.exe,DIRECT
   - PROCESS-NAME,WeChatAppEx.exe,DIRECT
+  - RULE_SET,DirectDomain / Domain,DIRECT
   - DOMAIN-SUFFIX,linux.do,香港-延时优选
   - DOMAIN-KEYWORD,adobe,REJECT
   - DOMAIN-SUFFIX,adobe.com,REJECT
@@ -333,6 +334,7 @@ rule-anchor:
 
 rule-providers:
 
+  DirectDomain / Domain: {<<: *class, url: "https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/refs/heads/main/clash/rule/DirectDomain.yaml"}
   MyVideo / Domain: {<<: *class, url: "https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/refs/heads/main/loon/rule/myvideorule.list"}
   TEST / Domain: {<<: *class, url: "https://gh-proxy.com/raw.githubusercontent.com/liandu2024/clash/refs/heads/main/list/Check.list"}
   ChatGPT / Domain: {<<: *domain, url: "https://gh-proxy.com/github.com/metacubex/meta-rules-dat/raw/refs/heads/meta/geo/geosite/openai.mrs"}

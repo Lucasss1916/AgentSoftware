@@ -521,27 +521,6 @@ proxy-groups:
 rules:
 
 
-# ==========================
-# 系统进程
-# ==========================
-
-
-- PROCESS-NAME,Weixin.exe,DIRECT
-
-- PROCESS-NAME,plastic.exe,DIRECT
-
-- PROCESS-NAME,WeChatAppEx.exe,DIRECT
-
-
-
-# ==========================
-# 广告
-# ==========================
-
-
-- GEOSITE,category-ads-all,Block
-
-
 
 # ==========================
 # 私网

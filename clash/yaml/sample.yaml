@@ -371,7 +371,7 @@ proxy-groups:
 
 - name: 香港-延时优选
 
-  type: urltest
+  type: url-test
 
   include-all: true
 
@@ -391,7 +391,7 @@ proxy-groups:
 
 - name: 台湾-延时优选
 
-  type: urltest
+  type: url-test
 
   include-all: true
 
@@ -411,7 +411,7 @@ proxy-groups:
 
 - name: 日本-延时优选
 
-  type: urltest
+  type: url-test
 
   include-all: true
 
@@ -431,7 +431,7 @@ proxy-groups:
 
 - name: 新加坡-延时优选
 
-  type: urltest
+  type: url-test
 
   include-all: true
 
@@ -451,7 +451,7 @@ proxy-groups:
 
 - name: 韩国-延时优选
 
-  type: urltest
+  type: url-test
 
   include-all: true
 
@@ -469,7 +469,7 @@ proxy-groups:
 
 - name: 美国-延时优选
 
-  type: urltest
+  type: url-test
 
   include-all: true
 
@@ -487,7 +487,7 @@ proxy-groups:
 
 - name: 英国-延时优选
 
-  type: urltest
+  type: url-test
 
   include-all: true
 
@@ -505,7 +505,7 @@ proxy-groups:
 
 - name: 其他
 
-  type: urltest
+  type: url-test
 
   include-all: true
 

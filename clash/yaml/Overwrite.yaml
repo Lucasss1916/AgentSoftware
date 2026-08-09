@@ -1,16 +1,4 @@
-
 experimental: {}
-
-geodata-mode: true
-
-geo-auto-update: true
-geo-update-interval: 72
-
-geox-url:
-  geosite: https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/geosite.dat
-  geoip: https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/geoip.dat
-
-hosts: {}
 hosts: {}
 profile:
   store-selected: true
@@ -498,17 +486,9 @@ rule-providers:
     format: mrs
     url: https://gh-proxy.com/github.com/metacubex/meta-rules-dat/raw/refs/heads/meta/geo/geoip/google.mrs
 rules:
-
-# 私有网络
-
-- GEOSITE,private,DIRECT
-
-# 中国大陆
-
-- GEOSITE,cn,DIRECT
-
-- GEOIP,CN,DIRECT,no-resolve
-
+- PROCESS-NAME,Weixin.exe,DIRECT
+- PROCESS-NAME,plastic.exe,DIRECT
+- PROCESS-NAME,WeChatAppEx.exe,DIRECT
 - DOMAIN-SUFFIX,linux.do,国外媒体
 - RULE-SET,TEST / Domain,Test
 - RULE-SET,MyVideo / Domain,Video

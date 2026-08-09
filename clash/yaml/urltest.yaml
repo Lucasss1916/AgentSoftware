@@ -274,9 +274,7 @@ proxy-groups:
 # 规则引擎（rules）
 # ========================
 rules:
-  - PROCESS-NAME,Weixin.exe,DIRECT
-  - PROCESS-NAME,plastic.exe,DIRECT
-  - PROCESS-NAME,WeChatAppEx.exe,DIRECT
+  - RULE-SET,NeedHighQualityNodeDomain,所有-手选
   - RULE-SET,DirectDomain / Domain,DIRECT
   - DOMAIN-SUFFIX,linux.do,香港-延时优选
   - DOMAIN-KEYWORD,adobe,REJECT
@@ -333,7 +331,7 @@ rule-anchor:
   class: &class {type: http, interval: 86400, behavior: classical, format: text}
 
 rule-providers:
-
+  NeedHighQualityNodeDomain : {<<: *class, url: "https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/refs/heads/main/clash/rule/NeedHighQualityNodeDomain.yaml"}
   DirectDomain / Domain: {<<: *class, url: "https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/refs/heads/main/clash/rule/DirectDomain.yaml"}
   MyVideo / Domain: {<<: *class, url: "https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/refs/heads/main/loon/rule/myvideorule.list"}
   TEST / Domain: {<<: *class, url: "https://gh-proxy.com/raw.githubusercontent.com/liandu2024/clash/refs/heads/main/list/Check.list"}

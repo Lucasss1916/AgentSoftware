@@ -7,6 +7,7 @@ https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/clash/rule/Dire
 https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/clash/rule/GFWRules.yaml
 https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/clash/rule/HKProxyDomain.yaml
 https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/clash/rule/MyAiport.yaml
+https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/clash/rule/NeedHighQualityNodeDomain.yaml
 https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/clash/rule/ProxyDomain.yaml
 https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/clash/rule/TalktoneAds.yaml
 https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/clash/rule/TalktoneDirect.yaml

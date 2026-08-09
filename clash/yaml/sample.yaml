@@ -231,13 +231,13 @@ proxy-groups:
 
     - 所有-手选
 
-    - 香港-智选
-    - 台湾-智选
-    - 日本-智选
-    - 新加坡-智选
-    - 韩国-智选
-    - 美国-智选
-    - 英国-智选
+    - 香港-延时优选
+    - 台湾-延时优选
+    - 日本-延时优选
+    - 新加坡-延时优选
+    - 韩国-延时优选
+    - 美国-延时优选
+    - 英国-延时优选
     - 其他
 
     - DIRECT
@@ -351,13 +351,13 @@ proxy-groups:
 
   proxies:
 
-    - 香港-智选
-    - 新加坡-智选
-    - 日本-智选
-    - 台湾-智选
-    - 韩国-智选
-    - 美国-智选
-    - 英国-智选
+    - 香港-延时优选
+    - 新加坡-延时优选
+    - 日本-延时优选
+    - 台湾-延时优选
+    - 韩国-延时优选
+    - 美国-延时优选
+    - 英国-延时优选
     - 所有-手选
     - 其他
     - DIRECT
@@ -369,9 +369,9 @@ proxy-groups:
 # ==========================
 
 
-- name: 香港-智选
+- name: 香港-延时优选
 
-  type: smart
+  type: urltest
 
   include-all: true
 
@@ -389,9 +389,9 @@ proxy-groups:
 
 
 
-- name: 台湾-智选
+- name: 台湾-延时优选
 
-  type: smart
+  type: urltest
 
   include-all: true
 
@@ -409,9 +409,9 @@ proxy-groups:
 
 
 
-- name: 日本-智选
+- name: 日本-延时优选
 
-  type: smart
+  type: urltest
 
   include-all: true
 
@@ -429,9 +429,9 @@ proxy-groups:
 
 
 
-- name: 新加坡-智选
+- name: 新加坡-延时优选
 
-  type: smart
+  type: urltest
 
   include-all: true
 
@@ -449,9 +449,9 @@ proxy-groups:
 
 
 
-- name: 韩国-智选
+- name: 韩国-延时优选
 
-  type: smart
+  type: urltest
 
   include-all: true
 
@@ -467,9 +467,9 @@ proxy-groups:
 
 
 
-- name: 美国-智选
+- name: 美国-延时优选
 
-  type: smart
+  type: urltest
 
   include-all: true
 
@@ -485,9 +485,9 @@ proxy-groups:
 
 
 
-- name: 英国-智选
+- name: 英国-延时优选
 
-  type: smart
+  type: urltest
 
   include-all: true
 
@@ -505,7 +505,7 @@ proxy-groups:
 
 - name: 其他
 
-  type: smart
+  type: urltest
 
   include-all: true
 

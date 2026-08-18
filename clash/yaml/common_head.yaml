@@ -1,0 +1,179 @@
+# ============================================================
+#  机场节点订阅（按需取消注释并填入订阅地址）
+# ============================================================
+# proxy-providers:
+#   Mitce:
+#     url: "机场订阅地址"
+#     type: http
+#     interval: 86400
+#     health-check: {enable: true, url: https://www.gstatic.com/generate_204, interval: 300}
+#     proxy: 所有-手选
+#
+#   69yun:
+#     url: "机场订阅地址"
+#     type: http
+#     interval: 86400
+#     health-check: {enable: true, url: https://www.gstatic.com/generate_204, interval: 300}
+#     proxy: 所有-手选
+
+# ========================
+# 主要端口设置
+# ========================
+port: 7890
+socks-port: 7891
+redir-port: 7892
+mixed-port: 7893
+tproxy-port: 7895
+
+allow-lan: true
+mode: rule
+log-level: info
+ipv6: false
+unified-delay: true
+tcp-concurrent: true
+find-process-mode: strict
+keep-alive-interval: 30
+
+external-controller: 0.0.0.0:9090
+# external-ui: ui
+# external-ui-name: zashboard
+# external-ui-url: https://gh-proxy.com/github.com/Zephyruso/zashboard/archive/refs/heads/gh-pages.zip
+secret: "anv4SIzOSEWGMXcIoT-hGT-5LigNk9v0"
+
+profile:
+  store-selected: true
+  store-fake-ip: true
+
+# ========================
+# TUN 模块
+# ========================
+# 【场景 A】本机接管（默认启用）：Mac / Windows 本机直接全局接管
+tun:
+  enable: true
+  stack: mixed
+  device: Mihomo
+  endpoint-independent-nat: true
+  auto-route: true
+  auto-detect-interface: true
+  auto-redirect: false
+  strict-route: false
+  dns-hijack:
+    - any:53
+  route-exclude-address: []
+  mtu: 1350
+
+# 【场景 B】旁路由 / 网关：由路由器做网关，Clash 只做转发
+# 用法：注释掉上面整段 tun，取消下面整段注释
+# tun:
+#   enable: true
+#   stack: gvisor
+#   device: utun
+#   endpoint-independent-nat: true
+#   auto-route: false
+#   auto-detect-interface: false
+#   auto-redirect: false
+#   strict-route: false
+
+# ========================
+# 嗅探模块
+# ========================
+sniffer:
+  enable: true
+  parse-pure-ip: true
+  force-dns-mapping: true
+  override-destination: true
+  sniff:
+    HTTP:
+      ports: [80, 443]
+      override-destination: true
+    TLS:
+      ports: [443]
+    QUIC:
+      ports: [443]
+  skip-domain:
+    - +.push.apple.com
+    - +.apple.com
+    - Mijia Cloud
+  force-domain: []
+  skip-src-address: []
+
+# ========================
+# DNS 设置
+# ========================
+dns:
+  enable: true
+  listen: 0.0.0.0:7874
+  ipv6: false
+  prefer-h3: false
+  enhanced-mode: fake-ip
+  fake-ip-range: 198.18.0.0/16
+  use-hosts: false
+  use-system-hosts: false
+  # 让 DNS 查询遵循 rules 分流（依赖 proxy-server-nameserver）
+  respect-rules: true
+
+  # 解析 DNS 服务器自身域名用，必须是纯 IP
+  default-nameserver:
+    - 223.5.5.5
+    - 119.29.29.29
+
+  # 默认解析：国内 DoH，直连域名秒解析
+  nameserver:
+    - https://223.5.5.5/dns-query
+    - https://doh.pub/dns-query
+
+  # 解析机场节点域名，必须走国内 DNS，否则会死锁
+  proxy-server-nameserver:
+    - https://223.5.5.5/dns-query
+
+  # 命中 DIRECT 的域名走这里
+  direct-nameserver:
+    - https://223.5.5.5/dns-query
+    - https://doh.pub/dns-query
+
+  # respect-rules 开启后 fallback 不再生效，留空
+  fallback: []
+
+  # 分流解析。注意：nameserver-policy 的 rule-set 只支持 behavior: domain 的
+  # provider（本配置中即 *domain 锚点那批 .mrs），classical 的列表不能写在这里。
+  nameserver-policy:
+    "rule-set:ChatGPT / Domain,GitHub / Domain,Telegram / Domain,Google / Domain,Youtube / Domain,Twitter / Domain,Facebook / Domain,Netflix / Domain,TikTok / Domain,Disney / Domain,Spotify / Domain,Reddit / Domain":
+      - https://dns.google/dns-query
+      - https://cloudflare-dns.com/dns-query
+    "rule-set:China / Domain,Apple-CN / Domain":
+      - https://223.5.5.5/dns-query
+      - https://doh.pub/dns-query
+    "rule-set:Private / Domain":
+      - system
+
+  # 避免游戏 NAT / STUN / 局域网发现被 fake-ip 劫持
+  fake-ip-filter:
+    - "*.lan"
+    - "*.local"
+    - "+.market.xiaomi.com"
+    - "+.weixin.qq.com"
+    - "+.qpic.cn"
+    - "+.qq.com"
+    - localhost.ptlogin2.qq.com
+    # 时间同步
+    - time.*.com
+    - time.*.gov
+    - ntp.*.com
+    - "+.pool.ntp.org"
+    # STUN / P2P
+    - "*.stun.*"
+    - "*.stun.*.*"
+    - stun.l.google.com
+    - stun1.l.google.com
+    - stun2.l.google.com
+    # 游戏 NAT
+    - "+.srv.nintendo.net"
+    - "+.stun.playstation.net"
+    - xbox.*.microsoft.com
+    - "+.xboxlive.com"
+    # 网络连通性检测
+    - msftconnecttest.com
+    - msftncsi.com
+    - "+.msftconnecttest.com"
+    - "+.msftncsi.com"
+    - captive.apple.com

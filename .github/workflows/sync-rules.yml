@@ -64,7 +64,9 @@ jobs:
       - name: Generate README.md for rule folders
         if: github.event_name != 'pull_request'
         run: |
-          for subdir in clash/rule clash/yaml loon/rule Egern/rule quanx/rule singbox/rule Surge/rule \
+          # 注意：不含 clash/yaml —— 那里是手写说明文档，不是规则目录，
+          # 早期 workflow 曾把它覆盖成 URL 列表。
+          for subdir in clash/rule loon/rule Egern/rule quanx/rule singbox/rule Surge/rule \
                         Egern/module Surge/config Surge/module Surge/boxjs \
                         loon/plugin quanx/rewrite quanx/task singbox/config; do
             [ -d "$subdir" ] || continue

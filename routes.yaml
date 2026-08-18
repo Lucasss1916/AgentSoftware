@@ -1,0 +1,274 @@
+# ============================================================
+#  routes.yaml —— 分流规则唯一源
+#
+#  clash（smart/urltest.yaml）与 sing-box（config.json）都由本文件生成。
+#  改分流请只改这里，然后运行：  python3 sync_config.py
+#  CI 会用 --check 卡住任何绕过本文件的手改。
+# ============================================================
+
+# ---- 规则集：一个条目同时描述两侧的取数方式 ----
+#   clash:   behavior/format + url
+#   singbox: remote=上游 .srs / self=本仓 JSON / null=该格式无对应，自动跳过
+rule_sets:
+  # ---- 自建规则（本仓库 clash/rule/*.yaml 是 payload: 结构，须用 format: yaml）----
+  - name: 'MyVideo / Domain'
+    clash: {anchor: yamlclass, url: 'https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/refs/heads/main/clash/rule/myvideorule.yaml'}
+    singbox: {kind: self, name: 'myvideorule'}
+  - name: 'DirectDomain / Domain'
+    clash: {anchor: yamlclass, url: 'https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/refs/heads/main/clash/rule/DirectDomain.yaml'}
+    singbox: {kind: self, name: 'DirectDomain'}
+  - name: 'ProxyDomain / Domain'
+    clash: {anchor: yamlclass, url: 'https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/refs/heads/main/clash/rule/ProxyDomain.yaml'}
+    singbox: {kind: self, name: 'ProxyDomain'}
+  - name: 'NeedHighQualityNodeDomain'
+    clash: {anchor: yamlclass, url: 'https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/refs/heads/main/clash/rule/NeedHighQualityNodeDomain.yaml'}
+    singbox: {kind: self, name: 'NeedHighQualityNodeDomain'}
+  - name: 'SteamCDN / Domain'
+    clash: {anchor: yamlclass, url: 'https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/refs/heads/main/clash/rule/steamCDN.yaml'}
+    singbox: {kind: self, name: 'steamCDN'}
+
+  # ---- 检测 / 广告 ----
+  - name: 'TEST / Domain'
+    clash: {anchor: class, url: 'https://gh-proxy.com/raw.githubusercontent.com/liandu2024/clash/refs/heads/main/list/Check.list'}
+    singbox: null   # 上游无 .srs，sing-box 侧跳过
+  - name: 'Block / Domain'
+    clash: {anchor: class, url: 'https://gh-proxy.com/raw.githubusercontent.com/liandu2024/clash/refs/heads/main/list/Block.list'}
+    singbox: {kind: remote, path: 'geosite/category-ads-all', substitute: true}  # 上游无同源 .srs，改用通用广告表
+
+  # ---- AI ----
+  - name: 'ChatGPT / Domain'
+    clash: {anchor: domain, url: 'https://gh-proxy.com/github.com/metacubex/meta-rules-dat/raw/refs/heads/meta/geo/geosite/openai.mrs'}
+    singbox: {kind: remote, path: 'geosite/openai'}
+  - name: 'Claude / Domain'
+    clash: {anchor: class, url: 'https://gh-proxy.com/raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Clash/Claude/Claude.list'}
+    singbox: {kind: remote, path: 'geosite/anthropic'}
+  - name: 'Gemini / Domain'
+    clash: {anchor: class, url: 'https://gh-proxy.com/raw.githubusercontent.com/liandu2024/clash/refs/heads/main/list/Gemini.list'}
+    singbox: {kind: remote, path: 'geosite/google-gemini'}
+  - name: 'Copilot / Domain'
+    clash: {anchor: class, url: 'https://gh-proxy.com/raw.githubusercontent.com/liandu2024/clash/refs/heads/main/list/Copilot.list'}
+    singbox: {kind: remote, path: 'geosite/github-copilot'}
+  - name: 'Meta AI / Domain'
+    clash: {anchor: class, url: 'https://gh-proxy.com/raw.githubusercontent.com/liandu2024/clash/refs/heads/main/list/MetaAi.list'}
+    singbox: null   # 上游无 .srs，sing-box 侧跳过
+
+  # ---- 社交 / 开发 ----
+  - name: 'GitHub / Domain'
+    clash: {anchor: domain, url: 'https://gh-proxy.com/github.com/metacubex/meta-rules-dat/raw/refs/heads/meta/geo/geosite/github.mrs'}
+    singbox: {kind: remote, path: 'geosite/github'}
+  - name: 'Telegram / Domain'
+    clash: {anchor: domain, url: 'https://gh-proxy.com/github.com/metacubex/meta-rules-dat/raw/refs/heads/meta/geo/geosite/telegram.mrs'}
+    singbox: {kind: remote, path: 'geosite/telegram'}
+  - name: 'Telegram / IP'
+    clash: {anchor: ip, url: 'https://gh-proxy.com/github.com/metacubex/meta-rules-dat/raw/refs/heads/meta/geo/geoip/telegram.mrs'}
+    singbox: {kind: remote, path: 'geoip/telegram'}
+  - name: 'Twitter / Domain'
+    clash: {anchor: domain, url: 'https://gh-proxy.com/github.com/metacubex/meta-rules-dat/raw/refs/heads/meta/geo/geosite/x.mrs'}
+    singbox: {kind: remote, path: 'geosite/x'}
+  - name: 'Facebook / Domain'
+    clash: {anchor: domain, url: 'https://gh-proxy.com/github.com/metacubex/meta-rules-dat/raw/refs/heads/meta/geo/geosite/facebook.mrs'}
+    singbox: {kind: remote, path: 'geosite/facebook'}
+  - name: 'WhatsApp / Domain'
+    clash: {anchor: class, url: 'https://gh-proxy.com/raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Clash/Whatsapp/Whatsapp.list'}
+    singbox: {kind: remote, path: 'geosite/whatsapp'}
+  - name: 'Reddit / Domain'
+    clash: {anchor: domain, url: 'https://gh-proxy.com/github.com/metacubex/meta-rules-dat/raw/refs/heads/meta/geo/geosite/reddit.mrs'}
+    singbox: {kind: remote, path: 'geosite/reddit'}
+
+  # ---- 大厂 ----
+  - name: 'Apple-CN / Domain'
+    clash: {anchor: domain, url: 'https://gh-proxy.com/github.com/metacubex/meta-rules-dat/raw/refs/heads/meta/geo/geosite/apple-cn.mrs'}
+    singbox: {kind: remote, path: 'geosite/apple-cn'}
+  - name: 'Apple / Domain'
+    clash: {anchor: domain, url: 'https://gh-proxy.com/github.com/metacubex/meta-rules-dat/raw/refs/heads/meta/geo/geosite/apple.mrs'}
+    singbox: {kind: remote, path: 'geosite/apple'}
+  - name: 'Microsoft / Domain'
+    clash: {anchor: domain, url: 'https://gh-proxy.com/github.com/metacubex/meta-rules-dat/raw/refs/heads/meta/geo/geosite/microsoft.mrs'}
+    singbox: {kind: remote, path: 'geosite/microsoft'}
+  - name: 'Amazon / Domain'
+    clash: {anchor: domain, url: 'https://gh-proxy.com/github.com/metacubex/meta-rules-dat/raw/refs/heads/meta/geo/geosite/amazon.mrs'}
+    singbox: {kind: remote, path: 'geosite/amazon'}
+  - name: 'Nvidia / Domain'
+    clash: {anchor: class, url: 'https://gh-proxy.com/raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Clash/Nvidia/Nvidia.list'}
+    singbox: {kind: remote, path: 'geosite/nvidia'}
+  - name: 'Unity / Domain'
+    clash: {anchor: class, url: 'https://gh-proxy.com/raw.githubusercontent.com/LM-Firefly/Rules/master/PROXY/Unity.list'}
+    singbox: {kind: remote, path: 'geosite/unity'}
+  - name: 'Google / Domain'
+    clash: {anchor: domain, url: 'https://gh-proxy.com/github.com/metacubex/meta-rules-dat/raw/refs/heads/meta/geo/geosite/google.mrs'}
+    singbox: {kind: remote, path: 'geosite/google'}
+  - name: 'Google / IP'
+    clash: {anchor: ip, url: 'https://gh-proxy.com/github.com/metacubex/meta-rules-dat/raw/refs/heads/meta/geo/geoip/google.mrs'}
+    singbox: {kind: remote, path: 'geoip/google'}
+
+  # ---- 金融 ----
+  - name: 'OKX / Domain'
+    clash: {anchor: domain, url: 'https://gh-proxy.com/github.com/metacubex/meta-rules-dat/raw/refs/heads/meta/geo/geosite/okx.mrs'}
+    singbox: {kind: remote, path: 'geosite/okx'}
+  - name: 'Bybit / Domain'
+    clash: {anchor: domain, url: 'https://gh-proxy.com/github.com/metacubex/meta-rules-dat/raw/refs/heads/meta/geo/geosite/bybit.mrs'}
+    singbox: {kind: remote, path: 'geosite/bybit'}
+  - name: 'Binance / Domain'
+    clash: {anchor: domain, url: 'https://gh-proxy.com/github.com/metacubex/meta-rules-dat/raw/refs/heads/meta/geo/geosite/binance.mrs'}
+    singbox: {kind: remote, path: 'geosite/binance'}
+
+  # ---- 流媒体 ----
+  - name: 'Youtube / Domain'
+    clash: {anchor: domain, url: 'https://gh-proxy.com/github.com/metacubex/meta-rules-dat/raw/refs/heads/meta/geo/geosite/youtube.mrs'}
+    singbox: {kind: remote, path: 'geosite/youtube'}
+  - name: 'TikTok / Domain'
+    clash: {anchor: domain, url: 'https://gh-proxy.com/github.com/metacubex/meta-rules-dat/raw/refs/heads/meta/geo/geosite/tiktok.mrs'}
+    singbox: {kind: remote, path: 'geosite/tiktok'}
+  - name: 'Netflix / Domain'
+    clash: {anchor: domain, url: 'https://gh-proxy.com/github.com/metacubex/meta-rules-dat/raw/refs/heads/meta/geo/geosite/netflix.mrs'}
+    singbox: {kind: remote, path: 'geosite/netflix'}
+  - name: 'Netflix / IP'
+    clash: {anchor: ip, url: 'https://gh-proxy.com/github.com/metacubex/meta-rules-dat/raw/refs/heads/meta/geo/geoip/netflix.mrs'}
+    singbox: {kind: remote, path: 'geoip/netflix'}
+  - name: 'Disney / Domain'
+    clash: {anchor: domain, url: 'https://gh-proxy.com/github.com/metacubex/meta-rules-dat/raw/refs/heads/meta/geo/geosite/disney.mrs'}
+    singbox: {kind: remote, path: 'geosite/disney'}
+  - name: 'HBO / Domain'
+    clash: {anchor: domain, url: 'https://gh-proxy.com/github.com/metacubex/meta-rules-dat/raw/refs/heads/meta/geo/geosite/hbo.mrs'}
+    singbox: {kind: remote, path: 'geosite/hbo'}
+  - name: 'Crunchyroll / Domain'
+    clash: {anchor: class, url: 'https://gh-proxy.com/raw.githubusercontent.com/liandu2024/clash/refs/heads/main/list/Crunchyroll.list'}
+    singbox: null   # 上游无 .srs，sing-box 侧跳过
+  - name: 'Spotify / Domain'
+    clash: {anchor: domain, url: 'https://gh-proxy.com/github.com/metacubex/meta-rules-dat/raw/refs/heads/meta/geo/geosite/spotify.mrs'}
+    singbox: {kind: remote, path: 'geosite/spotify'}
+
+  # ---- 游戏 ----
+  - name: 'Steam / Domain'
+    clash: {anchor: domain, url: 'https://gh-proxy.com/github.com/metacubex/meta-rules-dat/raw/refs/heads/meta/geo/geosite/steam.mrs'}
+    singbox: {kind: remote, path: 'geosite/steam'}
+  - name: 'Epic / Domain'
+    clash: {anchor: class, url: 'https://gh-proxy.com/raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Epic/Epic.list'}
+    singbox: {kind: remote, path: 'geosite/epicgames'}
+  - name: 'EA / Domain'
+    clash: {anchor: class, url: 'https://gh-proxy.com/raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/EA/EA.list'}
+    singbox: {kind: remote, path: 'geosite/ea'}
+  - name: 'Blizzard / Domain'
+    clash: {anchor: class, url: 'https://gh-proxy.com/raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Blizzard/Blizzard.list'}
+    singbox: {kind: remote, path: 'geosite/blizzard'}
+  - name: 'UBI / Domain'
+    clash: {anchor: class, url: 'https://gh-proxy.com/raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/UBI/UBI.list'}
+    singbox: {kind: remote, path: 'geosite/ubisoft'}
+  - name: 'PlayStation / Domain'
+    clash: {anchor: class, url: 'https://gh-proxy.com/raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Clash/PlayStation/PlayStation.list'}
+    singbox: {kind: remote, path: 'geosite/playstation'}
+  - name: 'Nintend / Domain'
+    clash: {anchor: class, url: 'https://gh-proxy.com/raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Nintendo/Nintendo.list'}
+    singbox: {kind: remote, path: 'geosite/nintendo'}
+
+  # ---- 兜底分流 ----
+  - name: 'Proxy / Domain'
+    clash: {anchor: class, url: 'https://gh-proxy.com/raw.githubusercontent.com/liandu2024/clash/refs/heads/main/list/Proxy.list'}
+    singbox: null   # 上游无 .srs，sing-box 侧跳过
+  - name: 'Globe / Domain'
+    clash: {anchor: class, url: 'https://gh-proxy.com/raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Clash/Global/Global.list'}
+    singbox: null   # 上游无 .srs，sing-box 侧跳过
+  - name: 'Direct / Domain'
+    clash: {anchor: class, url: 'https://gh-proxy.com/raw.githubusercontent.com/liandu2024/clash/refs/heads/main/list/Direct.list'}
+    singbox: null   # 上游无 .srs，sing-box 侧跳过
+  - name: 'China / Domain'
+    clash: {anchor: domain, url: 'https://gh-proxy.com/github.com/metacubex/meta-rules-dat/raw/refs/heads/meta/geo/geosite/cn.mrs'}
+    singbox: {kind: remote, path: 'geosite/cn'}
+  - name: 'China / IP'
+    clash: {anchor: ip, url: 'https://gh-proxy.com/github.com/metacubex/meta-rules-dat/raw/refs/heads/meta/geo/geoip/cn.mrs'}
+    singbox: {kind: remote, path: 'geoip/cn'}
+  - name: 'Private / Domain'
+    clash: {anchor: domain, url: 'https://gh-proxy.com/github.com/metacubex/meta-rules-dat/raw/refs/heads/meta/geo/geosite/private.mrs'}
+    singbox: {kind: remote, path: 'geosite/private'}
+
+# ---- 分流顺序：两侧严格一致 ----
+# 顺序原则：进程直连 > 局域网 > 广告拦截 > 个人自定义 > 业务分流 > 国内直连 > 兜底
+rules:
+
+  # ---- 本地进程强制直连 ----
+  - PROCESS-NAME,Weixin.exe,DIRECT
+  - PROCESS-NAME,WeChatAppEx.exe,DIRECT
+  - PROCESS-NAME,plastic.exe,DIRECT
+
+  # ---- 局域网 / 私有地址 ----
+  - RULE-SET,Private / Domain,DIRECT
+  - IP-CIDR,127.0.0.0/8,DIRECT,no-resolve
+  - IP-CIDR,10.0.0.0/8,DIRECT,no-resolve
+  - IP-CIDR,172.16.0.0/12,DIRECT,no-resolve
+  - IP-CIDR,192.168.0.0/16,DIRECT,no-resolve
+  - IP-CIDR,100.64.0.0/10,DIRECT,no-resolve
+
+  # ---- 广告拦截（必须早于业务分流，否则会被业务规则截胡）----
+  - RULE-SET,Block / Domain,Block
+
+  # ---- 个人自定义（优先级最高的业务规则）----
+  - RULE-SET,NeedHighQualityNodeDomain,所有-手选
+  - RULE-SET,DirectDomain / Domain,DIRECT
+  - RULE-SET,ProxyDomain / Domain,国外媒体
+  - RULE-SET,MyVideo / Domain,Video
+  - RULE-SET,TEST / Domain,Test
+  - DOMAIN-SUFFIX,linux.do,国外媒体
+
+  # ---- AI ----
+  - RULE-SET,ChatGPT / Domain,AIGC
+  - RULE-SET,Claude / Domain,AIGC
+  - RULE-SET,Gemini / Domain,AIGC
+  - RULE-SET,Copilot / Domain,AIGC
+  - RULE-SET,Meta AI / Domain,AIGC
+
+  # ---- 社交 / 开发 ----
+  - RULE-SET,GitHub / Domain,GitHub
+  - RULE-SET,Telegram / Domain,Telegram
+  - RULE-SET,Telegram / IP,Telegram,no-resolve
+  - RULE-SET,Twitter / Domain,国外媒体
+  - RULE-SET,Facebook / Domain,国外媒体
+  - RULE-SET,WhatsApp / Domain,国外媒体
+  - RULE-SET,Reddit / Domain,国外媒体
+
+  # ---- 流媒体 ----
+  - RULE-SET,Spotify / Domain,Spotify
+  - RULE-SET,Youtube / Domain,国外媒体
+  - RULE-SET,TikTok / Domain,国外媒体
+  - RULE-SET,Netflix / Domain,国外媒体
+  - RULE-SET,Netflix / IP,国外媒体,no-resolve
+  - RULE-SET,Disney / Domain,国外媒体
+  - RULE-SET,HBO / Domain,国外媒体
+  - RULE-SET,Crunchyroll / Domain,国外媒体
+
+  # ---- 游戏（Steam CDN 走直连，避免下载跑代理流量）----
+  - RULE-SET,SteamCDN / Domain,DIRECT
+  - RULE-SET,Steam / Domain,Steam
+  - RULE-SET,Epic / Domain,Game
+  - RULE-SET,EA / Domain,Game
+  - RULE-SET,Blizzard / Domain,Game
+  - RULE-SET,UBI / Domain,Game
+  - RULE-SET,PlayStation / Domain,Game
+  - RULE-SET,Nintend / Domain,Game
+
+  # ---- 大厂（Apple-CN 必须在 Apple 之前，否则国区服务会被整体代理）----
+  - RULE-SET,Apple-CN / Domain,DIRECT
+  - RULE-SET,Apple / Domain,Apple
+  - RULE-SET,Microsoft / Domain,Microsoft
+  - RULE-SET,Amazon / Domain,国外媒体
+  - RULE-SET,Nvidia / Domain,国外媒体
+  - RULE-SET,Unity / Domain,国外媒体
+
+  # ---- 金融 ----
+  - RULE-SET,OKX / Domain,国外媒体
+  - RULE-SET,Bybit / Domain,国外媒体
+  - RULE-SET,Binance / Domain,国外媒体
+
+  # ---- Google 放在通用代理之前 ----
+  - RULE-SET,Google / Domain,国外媒体
+  - RULE-SET,Google / IP,国外媒体,no-resolve
+
+  # ---- 通用代理 / 直连 ----
+  - RULE-SET,Proxy / Domain,国外媒体
+  - RULE-SET,Globe / Domain,国外媒体
+  - RULE-SET,Direct / Domain,DIRECT
+  - RULE-SET,China / Domain,DIRECT
+  - RULE-SET,China / IP,DIRECT,no-resolve
+  - GEOIP,CN,DIRECT,no-resolve
+
+  # ---- 兜底 ----
+  - MATCH,漏网之鱼

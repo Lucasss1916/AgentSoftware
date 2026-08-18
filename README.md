@@ -48,10 +48,44 @@ python3 sync_rules.py --check  # 只校验不写入（CI 用）
 `GFWRules`（5546 条）体量较大且仅 QX / Egern 使用，未纳入统一源，
 由 `sync_rules.py` 的 `KEEP` 列表保护，不会被清理。
 
-## Clash 主配置
+## 主配置同步（Clash ↔ sing-box）
 
-见 [`clash/yaml/README.md`](clash/yaml/README.md)。两份配置（`smart.yaml` / `urltest.yaml`）
-由 `clash/yaml/gen.py` 配合 `common_head.yaml`、`common_rules.yaml` 生成。
+规则**内容**由 `sync_rules.py` 同步；分流**顺序与策略**则由 `routes.yaml`
+这一份源同时铺到 Clash 与 sing-box：
+
+```
+                    ┌──►  clash/yaml/common_rules.yaml ──gen.py──┬──► smart.yaml
+   routes.yaml ─────┤                                            └──► urltest.yaml
+   （唯一源）        └──►  singbox/config/config.json
+```
+
+```sh
+python3 sync_config.py                 # 正向：routes.yaml → 两侧
+python3 sync_config.py --check         # 只校验（CI 用）
+python3 sync_config.py --from-clash    # 反向：clash 侧改动 → routes.yaml
+python3 sync_config.py --from-singbox  # 反向：sing-box 侧改动 → routes.yaml
+```
+
+两个方向都是无损的：反向同步用 difflib 只应用真正的增删，未改动的行原样保留，
+因此 `no-resolve` 修饰符、以及 sing-box 侧不存在的规则集都不会被抹掉。
+惯常用法仍是直接改 `routes.yaml`；`--from-*` 是给「已经手改了某一侧」时收尾用的。
+
+### 两侧的差异
+
+sing-box 用 `.srs` 规则集，与 Clash 的 `.mrs` 并非一一对应。以下 6 个规则集
+上游没有 sing-box 格式，**仅在 Clash 侧生效**（`routes.yaml` 中标记为 `singbox: null`）：
+
+`TEST / Domain`、`Meta AI / Domain`、`Crunchyroll / Domain`、
+`Proxy / Domain`、`Globe / Domain`、`Direct / Domain`
+
+`Block / Domain` 在 sing-box 侧改用上游通用广告表 `geosite/category-ads-all` 替代
+（与 Clash 侧不同源，但保证 sing-box 不会完全失去广告拦截）。
+
+Clash 两份配置的说明见 [`clash/yaml/README.md`](clash/yaml/README.md)，
+sing-box 配置的节点填法见 [`singbox/config/README.md`](singbox/config/README.md)。
+
+> sing-box 配置**不含任何机场节点**，各策略组默认指向 `direct`，需按
+> `singbox/config/README.md` 的正则过滤订阅并填入后才会真正走代理。
 
 ## 目录
 

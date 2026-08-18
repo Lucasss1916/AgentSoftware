@@ -6,13 +6,19 @@ on:
     paths:
       - 'loon/rule/**'
       - 'clash/yaml/**'
+      - 'singbox/config/**'
+      - 'routes.yaml'
       - 'sync_rules.py'
+      - 'sync_config.py'
       - '.github/workflows/sync-rules.yml'
   pull_request:
     paths:
       - 'loon/rule/**'
       - 'clash/yaml/**'
+      - 'singbox/config/**'
+      - 'routes.yaml'
       - 'sync_rules.py'
+      - 'sync_config.py'
   workflow_dispatch:
 
 jobs:
@@ -38,16 +44,19 @@ jobs:
         if: github.event_name == 'pull_request'
         run: python3 sync_rules.py --check
 
+      # 主配置：clash 与 sing-box 是否都与 routes.yaml 一致
+      - name: Check main configs are in sync
+        if: github.event_name == 'pull_request'
+        run: python3 sync_config.py --check
+
       - name: Sync rules to all formats
         if: github.event_name != 'pull_request'
         run: python3 sync_rules.py
 
-      # 由 clash/yaml 下的源文件重新生成两份主配置
-      - name: Regenerate clash configs
+      # 由 routes.yaml 重新生成 clash 两份主配置 + sing-box 配置
+      - name: Regenerate main configs
         if: github.event_name != 'pull_request'
-        run: |
-          cd clash/yaml
-          python3 gen.py
+        run: python3 sync_config.py
 
       - name: Validate clash configs
         if: github.event_name != 'pull_request'
@@ -61,14 +70,24 @@ jobs:
           ./mihomo -t -d .mihomo-test -f .mihomo-test/config.yaml
           rm -rf .mihomo-test mihomo
 
+      - name: Validate sing-box config
+        if: github.event_name != 'pull_request'
+        run: |
+          V=1.13.19
+          curl -sL -o sb.tar.gz \
+            https://github.com/SagerNet/sing-box/releases/download/v${V}/sing-box-${V}-linux-amd64.tar.gz
+          tar xzf sb.tar.gz
+          ./sing-box-${V}-linux-amd64/sing-box check -c singbox/config/config.json
+          rm -rf sb.tar.gz sing-box-${V}-linux-amd64
+
       - name: Generate README.md for rule folders
         if: github.event_name != 'pull_request'
         run: |
-          # 注意：不含 clash/yaml —— 那里是手写说明文档，不是规则目录，
-          # 早期 workflow 曾把它覆盖成 URL 列表。
+          # 不含 clash/yaml 与 singbox/config —— 两者放的是说明文档而非规则，
+          # 早期 workflow 曾把 clash/yaml/README.md 覆盖成 URL 列表。
           for subdir in clash/rule loon/rule Egern/rule quanx/rule singbox/rule Surge/rule \
                         Egern/module Surge/config Surge/module Surge/boxjs \
-                        loon/plugin quanx/rewrite quanx/task singbox/config; do
+                        loon/plugin quanx/rewrite quanx/task; do
             [ -d "$subdir" ] || continue
             readme="$subdir/README.md"
             : > "$readme"
@@ -84,7 +103,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add clash/ loon/ Egern/ Surge/ quanx/ singbox/
+          git add clash/ loon/ Egern/ Surge/ quanx/ singbox/ routes.yaml
           if git diff --cached --quiet; then
             echo "无变更，跳过提交"
           else

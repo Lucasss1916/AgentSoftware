@@ -1,35 +1,21 @@
-# DNS Leak from Shadowrocket Default
-DOMAIN-SUFFIX, dnsleaktest.com
-DOMAIN-SUFFIX, dnsleak.com
-DOMAIN-SUFFIX, expressvpn.com
-DOMAIN-SUFFIX, nordvpn.com
-DOMAIN-SUFFIX, surfshark.com
-DOMAIN-SUFFIX, ipleak.net
-DOMAIN-SUFFIX, perfect-privacy.com
-DOMAIN-SUFFIX, browserleaks.com
-DOMAIN-SUFFIX, browserleaks.org
-DOMAIN-SUFFIX, vpnunlimited.com
-DOMAIN-SUFFIX, whoer.net
-DOMAIN-SUFFIX, whrq.net
-
-# Astrill
-DOMAIN-SUFFIX, astrill.com
-DOMAIN-SUFFIX, astrill.org
-DOMAIN-SUFFIX, dnsleak.asn247.net
-
-# Surfshark
-DOMAIN-SUFFIX, surfshark.com
-DOMAIN-SUFFIX, surfsharkdns.com
-
-# Pixelscan
-DOMAIN-SUFFIX, pixelscan.net
-
-# PING0
-DOMAIN, ipv4.ping0.cc
-DOMAIN, ipv6.ping0.cc
-
-# IPAPI.CO
-DOMAIN-SUFFIX, ipapi.co
-
-# BrowserScan
-DOMAIN, ip-scan.adspower.net
+HOST-SUFFIX,dnsleaktest.com
+HOST-SUFFIX,dnsleak.com
+HOST-SUFFIX,expressvpn.com
+HOST-SUFFIX,nordvpn.com
+HOST-SUFFIX,surfshark.com
+HOST-SUFFIX,ipleak.net
+HOST-SUFFIX,perfect-privacy.com
+HOST-SUFFIX,browserleaks.com
+HOST-SUFFIX,browserleaks.org
+HOST-SUFFIX,vpnunlimited.com
+HOST-SUFFIX,whoer.net
+HOST-SUFFIX,whrq.net
+HOST-SUFFIX,astrill.com
+HOST-SUFFIX,astrill.org
+HOST-SUFFIX,dnsleak.asn247.net
+HOST-SUFFIX,surfsharkdns.com
+HOST-SUFFIX,pixelscan.net
+HOST,ipv4.ping0.cc
+HOST,ipv6.ping0.cc
+HOST-SUFFIX,ipapi.co
+HOST,ip-scan.adspower.net

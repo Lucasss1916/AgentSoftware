@@ -1,0 +1,23 @@
+domain_set:
+- ipv4.ping0.cc
+- ipv6.ping0.cc
+- ip-scan.adspower.net
+domain_suffix_set:
+- dnsleaktest.com
+- dnsleak.com
+- expressvpn.com
+- nordvpn.com
+- surfshark.com
+- ipleak.net
+- perfect-privacy.com
+- browserleaks.com
+- browserleaks.org
+- vpnunlimited.com
+- whoer.net
+- whrq.net
+- astrill.com
+- astrill.org
+- dnsleak.asn247.net
+- surfsharkdns.com
+- pixelscan.net
+- ipapi.co

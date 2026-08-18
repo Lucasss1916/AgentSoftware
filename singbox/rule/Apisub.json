@@ -1,0 +1,13 @@
+{
+  "version": 2,
+  "rules": [
+    {
+      "domain_suffix": [
+        "de5.net",
+        "kfc-api.sxxe.net",
+        "x666.me",
+        "529961.com"
+      ]
+    }
+  ]
+}

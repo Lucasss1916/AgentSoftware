@@ -1,184 +1,91 @@
-name: Update and Validate Rules
+name: Sync Rules
 
 on:
   push:
     branches: [ main ]
+    paths:
+      - 'loon/rule/**'
+      - 'clash/yaml/**'
+      - 'sync_rules.py'
+      - '.github/workflows/sync-rules.yml'
   pull_request:
     paths:
-      - 'clash/rule/*.yaml'
-      - 'loon/rule/*.list'
-      - 'Egern/rule/*.yaml'
-      - 'clash/yaml/smart.yaml'   # 监听 smart.yaml 的变更
+      - 'loon/rule/**'
+      - 'clash/yaml/**'
+      - 'sync_rules.py'
+  workflow_dispatch:
 
 jobs:
-  validate-and-update:
+  sync:
     runs-on: ubuntu-latest
     permissions:
-      contents: write 
+      contents: write
 
     steps:
-      - name: Checkout Repository
+      - name: Checkout
         uses: actions/checkout@v4
 
       - name: Setup Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
-          python-version: '3.10'
+          python-version: '3.11'
 
       - name: Install dependencies
         run: pip install pyyaml
 
-      # 转换 Loon → Clash
-      - name: Convert Loon → Clash
+      # PR 只校验，不写回：产物与源不一致时直接失败，提示本地重新生成
+      - name: Check rules are in sync
+        if: github.event_name == 'pull_request'
+        run: python3 sync_rules.py --check
+
+      - name: Sync rules to all formats
+        if: github.event_name != 'pull_request'
+        run: python3 sync_rules.py
+
+      # 由 clash/yaml 下的源文件重新生成两份主配置
+      - name: Regenerate clash configs
+        if: github.event_name != 'pull_request'
         run: |
-          echo "当前目录: $(pwd)"
-          echo "Loon规则文件列表:"
-          ls -R loon/rule/ || true
+          cd clash/yaml
+          python3 gen.py
 
-          mkdir -p clash/rule
-          mkdir -p scripts  
-
-          python convert_loon_to_clash.py \
-            --input 'loon/rule/*.list' \
-            --output 'clash/rule/clash-converted.yaml'
-
-          echo "生成文件检查:"
-          ls -l clash/rule/
-
-      # 转换 Loon → Egern
-      - name: Convert Loon → Egern
+      - name: Validate clash configs
+        if: github.event_name != 'pull_request'
         run: |
-          mkdir -p $GITHUB_WORKSPACE/Egern/rule
-          python convert_loon_to_egern.py \
-            --input $GITHUB_WORKSPACE/loon/rule \
-            --output $GITHUB_WORKSPACE/Egern/rule
-      # 转换 Loon → Quantumult X
-      - name: Convert Loon → Quantumult X
+          curl -sL -o mihomo.gz \
+            https://github.com/MetaCubeX/mihomo/releases/download/v1.19.2/mihomo-linux-amd64-v1.19.2.gz
+          gunzip mihomo.gz && chmod +x mihomo
+          mkdir -p .mihomo-test
+          # smart.yaml 需要 smart 内核，官方内核无法校验，故只验通用版
+          cp clash/yaml/urltest.yaml .mihomo-test/config.yaml
+          ./mihomo -t -d .mihomo-test -f .mihomo-test/config.yaml
+          rm -rf .mihomo-test mihomo
+
+      - name: Generate README.md for rule folders
+        if: github.event_name != 'pull_request'
         run: |
-          echo "开始转换 Loon → Quantumult X ..."
-          mkdir -p $GITHUB_WORKSPACE/quanx/rule
-
-          python convert_loon_to_qx.py \
-            --input $GITHUB_WORKSPACE/loon/rule \
-            --output $GITHUB_WORKSPACE/quanx/rule
-
-          echo "Quantumult X 规则生成完成："
-          ls -l $GITHUB_WORKSPACE/quanx/rule
-
-      # 转换 Loon → sing-box rule-set (JSON, version 2)
-      - name: Convert Loon → sing-box rule-set
-        run: |
-          echo "开始转换 Loon → sing-box ..."
-          mkdir -p $GITHUB_WORKSPACE/singbox/rule
-
-          python convert_clash_to_singbox.py \
-            $GITHUB_WORKSPACE/loon/rule \
-            --out-dir $GITHUB_WORKSPACE/singbox/rule
-
-          echo "sing-box rule-set 生成完成："
-          ls -l $GITHUB_WORKSPACE/singbox/rule
-
-      # === 新增步骤: 转换 smart.yaml → Overwrite.yaml ===
-      - name: Convert Smart → Overwrite
-        run: |
-          echo "开始转换 smart.yaml → Overwrite.yaml ..."
-          python - <<'EOF'
-          import yaml
-          from pathlib import Path
-
-          base = Path("clash/yaml")
-          smart = base / "smart.yaml"
-          overwrite = base / "Overwrite.yaml"
-
-          with open(smart, "r", encoding="utf-8") as f:
-              raw = yaml.safe_load(f)
-
-          new_config = {
-              "experimental": {},
-              "hosts": {},
-              "profile": {"store-selected": True, "store-fake-ip": True},
-              "ntp": {},
-              "sniffer": {},
-              "tun": raw.get("tun", {}),
-              "dns": raw.get("dns", {}),
-              "proxy-groups": raw.get("proxy-groups", []),
-              "rule-providers": raw.get("rule-providers", {}),
-              "rules": raw.get("rules", []),
-          }
-
-          base_keys = [
-              "port","socks-port","redir-port","mixed-port","tproxy-port",
-              "allow-lan","mode","log-level","external-controller","secret"
-          ]
-          for k in base_keys:
-              if k in raw:
-                  new_config[k] = raw[k]
-
-          with open(overwrite, "w", encoding="utf-8") as f:
-              yaml.dump(new_config, f, sort_keys=False, allow_unicode=True)
-
-          print(f"✅ 已生成 {overwrite}")
-          EOF
-
-      # 验证 Clash 规则
-      - name: Validate Clash Rules
-        run: |
-          echo "开始验证 Clash 规则..."
-          if [ -f clash/rule/clash-converted.yaml ]; then
-            echo "检测到新生成的 Clash 文件，开始验证..."
-            echo "验证通过！"
-          else
-            echo "未找到 Clash 规则文件，跳过验证。"
-          fi
-
-      # 验证 Loon 规则
-      - name: Validate Loon Rules
-        run: |
-          echo "开始验证 Loon 规则..."
-          if [ -d "loon/rule" ]; then
-            files=$(ls loon/rule/*.list 2>/dev/null || true)
-            if [ -n "$files" ]; then
-              echo "检测到 Loon 规则文件：$files"
-              echo "验证通过！"
-            else
-              echo "Loon 文件夹为空，跳过验证。"
-            fi
-          else
-            echo "Loon 目录不存在，跳过验证。"
-          fi
-
-      # 生成 README.md
-      - name: Generate README.md for second-level folders
-        run: |
-          for topdir in clash loon Egern Surge quanx singbox; do
-              if [ -d "$topdir" ]; then
-                find "$topdir" -mindepth 1 -maxdepth 1 -type d | while read subdir; do
-                  readme="$subdir/README.md"
-                  : > "$readme"
-                  for file in "$subdir"/*; do
-                    if [ -f "$file" ] && [ "$(basename "$file")" != "README.md" ]; then
-                      relpath=$(echo "$file" | sed 's@^\./@@')
-                      echo "https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/$relpath" >> "$readme"
-                    fi
-                  done
-                  echo "生成: $readme"
-                  cat "$readme"
-                done
+          for subdir in clash/rule clash/yaml loon/rule Egern/rule quanx/rule singbox/rule Surge/rule \
+                        Egern/module Surge/config Surge/module Surge/boxjs \
+                        loon/plugin quanx/rewrite quanx/task singbox/config; do
+            [ -d "$subdir" ] || continue
+            readme="$subdir/README.md"
+            : > "$readme"
+            for file in "$subdir"/*; do
+              if [ -f "$file" ] && [ "$(basename "$file")" != "README.md" ]; then
+                echo "https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/$file" >> "$readme"
               fi
             done
+          done
 
-      # 提交变更
-      - name: Commit Changes
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Commit changes
+        if: github.event_name != 'pull_request'
         run: |
-          git config user.name "GitHub Actions"
-          git config user.email "actions@github.com"
-          git add loon/
-          git add clash/
-          git add Egern/
-          git add Surge/
-          git add quanx/
-          git add singbox/
-          git diff --cached --quiet || git commit -m "自动更新规则文件（Loon → Clash + Egern + QX + sing-box + Smart → Overwrite）"
-          git push origin main
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add clash/ loon/ Egern/ Surge/ quanx/ singbox/
+          if git diff --cached --quiet; then
+            echo "无变更，跳过提交"
+          else
+            git commit -m "chore: 自动同步规则至各客户端格式"
+            git push origin main
+          fi

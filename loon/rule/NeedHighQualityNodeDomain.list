@@ -1,0 +1,2 @@
+# 源自 clash/rule/NeedHighQualityNodeDomain.yaml，由 backfill 纳入统一同步
+DOMAIN-SUFFIX,anyrouter.top

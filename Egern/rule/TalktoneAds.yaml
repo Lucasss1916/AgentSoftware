@@ -1,7 +1,7 @@
 domain_suffix_set:
-- aax-fe-sin.amazon-adsystem.com
-- aax-fe.amazon-adsystem.com
 - aax.amazon-adsystem.com
+- aax-fe.amazon-adsystem.com
+- aax-fe-sin.amazon-adsystem.com
 - ads.inmobi.com
 - ads.pubmatic.com
 - adsappier.com
@@ -13,10 +13,10 @@ domain_suffix_set:
 - b.de.inmobi.com
 - bidder.criteo.com
 - c.amazon-adsystem.com
-- cdn-f.adsmoloco.com
 - cdn.liftoff-creatives.io
 - cdn.mobilefuse.com
 - cdn2.inner-active.mobi
+- cdn-f.adsmoloco.com
 - config.inmobi.com
 - cr.adsappier.com
 - criteo.com
@@ -26,20 +26,20 @@ domain_suffix_set:
 - et-eus.w.inmobi.com
 - ets-ap-southeast-1.track.smaato.net
 - exchange-b-events.inner-active.mobi
-- firebase-settings.crashlytics.com
 - firebaseinstallations.googleapis.com
 - firebaselogging-pa.googleapis.com
 - firebaseremoteconfig.googleapis.com
+- firebase-settings.crashlytics.com
 - fundingchoicesmessages.google.com
-- googleads.g.doubleclick-cn.net
 - googleads.g.doubleclick.net
+- googleads.g.doubleclick-cn.net
 - googlesyndication.com
 - gum.criteo.com
-- i.l-dsp.inmobicdn.net
 - i.l.inmobicdn.net
+- i.l-dsp.inmobicdn.net
 - ic.de.inmobi.com
-- impression-asia.liftoff.io
 - impression.link
+- impression-asia.liftoff.io
 - ins.track.tappx.com
 - lh3.googleadsserving.cn
 - mads.amazon-adsystem.com

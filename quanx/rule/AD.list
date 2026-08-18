@@ -1,5 +1,4 @@
-DOMAIN-SUFFIX, jxna200.com
-DOMAIN-SUFFIX, kjkw050.xyz
-DOMAIN-SUFFIX,open.e.kuaishou.com
-# > 运动世界
-DOMAIN-SUFFIX,discovery.gxapp.iydsj.com
+HOST-SUFFIX,jxna200.com
+HOST-SUFFIX,kjkw050.xyz
+HOST-SUFFIX,open.e.kuaishou.com
+HOST-SUFFIX,discovery.gxapp.iydsj.com

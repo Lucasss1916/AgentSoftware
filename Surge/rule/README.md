@@ -1,0 +1,17 @@
+https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/Surge/rule/AD.list
+https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/Surge/rule/Apisub.list
+https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/Surge/rule/AppleAPIRules.list
+https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/Surge/rule/AppleCDNRules.list
+https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/Surge/rule/AppleNoChinaCDNRules.list
+https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/Surge/rule/AppleRules.list
+https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/Surge/rule/DirectDomain.list
+https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/Surge/rule/HKProxyDomain.list
+https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/Surge/rule/MyAiport.list
+https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/Surge/rule/NeedHighQualityNodeDomain.list
+https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/Surge/rule/ProxyDomain.list
+https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/Surge/rule/TalktoneAds.list
+https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/Surge/rule/TalktoneDirect.list
+https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/Surge/rule/TalktoneProxy.list
+https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/Surge/rule/myvideorule.list
+https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/Surge/rule/prevent_dns.list
+https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/Surge/rule/steamCDN.list

@@ -2,11 +2,13 @@ https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/quanx/rule/AD.l
 https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/quanx/rule/Apisub.list
 https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/quanx/rule/AppleAPIRules.list
 https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/quanx/rule/AppleCDNRules.list
+https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/quanx/rule/AppleNoChinaCDNRules.list
 https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/quanx/rule/AppleRules.list
 https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/quanx/rule/DirectDomain.list
 https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/quanx/rule/GFWRules.list
 https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/quanx/rule/HKProxyDomain.list
 https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/quanx/rule/MyAiport.list
+https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/quanx/rule/NeedHighQualityNodeDomain.list
 https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/quanx/rule/ProxyDomain.list
 https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/quanx/rule/TalktoneAds.list
 https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/quanx/rule/TalktoneDirect.list

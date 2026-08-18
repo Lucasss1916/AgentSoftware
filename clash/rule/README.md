@@ -1,8 +1,11 @@
+https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/clash/rule/AD.yaml
+https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/clash/rule/Apisub.yaml
 https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/clash/rule/AppleAPIRules.yaml
 https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/clash/rule/AppleCDNRules.yaml
 https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/clash/rule/AppleNoChinaCDNRules.yaml
 https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/clash/rule/AppleRules.yaml
 https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/clash/rule/DirectDomain.yaml
+https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/clash/rule/HKProxyDomain.yaml
 https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/clash/rule/MyAiport.yaml
 https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/clash/rule/NeedHighQualityNodeDomain.yaml
 https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/clash/rule/ProxyDomain.yaml
@@ -10,4 +13,5 @@ https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/clash/rule/Talk
 https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/clash/rule/TalktoneDirect.yaml
 https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/clash/rule/TalktoneProxy.yaml
 https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/clash/rule/myvideorule.yaml
+https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/clash/rule/prevent_dns.yaml
 https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/clash/rule/steamCDN.yaml

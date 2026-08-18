@@ -1,7 +1,17 @@
+https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/singbox/rule/AD.json
+https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/singbox/rule/Apisub.json
+https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/singbox/rule/AppleAPIRules.json
+https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/singbox/rule/AppleCDNRules.json
+https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/singbox/rule/AppleNoChinaCDNRules.json
+https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/singbox/rule/AppleRules.json
 https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/singbox/rule/DirectDomain.json
+https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/singbox/rule/HKProxyDomain.json
+https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/singbox/rule/MyAiport.json
+https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/singbox/rule/NeedHighQualityNodeDomain.json
 https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/singbox/rule/ProxyDomain.json
 https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/singbox/rule/TalktoneAds.json
 https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/singbox/rule/TalktoneDirect.json
 https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/singbox/rule/TalktoneProxy.json
 https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/singbox/rule/myvideorule.json
+https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/singbox/rule/prevent_dns.json
 https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/singbox/rule/steamCDN.json

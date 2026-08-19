@@ -14,6 +14,7 @@
 """
 from __future__ import annotations
 import argparse, json, re, subprocess, sys
+from urllib.parse import quote
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent
@@ -21,6 +22,8 @@ ROUTES = ROOT / "routes.yaml"
 CLASH_DIR = ROOT / "clash" / "yaml"
 COMMON_RULES = CLASH_DIR / "common_rules.yaml"
 SB_CONFIG = ROOT / "singbox" / "config" / "config.json"
+SB_RAW = ("https://raw.githubusercontent.com/Lucasss1916/AgentSoftware"
+          "/main/singbox/config/config.json")
 
 MRS = "https://gh-proxy.com/github.com/metacubex/meta-rules-dat/raw/refs/heads/meta/geo/"
 SRS = "https://gh-proxy.com/github.com/MetaCubeX/meta-rules-dat/raw/sing/geo/"
@@ -287,9 +290,12 @@ def build_singbox(rule_sets, rules, old: dict | None):
     }
     return cfg, skipped, node_tags
 
-def write_sb_readme(skipped):
-    """sing-box 配置说明。原先塞在 config.json 的 _notes 里，
-    但 sing-box 1.13 拒绝未知顶层字段，故改为独立文档。"""
+def write_sb_readme(skipped) -> str:
+    """生成 sing-box 配置说明（返回文本，不落盘）。
+
+    原先塞在 config.json 的 _notes 里，但 sing-box 1.13 拒绝未知顶层字段，
+    故改为独立文档。返回而非直接写，是为了让 --check 能只比不写 ——
+    早先它无条件写盘，等于校验模式会悄悄改工作区。"""
     L = ["# sing-box 配置", "",
          "本目录的 `config.json` **由 `sync_config.py` 生成，请勿手改**。", "",
          "- 改分流：编辑仓库根目录 `routes.yaml`，再跑 `python3 sync_config.py`",
@@ -302,7 +308,15 @@ def write_sb_readme(skipped):
          "| 地区组 | filter 正则 |", "| --- | --- |"]
     for r in REGIONS:
         L.append(f"| `{r}-{SUFFIX}` | `{FILTERS[r]}` |")
-    L += ["", "业务组（AIGC / GitHub / …）已自动引用各地区组，填完节点无需再动。", ""]
+    L += ["", "业务组（AIGC / GitHub / …）已自动引用各地区组，填完节点无需再动。", "",
+          "## 导入", "",
+          f"订阅地址：<{SB_RAW}>", "",
+          "一键导入（官方 SFI / SFM / SFA）。sing-box 只有自定义协议头，"
+          "GitHub 会过滤掉非 http(s) 链接，需复制到地址栏或快捷指令打开：", "",
+          "```",
+          f"sing-box://import-remote-profile?url={quote(SB_RAW, safe='')}"
+          f"#{quote('AgentSoftware')}",
+          "```", ""]
     if skipped:
         L += ["## 与 clash 的差异", "",
               "以下规则集上游没有 sing-box `.srs` 格式，仅在 clash 侧生效：", ""]
@@ -310,7 +324,7 @@ def write_sb_readme(skipped):
             L.append(f"- `{n}` → `{t}`")
         L += ["", "其中 `Block / Domain` 在 sing-box 侧改用上游通用广告表 "
               "`geosite/category-ads-all` 替代（内容与 clash 侧不同源）。", ""]
-    (SB_CONFIG.parent / "README.md").write_text("\n".join(L), encoding="utf-8")
+    return "\n".join(L)
 
 
 # ---------------------------------------------------------------- 反向同步
@@ -475,7 +489,13 @@ def forward(check: bool) -> int:
     cfg, skipped, nodes = build_singbox(rule_sets, rules, old_sb)
     # 注意：sing-box 1.13 会拒绝未知顶层字段，配置里不能放 _notes。
     # 地区 filter 正则、节点填法、与 clash 的差异一并写进 singbox/config/README.md。
-    write_sb_readme(skipped)
+    sb_readme = SB_CONFIG.parent / "README.md"
+    new_readme = write_sb_readme(skipped)
+    if check:              # --check 必须只读，不得改动工作区
+        if not sb_readme.exists() or sb_readme.read_text(encoding="utf-8") != new_readme:
+            drift.append(str(sb_readme.relative_to(ROOT)))
+    else:
+        sb_readme.write_text(new_readme, encoding="utf-8")
     new_json = json.dumps(cfg, ensure_ascii=False, indent=2) + "\n"
     if check:
         if not SB_CONFIG.exists() or SB_CONFIG.read_text(encoding="utf-8") != new_json:

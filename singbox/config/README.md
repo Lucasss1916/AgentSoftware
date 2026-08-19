@@ -22,6 +22,16 @@
 
 业务组（AIGC / GitHub / …）已自动引用各地区组，填完节点无需再动。
 
+## 导入
+
+订阅地址：<https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/singbox/config/config.json>
+
+一键导入（官方 SFI / SFM / SFA）。sing-box 只有自定义协议头，GitHub 会过滤掉非 http(s) 链接，需复制到地址栏或快捷指令打开：
+
+```
+sing-box://import-remote-profile?url=https%3A%2F%2Fraw.githubusercontent.com%2FLucasss1916%2FAgentSoftware%2Fmain%2Fsingbox%2Fconfig%2Fconfig.json#AgentSoftware
+```
+
 ## 与 clash 的差异
 
 以下规则集上游没有 sing-box `.srs` 格式，仅在 clash 侧生效：

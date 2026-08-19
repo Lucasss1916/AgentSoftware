@@ -10,6 +10,7 @@ on:
       - 'routes.yaml'
       - 'sync_rules.py'
       - 'sync_config.py'
+      - 'gen_readme.py'
       - '.github/workflows/sync-rules.yml'
   pull_request:
     paths:
@@ -19,6 +20,7 @@ on:
       - 'routes.yaml'
       - 'sync_rules.py'
       - 'sync_config.py'
+      - 'gen_readme.py'
   workflow_dispatch:
 
 jobs:
@@ -48,6 +50,10 @@ jobs:
       - name: Check main configs are in sync
         if: github.event_name == 'pull_request'
         run: python3 sync_config.py --check
+
+      - name: Check folder READMEs are in sync
+        if: github.event_name == 'pull_request'
+        run: python3 gen_readme.py --check
 
       - name: Sync rules to all formats
         if: github.event_name != 'pull_request'
@@ -80,30 +86,19 @@ jobs:
           ./sing-box-${V}-linux-amd64/sing-box check -c singbox/config/config.json
           rm -rf sb.tar.gz sing-box-${V}-linux-amd64
 
-      - name: Generate README.md for rule folders
+      # 各客户端目录的 README：原始地址 + 各自 URL Scheme 的一键导入链接。
+      # 早期这里是内联 shell，只吐裸 URL，且会把 clash/yaml 的说明文档覆盖掉；
+      # 现在由 gen_readme.py 按显式白名单生成，手写文档目录不在其中。
+      - name: Generate folder READMEs
         if: github.event_name != 'pull_request'
-        run: |
-          # 不含 clash/yaml 与 singbox/config —— 两者放的是说明文档而非规则，
-          # 早期 workflow 曾把 clash/yaml/README.md 覆盖成 URL 列表。
-          for subdir in clash/rule loon/rule Egern/rule quanx/rule singbox/rule Surge/rule \
-                        Egern/module Surge/config Surge/module Surge/boxjs \
-                        loon/plugin quanx/rewrite quanx/task; do
-            [ -d "$subdir" ] || continue
-            readme="$subdir/README.md"
-            : > "$readme"
-            for file in "$subdir"/*; do
-              if [ -f "$file" ] && [ "$(basename "$file")" != "README.md" ]; then
-                echo "https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/$file" >> "$readme"
-              fi
-            done
-          done
+        run: python3 gen_readme.py
 
       - name: Commit changes
         if: github.event_name != 'pull_request'
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add clash/ loon/ Egern/ Surge/ quanx/ singbox/ routes.yaml
+          git add clash/ loon/ Egern/ Surge/ quanx/ singbox/ routes.yaml gen_readme.py
           if git diff --cached --quiet; then
             echo "无变更，跳过提交"
           else

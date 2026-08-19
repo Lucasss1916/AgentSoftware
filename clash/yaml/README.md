@@ -7,9 +7,18 @@
 | `urltest.yaml` | `url-test` 延时优选 | 官方 mihomo 内核即可 |
 | `smart.yaml` | `smart` 智选（LightGBM 加权） | vernesong/mihomo 的 smart 内核，官方内核会报 `unsupported type: smart` |
 
-订阅地址：
-https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/clash/yaml/urltest.yaml
-https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/clash/yaml/smart.yaml
+订阅地址与一键导入：
+
+| 文件 | 地址 / Scheme |
+| --- | --- |
+| `urltest.yaml` | <https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/clash/yaml/urltest.yaml> |
+| | `mihomo://install-config?url=https%3A%2F%2Fraw.githubusercontent.com%2FLucasss1916%2FAgentSoftware%2Fmain%2Fclash%2Fyaml%2Furltest.yaml&name=AgentSoftware-urltest` |
+| `smart.yaml` | <https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/clash/yaml/smart.yaml> |
+| | `mihomo://install-config?url=https%3A%2F%2Fraw.githubusercontent.com%2FLucasss1916%2FAgentSoftware%2Fmain%2Fclash%2Fyaml%2Fsmart.yaml&name=AgentSoftware-smart` |
+
+`mihomo://` 是 Clash Party（原 Mihomo Party）的 URL Scheme，ClashX 系可把协议头换成
+`clash://`。GitHub 会过滤非 http(s) 链接，所以只能复制上面的整行到地址栏打开。
+其余客户端（ClashMeta for Android、Stash 等）直接粘贴订阅地址即可。
 
 ## 维护方式
 

@@ -1,18 +1,26 @@
-https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/quanx/rule/AD.list
-https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/quanx/rule/Apisub.list
-https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/quanx/rule/AppleAPIRules.list
-https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/quanx/rule/AppleCDNRules.list
-https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/quanx/rule/AppleNoChinaCDNRules.list
-https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/quanx/rule/AppleRules.list
-https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/quanx/rule/DirectDomain.list
-https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/quanx/rule/GFWRules.list
-https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/quanx/rule/HKProxyDomain.list
-https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/quanx/rule/MyAiport.list
-https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/quanx/rule/NeedHighQualityNodeDomain.list
-https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/quanx/rule/ProxyDomain.list
-https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/quanx/rule/TalktoneAds.list
-https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/quanx/rule/TalktoneDirect.list
-https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/quanx/rule/TalktoneProxy.list
-https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/quanx/rule/myvideorule.list
-https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/quanx/rule/prevent_dns.list
-https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/quanx/rule/steamCDN.list
+# Quantumult X 分流规则
+
+| 文件 | 一键导入 | 原始地址 |
+| --- | --- | --- |
+| `AD.list` | [导入](https://quantumult.app/x/open-app/add-resource?remote-resource=%7B%22filter_remote%22%3A%20%5B%22https%3A%2F%2Fraw.githubusercontent.com%2FLucasss1916%2FAgentSoftware%2Fmain%2Fquanx%2Frule%2FAD.list%2C%20tag%3DAD%22%5D%7D) | <https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/quanx/rule/AD.list> |
+| `Apisub.list` | [导入](https://quantumult.app/x/open-app/add-resource?remote-resource=%7B%22filter_remote%22%3A%20%5B%22https%3A%2F%2Fraw.githubusercontent.com%2FLucasss1916%2FAgentSoftware%2Fmain%2Fquanx%2Frule%2FApisub.list%2C%20tag%3DApisub%22%5D%7D) | <https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/quanx/rule/Apisub.list> |
+| `AppleAPIRules.list` | [导入](https://quantumult.app/x/open-app/add-resource?remote-resource=%7B%22filter_remote%22%3A%20%5B%22https%3A%2F%2Fraw.githubusercontent.com%2FLucasss1916%2FAgentSoftware%2Fmain%2Fquanx%2Frule%2FAppleAPIRules.list%2C%20tag%3DAppleAPIRules%22%5D%7D) | <https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/quanx/rule/AppleAPIRules.list> |
+| `AppleCDNRules.list` | [导入](https://quantumult.app/x/open-app/add-resource?remote-resource=%7B%22filter_remote%22%3A%20%5B%22https%3A%2F%2Fraw.githubusercontent.com%2FLucasss1916%2FAgentSoftware%2Fmain%2Fquanx%2Frule%2FAppleCDNRules.list%2C%20tag%3DAppleCDNRules%22%5D%7D) | <https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/quanx/rule/AppleCDNRules.list> |
+| `AppleNoChinaCDNRules.list` | [导入](https://quantumult.app/x/open-app/add-resource?remote-resource=%7B%22filter_remote%22%3A%20%5B%22https%3A%2F%2Fraw.githubusercontent.com%2FLucasss1916%2FAgentSoftware%2Fmain%2Fquanx%2Frule%2FAppleNoChinaCDNRules.list%2C%20tag%3DAppleNoChinaCDNRules%22%5D%7D) | <https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/quanx/rule/AppleNoChinaCDNRules.list> |
+| `AppleRules.list` | [导入](https://quantumult.app/x/open-app/add-resource?remote-resource=%7B%22filter_remote%22%3A%20%5B%22https%3A%2F%2Fraw.githubusercontent.com%2FLucasss1916%2FAgentSoftware%2Fmain%2Fquanx%2Frule%2FAppleRules.list%2C%20tag%3DAppleRules%22%5D%7D) | <https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/quanx/rule/AppleRules.list> |
+| `DirectDomain.list` | [导入](https://quantumult.app/x/open-app/add-resource?remote-resource=%7B%22filter_remote%22%3A%20%5B%22https%3A%2F%2Fraw.githubusercontent.com%2FLucasss1916%2FAgentSoftware%2Fmain%2Fquanx%2Frule%2FDirectDomain.list%2C%20tag%3DDirectDomain%22%5D%7D) | <https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/quanx/rule/DirectDomain.list> |
+| `GFWRules.list` | [导入](https://quantumult.app/x/open-app/add-resource?remote-resource=%7B%22filter_remote%22%3A%20%5B%22https%3A%2F%2Fraw.githubusercontent.com%2FLucasss1916%2FAgentSoftware%2Fmain%2Fquanx%2Frule%2FGFWRules.list%2C%20tag%3DGFWRules%22%5D%7D) | <https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/quanx/rule/GFWRules.list> |
+| `HKProxyDomain.list` | [导入](https://quantumult.app/x/open-app/add-resource?remote-resource=%7B%22filter_remote%22%3A%20%5B%22https%3A%2F%2Fraw.githubusercontent.com%2FLucasss1916%2FAgentSoftware%2Fmain%2Fquanx%2Frule%2FHKProxyDomain.list%2C%20tag%3DHKProxyDomain%22%5D%7D) | <https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/quanx/rule/HKProxyDomain.list> |
+| `MyAiport.list` | [导入](https://quantumult.app/x/open-app/add-resource?remote-resource=%7B%22filter_remote%22%3A%20%5B%22https%3A%2F%2Fraw.githubusercontent.com%2FLucasss1916%2FAgentSoftware%2Fmain%2Fquanx%2Frule%2FMyAiport.list%2C%20tag%3DMyAiport%22%5D%7D) | <https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/quanx/rule/MyAiport.list> |
+| `NeedHighQualityNodeDomain.list` | [导入](https://quantumult.app/x/open-app/add-resource?remote-resource=%7B%22filter_remote%22%3A%20%5B%22https%3A%2F%2Fraw.githubusercontent.com%2FLucasss1916%2FAgentSoftware%2Fmain%2Fquanx%2Frule%2FNeedHighQualityNodeDomain.list%2C%20tag%3DNeedHighQualityNodeDomain%22%5D%7D) | <https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/quanx/rule/NeedHighQualityNodeDomain.list> |
+| `ProxyDomain.list` | [导入](https://quantumult.app/x/open-app/add-resource?remote-resource=%7B%22filter_remote%22%3A%20%5B%22https%3A%2F%2Fraw.githubusercontent.com%2FLucasss1916%2FAgentSoftware%2Fmain%2Fquanx%2Frule%2FProxyDomain.list%2C%20tag%3DProxyDomain%22%5D%7D) | <https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/quanx/rule/ProxyDomain.list> |
+| `TalktoneAds.list` | [导入](https://quantumult.app/x/open-app/add-resource?remote-resource=%7B%22filter_remote%22%3A%20%5B%22https%3A%2F%2Fraw.githubusercontent.com%2FLucasss1916%2FAgentSoftware%2Fmain%2Fquanx%2Frule%2FTalktoneAds.list%2C%20tag%3DTalktoneAds%22%5D%7D) | <https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/quanx/rule/TalktoneAds.list> |
+| `TalktoneDirect.list` | [导入](https://quantumult.app/x/open-app/add-resource?remote-resource=%7B%22filter_remote%22%3A%20%5B%22https%3A%2F%2Fraw.githubusercontent.com%2FLucasss1916%2FAgentSoftware%2Fmain%2Fquanx%2Frule%2FTalktoneDirect.list%2C%20tag%3DTalktoneDirect%22%5D%7D) | <https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/quanx/rule/TalktoneDirect.list> |
+| `TalktoneProxy.list` | [导入](https://quantumult.app/x/open-app/add-resource?remote-resource=%7B%22filter_remote%22%3A%20%5B%22https%3A%2F%2Fraw.githubusercontent.com%2FLucasss1916%2FAgentSoftware%2Fmain%2Fquanx%2Frule%2FTalktoneProxy.list%2C%20tag%3DTalktoneProxy%22%5D%7D) | <https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/quanx/rule/TalktoneProxy.list> |
+| `myvideorule.list` | [导入](https://quantumult.app/x/open-app/add-resource?remote-resource=%7B%22filter_remote%22%3A%20%5B%22https%3A%2F%2Fraw.githubusercontent.com%2FLucasss1916%2FAgentSoftware%2Fmain%2Fquanx%2Frule%2Fmyvideorule.list%2C%20tag%3Dmyvideorule%22%5D%7D) | <https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/quanx/rule/myvideorule.list> |
+| `prevent_dns.list` | [导入](https://quantumult.app/x/open-app/add-resource?remote-resource=%7B%22filter_remote%22%3A%20%5B%22https%3A%2F%2Fraw.githubusercontent.com%2FLucasss1916%2FAgentSoftware%2Fmain%2Fquanx%2Frule%2Fprevent_dns.list%2C%20tag%3Dprevent_dns%22%5D%7D) | <https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/quanx/rule/prevent_dns.list> |
+| `steamCDN.list` | [导入](https://quantumult.app/x/open-app/add-resource?remote-resource=%7B%22filter_remote%22%3A%20%5B%22https%3A%2F%2Fraw.githubusercontent.com%2FLucasss1916%2FAgentSoftware%2Fmain%2Fquanx%2Frule%2FsteamCDN.list%2C%20tag%3DsteamCDN%22%5D%7D) | <https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/quanx/rule/steamCDN.list> |
+
+> 导入后需在 QX 里给该资源指定策略（`force-policy`），链接中未预设。
+
+<sub>本文件由 `gen_readme.py` 生成，勿直接编辑。</sub>

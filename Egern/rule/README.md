@@ -1,18 +1,26 @@
-https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/Egern/rule/AD.yaml
-https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/Egern/rule/Apisub.yaml
-https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/Egern/rule/AppleAPIRules.yaml
-https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/Egern/rule/AppleCDNRules.yaml
-https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/Egern/rule/AppleNoChinaCDNRules.yaml
-https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/Egern/rule/AppleRules.yaml
-https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/Egern/rule/DirectDomain.yaml
-https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/Egern/rule/GFWRules.yaml
-https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/Egern/rule/HKProxyDomain.yaml
-https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/Egern/rule/MyAiport.yaml
-https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/Egern/rule/NeedHighQualityNodeDomain.yaml
-https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/Egern/rule/ProxyDomain.yaml
-https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/Egern/rule/TalktoneAds.yaml
-https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/Egern/rule/TalktoneDirect.yaml
-https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/Egern/rule/TalktoneProxy.yaml
-https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/Egern/rule/myvideorule.yaml
-https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/Egern/rule/prevent_dns.yaml
-https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/Egern/rule/steamCDN.yaml
+# Egern 规则集
+
+| 文件 | 一键导入 | 原始地址 |
+| --- | --- | --- |
+| `AD.yaml` | [导入](https://egernapp.com/rules/new?type=rule_set&match=https%3A%2F%2Fraw.githubusercontent.com%2FLucasss1916%2FAgentSoftware%2Fmain%2FEgern%2Frule%2FAD.yaml) | <https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/Egern/rule/AD.yaml> |
+| `Apisub.yaml` | [导入](https://egernapp.com/rules/new?type=rule_set&match=https%3A%2F%2Fraw.githubusercontent.com%2FLucasss1916%2FAgentSoftware%2Fmain%2FEgern%2Frule%2FApisub.yaml) | <https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/Egern/rule/Apisub.yaml> |
+| `AppleAPIRules.yaml` | [导入](https://egernapp.com/rules/new?type=rule_set&match=https%3A%2F%2Fraw.githubusercontent.com%2FLucasss1916%2FAgentSoftware%2Fmain%2FEgern%2Frule%2FAppleAPIRules.yaml) | <https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/Egern/rule/AppleAPIRules.yaml> |
+| `AppleCDNRules.yaml` | [导入](https://egernapp.com/rules/new?type=rule_set&match=https%3A%2F%2Fraw.githubusercontent.com%2FLucasss1916%2FAgentSoftware%2Fmain%2FEgern%2Frule%2FAppleCDNRules.yaml) | <https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/Egern/rule/AppleCDNRules.yaml> |
+| `AppleNoChinaCDNRules.yaml` | [导入](https://egernapp.com/rules/new?type=rule_set&match=https%3A%2F%2Fraw.githubusercontent.com%2FLucasss1916%2FAgentSoftware%2Fmain%2FEgern%2Frule%2FAppleNoChinaCDNRules.yaml) | <https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/Egern/rule/AppleNoChinaCDNRules.yaml> |
+| `AppleRules.yaml` | [导入](https://egernapp.com/rules/new?type=rule_set&match=https%3A%2F%2Fraw.githubusercontent.com%2FLucasss1916%2FAgentSoftware%2Fmain%2FEgern%2Frule%2FAppleRules.yaml) | <https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/Egern/rule/AppleRules.yaml> |
+| `DirectDomain.yaml` | [导入](https://egernapp.com/rules/new?type=rule_set&match=https%3A%2F%2Fraw.githubusercontent.com%2FLucasss1916%2FAgentSoftware%2Fmain%2FEgern%2Frule%2FDirectDomain.yaml) | <https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/Egern/rule/DirectDomain.yaml> |
+| `GFWRules.yaml` | [导入](https://egernapp.com/rules/new?type=rule_set&match=https%3A%2F%2Fraw.githubusercontent.com%2FLucasss1916%2FAgentSoftware%2Fmain%2FEgern%2Frule%2FGFWRules.yaml) | <https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/Egern/rule/GFWRules.yaml> |
+| `HKProxyDomain.yaml` | [导入](https://egernapp.com/rules/new?type=rule_set&match=https%3A%2F%2Fraw.githubusercontent.com%2FLucasss1916%2FAgentSoftware%2Fmain%2FEgern%2Frule%2FHKProxyDomain.yaml) | <https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/Egern/rule/HKProxyDomain.yaml> |
+| `MyAiport.yaml` | [导入](https://egernapp.com/rules/new?type=rule_set&match=https%3A%2F%2Fraw.githubusercontent.com%2FLucasss1916%2FAgentSoftware%2Fmain%2FEgern%2Frule%2FMyAiport.yaml) | <https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/Egern/rule/MyAiport.yaml> |
+| `NeedHighQualityNodeDomain.yaml` | [导入](https://egernapp.com/rules/new?type=rule_set&match=https%3A%2F%2Fraw.githubusercontent.com%2FLucasss1916%2FAgentSoftware%2Fmain%2FEgern%2Frule%2FNeedHighQualityNodeDomain.yaml) | <https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/Egern/rule/NeedHighQualityNodeDomain.yaml> |
+| `ProxyDomain.yaml` | [导入](https://egernapp.com/rules/new?type=rule_set&match=https%3A%2F%2Fraw.githubusercontent.com%2FLucasss1916%2FAgentSoftware%2Fmain%2FEgern%2Frule%2FProxyDomain.yaml) | <https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/Egern/rule/ProxyDomain.yaml> |
+| `TalktoneAds.yaml` | [导入](https://egernapp.com/rules/new?type=rule_set&match=https%3A%2F%2Fraw.githubusercontent.com%2FLucasss1916%2FAgentSoftware%2Fmain%2FEgern%2Frule%2FTalktoneAds.yaml) | <https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/Egern/rule/TalktoneAds.yaml> |
+| `TalktoneDirect.yaml` | [导入](https://egernapp.com/rules/new?type=rule_set&match=https%3A%2F%2Fraw.githubusercontent.com%2FLucasss1916%2FAgentSoftware%2Fmain%2FEgern%2Frule%2FTalktoneDirect.yaml) | <https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/Egern/rule/TalktoneDirect.yaml> |
+| `TalktoneProxy.yaml` | [导入](https://egernapp.com/rules/new?type=rule_set&match=https%3A%2F%2Fraw.githubusercontent.com%2FLucasss1916%2FAgentSoftware%2Fmain%2FEgern%2Frule%2FTalktoneProxy.yaml) | <https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/Egern/rule/TalktoneProxy.yaml> |
+| `myvideorule.yaml` | [导入](https://egernapp.com/rules/new?type=rule_set&match=https%3A%2F%2Fraw.githubusercontent.com%2FLucasss1916%2FAgentSoftware%2Fmain%2FEgern%2Frule%2Fmyvideorule.yaml) | <https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/Egern/rule/myvideorule.yaml> |
+| `prevent_dns.yaml` | [导入](https://egernapp.com/rules/new?type=rule_set&match=https%3A%2F%2Fraw.githubusercontent.com%2FLucasss1916%2FAgentSoftware%2Fmain%2FEgern%2Frule%2Fprevent_dns.yaml) | <https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/Egern/rule/prevent_dns.yaml> |
+| `steamCDN.yaml` | [导入](https://egernapp.com/rules/new?type=rule_set&match=https%3A%2F%2Fraw.githubusercontent.com%2FLucasss1916%2FAgentSoftware%2Fmain%2FEgern%2Frule%2FsteamCDN.yaml) | <https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/Egern/rule/steamCDN.yaml> |
+
+> 导入后需在 Egern 里为该规则集选择策略。
+
+<sub>本文件由 `gen_readme.py` 生成，勿直接编辑。</sub>

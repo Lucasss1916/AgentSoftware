@@ -87,6 +87,27 @@ sing-box 配置的节点填法见 [`singbox/config/README.md`](singbox/config/RE
 > sing-box 配置**不含任何机场节点**，各策略组默认指向 `direct`，需按
 > `singbox/config/README.md` 的正则过滤订阅并填入后才会真正走代理。
 
+## 一键导入
+
+各客户端目录的 `README.md` 里列出了本目录每个文件的原始地址与对应的一键导入链接，
+由 `gen_readme.py` 生成（`--check` 供 CI 校验）：
+
+| 客户端 | 目录 |
+| --- | --- |
+| Loon | [规则](loon/rule/README.md) · [插件](loon/plugin/README.md) |
+| Quantumult X | [规则](quanx/rule/README.md) · [重写](quanx/rewrite/README.md) · [任务](quanx/task/README.md) |
+| Egern | [规则](Egern/rule/README.md) · [模块](Egern/module/README.md) |
+| Surge | [配置](Surge/config/README.md) · [模块](Surge/module/README.md) · [规则](Surge/rule/README.md) · [BoxJS](Surge/boxjs/README.md) |
+| Clash / mihomo | [主配置](clash/yaml/README.md) · [规则](clash/rule/README.md) |
+| sing-box | [主配置](singbox/config/README.md) · [规则](singbox/rule/README.md) |
+
+只有 Loon、Quantumult X、Egern 有 Universal Link，能做成 GitHub 上可直接点的链接；
+Surge、Clash、sing-box 只有自定义协议头（`surge:///`、`mihomo://`、`sing-box://`），
+会被 GitHub 的 markdown 过滤掉，故以代码块形式给出，需自行复制到地址栏或快捷指令打开。
+
+各家能导入的粒度也不同：Surge 只能导入配置与模块，Clash / sing-box 只能导入主配置，
+它们的规则集需手写进主配置里，对应目录的 README 已注明写法。
+
 ## 目录
 
 | 目录 | 内容 |

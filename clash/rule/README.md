@@ -2,7 +2,6 @@
 
 | 文件 | 原始地址 |
 | --- | --- |
-| `.DS_Store` | <https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/clash/rule/.DS_Store> |
 | `AD.yaml` | <https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/clash/rule/AD.yaml> |
 | `Apisub.yaml` | <https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/clash/rule/Apisub.yaml> |
 | `AppleAPIRules.yaml` | <https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/clash/rule/AppleAPIRules.yaml> |

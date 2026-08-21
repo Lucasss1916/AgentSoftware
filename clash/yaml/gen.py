@@ -7,23 +7,23 @@ BUILD = Path(__file__).resolve().parent
 REGIONS = [
     # (中文名, 图标名, filter 正则, 是否给 policy-priority)
     ("香港", "Hong_Kong",
-     r"(?=.*(广港|香港|HK|Hong ?Kong|🇭🇰|HongKong)).*$", True),
+     r"(?!.*(?i:10x))(?=.*(广港|香港|HK|Hong ?Kong|🇭🇰|HongKong)).*$", True),
     ("台湾", "Taiwan",
-     r"(?=.*(广台|台湾|台灣|TW|Tai ?Wan|🇹🇼|TaiWan|Taiwan)).*$", True),
+     r"(?!.*(?i:10x))(?=.*(广台|台湾|台灣|TW|Tai ?Wan|🇹🇼|TaiWan|Taiwan)).*$", True),
     ("日本", "Japan",
-     r"(?=.*(广日|日本|JP|川日|东京|大阪|泉日|埼玉|沪日|深日|🇯🇵|Japan)).*$", True),
+     r"(?!.*(?i:10x))(?=.*(广日|日本|JP|川日|东京|大阪|泉日|埼玉|沪日|深日|🇯🇵|Japan)).*$", True),
     ("新加坡", "Singapore",
-     r"(?=.*(广新|新加坡|SG|坡|狮城|🇸🇬|Singapore)).*$", True),
+     r"(?!.*(?i:10x))(?=.*(广新|新加坡|SG|坡|狮城|🇸🇬|Singapore)).*$", True),
     ("韩国", "South_Korea",
-     r"(?=.*(广韩|韩国|韓國|KR|首尔|春川|🇰🇷|Korea)).*$", False),
+     r"(?!.*(?i:10x))(?=.*(广韩|韩国|韓國|KR|首尔|春川|🇰🇷|Korea)).*$", False),
     ("美国", "United_States",
-     r"(?=.*(广美|美国|US|纽约|波特兰|达拉斯|俄勒|凤凰城|费利蒙|拉斯|洛杉|圣何塞|圣克拉|西雅|芝加|🇺🇸|United ?States)).*$", False),
+     r"(?!.*(?i:10x))(?=.*(广美|美国|US|纽约|波特兰|达拉斯|俄勒|凤凰城|费利蒙|拉斯|洛杉|圣何塞|圣克拉|西雅|芝加|🇺🇸|United ?States)).*$", False),
     ("英国", "England",
-     r"(?=.*(英国|伦敦|UK|United ?Kingdom|🇬🇧|London)).*$", False),
+     r"(?!.*(?i:10x))(?=.*(英国|伦敦|UK|United ?Kingdom|🇬🇧|London)).*$", False),
 ]
 
 # “其他”组：排除上面所有地区关键词
-_EXCLUDE = ("直连|拒绝|广港|香港|HK|Hong ?Kong|🇭🇰|HongKong|广台|台湾|台灣|TW|Tai ?Wan|🇹🇼|TaiWan|Taiwan|"
+_EXCLUDE = ("10x|10X|直连|拒绝|广港|香港|HK|Hong ?Kong|🇭🇰|HongKong|广台|台湾|台灣|TW|Tai ?Wan|🇹🇼|TaiWan|Taiwan|"
             "广日|日本|JP|川日|东京|大阪|泉日|埼玉|沪日|深日|🇯🇵|Japan|广新|新加坡|SG|坡|狮城|🇸🇬|Singapore|"
             "广韩|韩国|韓國|KR|首尔|春川|🇰🇷|Korea|广美|美国|US|纽约|波特兰|达拉斯|俄勒|凤凰城|费利蒙|拉斯|洛杉|"
             "圣何塞|圣克拉|西雅|芝加|🇺🇸|United ?States|英国|UK|United ?Kingdom|伦敦|London|🇬🇧|"

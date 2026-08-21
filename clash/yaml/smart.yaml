@@ -258,7 +258,7 @@ proxy-groups:
     policy-priority: "Mitce:0.7"
     include-all: true
     interval: 300
-    filter: "(?=.*(广港|香港|HK|Hong ?Kong|🇭🇰|HongKong)).*$"
+    filter: "(?!.*(?i:10x))(?=.*(广港|香港|HK|Hong ?Kong|🇭🇰|HongKong)).*$"
     icon: https://fastly.jsdelivr.net/gh/Semporia/Hand-Painted-icon@master/Rounded_Rectangle/Hong_Kong.png
 
   # 台湾
@@ -269,7 +269,7 @@ proxy-groups:
     policy-priority: "Mitce:0.7"
     include-all: true
     interval: 300
-    filter: "(?=.*(广台|台湾|台灣|TW|Tai ?Wan|🇹🇼|TaiWan|Taiwan)).*$"
+    filter: "(?!.*(?i:10x))(?=.*(广台|台湾|台灣|TW|Tai ?Wan|🇹🇼|TaiWan|Taiwan)).*$"
     icon: https://fastly.jsdelivr.net/gh/Semporia/Hand-Painted-icon@master/Rounded_Rectangle/Taiwan.png
 
   # 日本
@@ -280,7 +280,7 @@ proxy-groups:
     policy-priority: "Mitce:0.7"
     include-all: true
     interval: 300
-    filter: "(?=.*(广日|日本|JP|川日|东京|大阪|泉日|埼玉|沪日|深日|🇯🇵|Japan)).*$"
+    filter: "(?!.*(?i:10x))(?=.*(广日|日本|JP|川日|东京|大阪|泉日|埼玉|沪日|深日|🇯🇵|Japan)).*$"
     icon: https://fastly.jsdelivr.net/gh/Semporia/Hand-Painted-icon@master/Rounded_Rectangle/Japan.png
 
   # 新加坡
@@ -291,7 +291,7 @@ proxy-groups:
     policy-priority: "Mitce:0.7"
     include-all: true
     interval: 300
-    filter: "(?=.*(广新|新加坡|SG|坡|狮城|🇸🇬|Singapore)).*$"
+    filter: "(?!.*(?i:10x))(?=.*(广新|新加坡|SG|坡|狮城|🇸🇬|Singapore)).*$"
     icon: https://fastly.jsdelivr.net/gh/Semporia/Hand-Painted-icon@master/Rounded_Rectangle/Singapore.png
 
   # 韩国
@@ -302,7 +302,7 @@ proxy-groups:
 #   policy-priority: "机场名:0.8"
     include-all: true
     interval: 300
-    filter: "(?=.*(广韩|韩国|韓國|KR|首尔|春川|🇰🇷|Korea)).*$"
+    filter: "(?!.*(?i:10x))(?=.*(广韩|韩国|韓國|KR|首尔|春川|🇰🇷|Korea)).*$"
     icon: https://fastly.jsdelivr.net/gh/Semporia/Hand-Painted-icon@master/Rounded_Rectangle/South_Korea.png
 
   # 美国
@@ -313,7 +313,7 @@ proxy-groups:
 #   policy-priority: "机场名:0.8"
     include-all: true
     interval: 300
-    filter: "(?=.*(广美|美国|US|纽约|波特兰|达拉斯|俄勒|凤凰城|费利蒙|拉斯|洛杉|圣何塞|圣克拉|西雅|芝加|🇺🇸|United ?States)).*$"
+    filter: "(?!.*(?i:10x))(?=.*(广美|美国|US|纽约|波特兰|达拉斯|俄勒|凤凰城|费利蒙|拉斯|洛杉|圣何塞|圣克拉|西雅|芝加|🇺🇸|United ?States)).*$"
     icon: https://fastly.jsdelivr.net/gh/Semporia/Hand-Painted-icon@master/Rounded_Rectangle/United_States.png
 
   # 英国
@@ -324,7 +324,7 @@ proxy-groups:
 #   policy-priority: "机场名:0.8"
     include-all: true
     interval: 300
-    filter: "(?=.*(英国|伦敦|UK|United ?Kingdom|🇬🇧|London)).*$"
+    filter: "(?!.*(?i:10x))(?=.*(英国|伦敦|UK|United ?Kingdom|🇬🇧|London)).*$"
     icon: https://fastly.jsdelivr.net/gh/Semporia/Hand-Painted-icon@master/Rounded_Rectangle/England.png
 
   # 其他（未匹配到上述地区的节点）
@@ -334,7 +334,7 @@ proxy-groups:
     collectdata: true
     include-all: true
     interval: 300
-    filter: "^((?!(直连|拒绝|广港|香港|HK|Hong ?Kong|🇭🇰|HongKong|广台|台湾|台灣|TW|Tai ?Wan|🇹🇼|TaiWan|Taiwan|广日|日本|JP|川日|东京|大阪|泉日|埼玉|沪日|深日|🇯🇵|Japan|广新|新加坡|SG|坡|狮城|🇸🇬|Singapore|广韩|韩国|韓國|KR|首尔|春川|🇰🇷|Korea|广美|美国|US|纽约|波特兰|达拉斯|俄勒|凤凰城|费利蒙|拉斯|洛杉|圣何塞|圣克拉|西雅|芝加|🇺🇸|United ?States|英国|UK|United ?Kingdom|伦敦|London|🇬🇧|过期|剩余|流量|官网|套餐|机场|返利|订阅|重置)).)*$"
+    filter: "^((?!(10x|10X|直连|拒绝|广港|香港|HK|Hong ?Kong|🇭🇰|HongKong|广台|台湾|台灣|TW|Tai ?Wan|🇹🇼|TaiWan|Taiwan|广日|日本|JP|川日|东京|大阪|泉日|埼玉|沪日|深日|🇯🇵|Japan|广新|新加坡|SG|坡|狮城|🇸🇬|Singapore|广韩|韩国|韓國|KR|首尔|春川|🇰🇷|Korea|广美|美国|US|纽约|波特兰|达拉斯|俄勒|凤凰城|费利蒙|拉斯|洛杉|圣何塞|圣克拉|西雅|芝加|🇺🇸|United ?States|英国|UK|United ?Kingdom|伦敦|London|🇬🇧|过期|剩余|流量|官网|套餐|机场|返利|订阅|重置)).)*$"
     icon: https://www.clashverge.dev/assets/icons/adjust.svg
 
 # ========================

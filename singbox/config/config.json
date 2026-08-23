@@ -29,10 +29,6 @@
     ],
     "rules": [
       {
-        "ip_accept_any": true,
-        "server": "dns_local"
-      },
-      {
         "query_type": [
           "A",
           "AAAA"
@@ -366,6 +362,10 @@
     {
       "type": "direct",
       "tag": "direct"
+    },
+    {
+      "type": "block",
+      "tag": "block"
     }
   ],
   "route": {

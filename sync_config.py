@@ -243,6 +243,7 @@ def build_singbox(rule_sets, rules, old: dict | None):
                       "interval": "5m", "tolerance": 30})
     outbounds += user_nodes
     outbounds.append({"type": "direct", "tag": "direct"})
+    outbounds.append({"type": "block", "tag": "block"})
 
     rsets = sb_rule_sets(rule_sets, used)
     # GEOIP,CN -> 等价 .srs
@@ -262,7 +263,6 @@ def build_singbox(rule_sets, rules, old: dict | None):
           {"type": "local", "tag": "dns_local"},
         ],
         "rules": [
-          {"ip_accept_any": True, "server": "dns_local"},
           {"query_type": ["A", "AAAA"], "server": "dns_fake", "rewrite_ttl": 1},
         ],
         "final": "dns_cn",
@@ -308,13 +308,28 @@ def write_sb_readme(skipped) -> str:
          "| 地区组 | filter 正则 |", "| --- | --- |"]
     for r in REGIONS:
         L.append(f"| `{r}-{SUFFIX}` | `{FILTERS[r]}` |")
-    L += ["", "业务组（AIGC / GitHub / …）已自动引用各地区组，填完节点无需再动。", "",
+    L += ["", "业务组(AIGC / GitHub / ...)已自动引用各地区组,填完节点无需再动。", "",
+          "## sub-store 自动拉取节点(方式 1)", "",
+          "sing-box **内核不支持** clash 那种 `proxy-providers` 远程节点订阅,",
+          "节点必须写死在 `outbounds`。想要“订阅 URL 自动拉节点”,正确做法是:",
+          "让 sub-store(或 SFM 客户端的订阅)以**本份 `config.json` 为模板**,",
+          "把机场订阅节点注入进 `outbounds` 的各地区 urltest 组,",
+          "输出一份**完整 sing-box 配置**托管到固定 URL,再把该 URL 给客户端定时拉取。", "",
+          "接线步骤:", "",
+          "1. 在 sub-store 输出端选 **sing-box 模板** 格式,模板 URL 指向本文件:",
+          f"   `{SB_RAW}`",
+          "2. sub-store 会用机场订阅节点替换/填充 `香港-智选`…`其他` 等 urltest 组的 ",
+          "`outbounds`(把 `[\"direct\"]` 换成你节点的 tag)。",
+          "3. 把 sub-store 生成的**完整配置托管地址**(而不是本仓库这个地址)填进客户端订阅,",
+          "sub-store 定时刷新节点。", "",
+          "取舍:节点自动更新的同时,**分流以 sub-store 编排产出的那份为准**;",
+          "本仓库 `routes.yaml` 仍负责 `config.json` 模板本身的分流。两者各自独立。", "",
           "## 导入", "",
-          f"订阅地址：<{SB_RAW}>", "",
-          "一键导入（官方 SFI / SFM / SFA）。sing-box 只有自定义协议头，"
-          "GitHub 会过滤掉非 http(s) 链接，需复制到地址栏或快捷指令打开：", "",
+          f"订阅地址:<{SB_RAW}>", "",
+          "一键导入(官方 SFI / SFM / SFA)。sing-box 只有自定义协议头,",
+          "GitHub 会过滤掉非 http(s) 链接,需复制到地址栏或快捷指令打开:", "",
           "```",
-          f"sing-box://import-remote-profile?url={quote(SB_RAW, safe='')}"
+          f"sing-box://import-remote-profile?url={quote(SB_RAW, safe='')}",
           f"#{quote('AgentSoftware')}",
           "```", ""]
     if skipped:

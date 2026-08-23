@@ -708,6 +708,14 @@
       },
       {
         "type": "remote",
+        "tag": "discord-domain",
+        "format": "binary",
+        "url": "https://gh-proxy.com/github.com/MetaCubeX/meta-rules-dat/raw/sing/geo/geosite/discord.srs",
+        "download_detour": "direct",
+        "update_interval": "24h"
+      },
+      {
+        "type": "remote",
         "tag": "china-domain",
         "format": "binary",
         "url": "https://gh-proxy.com/github.com/MetaCubeX/meta-rules-dat/raw/sing/geo/geosite/cn.srs",
@@ -904,7 +912,8 @@
           "blizzard-domain",
           "ubi-domain",
           "playstation-domain",
-          "nintend-domain"
+          "nintend-domain",
+          "discord-domain"
         ],
         "outbound": "Game"
       },

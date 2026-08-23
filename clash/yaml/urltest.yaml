@@ -7,13 +7,13 @@
 # ============================================================
 #  机场节点订阅（按需取消注释并填入订阅地址）
 # ============================================================
-# proxy-providers:
-#   Mitce:
-#     url: "机场订阅地址"
-#     type: http
-#     interval: 86400
-#     health-check: {enable: true, url: https://www.gstatic.com/generate_204, interval: 300}
-#     proxy: 所有-手选
+ proxy-providers:
+   Mitce:
+     url: "机场订阅地址"
+     type: http
+     interval: 86400
+     health-check: {enable: true, url: https://www.gstatic.com/generate_204, interval: 300}
+     proxy: 所有-手选
 #
 #   69yun:
 #     url: "机场订阅地址"

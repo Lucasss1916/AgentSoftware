@@ -408,6 +408,7 @@ rule-providers:
   UBI / Domain: {<<: *class, url: "https://gh-proxy.com/raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/UBI/UBI.list"}
   PlayStation / Domain: {<<: *class, url: "https://gh-proxy.com/raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Clash/PlayStation/PlayStation.list"}
   Nintend / Domain: {<<: *class, url: "https://gh-proxy.com/raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Nintendo/Nintendo.list"}
+  Discord / Domain: {<<: *class, url: "https://gh-proxy.com/raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Discord/Discord.list"}
 
   # ---- 兜底分流 ----
   Proxy / Domain: {<<: *class, url: "https://gh-proxy.com/raw.githubusercontent.com/liandu2024/clash/refs/heads/main/list/Proxy.list"}
@@ -483,6 +484,7 @@ rules:
   - RULE-SET,UBI / Domain,Game
   - RULE-SET,PlayStation / Domain,Game
   - RULE-SET,Nintend / Domain,Game
+  - RULE-SET,Discord / Domain,Game
 
   # ---- 大厂（Apple-CN 必须在 Apple 之前，否则国区服务会被整体代理）----
   - RULE-SET,Apple-CN / Domain,DIRECT

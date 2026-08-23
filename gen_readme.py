@@ -184,7 +184,8 @@ def files_of(d: dict) -> list[Path]:
     p = ROOT / d["path"]
     out = []
     for f in sorted(p.iterdir()):
-        if not f.is_file() or f.name == "README.md":
+        # 点文件（.DS_Store 等）不是规则，且 .gitignore 已忽略 —— 列进来只会让 CI 与本地打架
+        if not f.is_file() or f.name == "README.md" or f.name.startswith("."):
             continue
         if d["ext"] is not None and f.suffix not in d["ext"]:
             continue

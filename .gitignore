@@ -3,3 +3,6 @@
 __pycache__/
 *.pyc
 .mihomo-test/
+.claude/
+# 手动导入的参考配置，不是本仓库生成物
+singbox/shared-*.json

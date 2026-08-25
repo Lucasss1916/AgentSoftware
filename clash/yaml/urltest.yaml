@@ -7,13 +7,13 @@
 # ============================================================
 #  机场节点订阅（按需取消注释并填入订阅地址）
 # ============================================================
- proxy-providers:
-   Mitce:
-     url: "机场订阅地址"
-     type: http
-     interval: 86400
-     health-check: {enable: true, url: https://www.gstatic.com/generate_204, interval: 300}
-     proxy: 所有-手选
+# proxy-providers:
+#   Mitce:
+#     url: "机场订阅地址"
+#     type: http
+#     interval: 86400
+#     health-check: {enable: true, url: https://www.gstatic.com/generate_204, interval: 300}
+#     proxy: 所有-手选
 #
 #   69yun:
 #     url: "机场订阅地址"
@@ -25,28 +25,28 @@
 # ========================
 # 主要端口设置
 # ========================
- port: 7890
- socks-port: 7891
- redir-port: 7892
- mixed-port: 7893
- tproxy-port: 7895
+port: 7890
+socks-port: 7891
+redir-port: 7892
+mixed-port: 7893
+tproxy-port: 7895
 
- allow-lan: true
- mode: rule
- log-level: info
- ipv6: false
- unified-delay: true
- tcp-concurrent: true
- find-process-mode: strict
- keep-alive-interval: 30
+allow-lan: true
+mode: rule
+log-level: info
+ipv6: false
+unified-delay: true
+tcp-concurrent: true
+find-process-mode: strict
+keep-alive-interval: 30
 
- external-controller: 0.0.0.0:9090
+external-controller: 0.0.0.0:9090
 # external-ui: ui
 # external-ui-name: zashboard
 # external-ui-url: https://gh-proxy.com/github.com/Zephyruso/zashboard/archive/refs/heads/gh-pages.zip
- secret: "anv4SIzOSEWGMXcIoT-hGT-5LigNk9v0"
+secret: "anv4SIzOSEWGMXcIoT-hGT-5LigNk9v0"
 
- profile:
+profile:
   store-selected: true
   store-fake-ip: true
 
@@ -54,7 +54,7 @@
 # TUN 模块
 # ========================
 # 【场景 A】本机接管（默认启用）：Mac / Windows 本机直接全局接管
- tun:
+tun:
   enable: true
   stack: mixed
   device: Mihomo
@@ -83,7 +83,7 @@
 # ========================
 # 嗅探模块
 # ========================
- sniffer:
+sniffer:
   enable: true
   parse-pure-ip: true
   force-dns-mapping: true
@@ -106,7 +106,7 @@
 # ========================
 # DNS 设置
 # ========================
- dns:
+dns:
   enable: true
   listen: 0.0.0.0:7874
   ipv6: false
@@ -188,7 +188,7 @@
 # ========================
 # 策略组定义
 # ========================
- default: &default
+default: &default
   type: select
   proxies:
     - 所有-手选
@@ -203,7 +203,7 @@
     - DIRECT
     - REJECT
 
- proxy-groups:
+proxy-groups:
 
   # ---- 业务分流组 ----
   - {name: AIGC, icon: https://raw.githubusercontent.com/Orz-3/mini/master/Color/OpenAI.png, <<: *default}
@@ -341,13 +341,13 @@
 # ========================
 # 规则集提供者
 # ========================
- rule-anchor:
+rule-anchor:
   ip: &ip {type: http, interval: 86400, behavior: ipcidr, format: mrs}
   domain: &domain {type: http, interval: 86400, behavior: domain, format: mrs}
   class: &class {type: http, interval: 86400, behavior: classical, format: text}
   yamlclass: &yamlclass {type: http, interval: 86400, behavior: classical, format: yaml}
 
- rule-providers:
+rule-providers:
   # ---- 自建规则（本仓库 clash/rule/*.yaml 是 payload: 结构，须用 format: yaml）----
   MyVideo / Domain: {<<: *yamlclass, url: "https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/refs/heads/main/clash/rule/myvideorule.yaml"}
   DirectDomain / Domain: {<<: *yamlclass, url: "https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/refs/heads/main/clash/rule/DirectDomain.yaml"}
@@ -423,7 +423,7 @@
 # ========================
 # 顺序原则：进程直连 > 局域网 > 广告拦截 > 个人自定义 > 业务分流 > 国内直连 > 兜底
 # 本段由 sync_config.py 依 routes.yaml 生成，勿直接编辑。
- rules:
+rules:
 
   # ---- 本地进程强制直连 ----
   - PROCESS-NAME,Weixin.exe,DIRECT

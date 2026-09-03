@@ -20,9 +20,25 @@
 `clash://`。GitHub 会过滤非 http(s) 链接，所以只能复制上面的整行到地址栏打开。
 其余客户端（ClashMeta for Android、Stash 等）直接粘贴订阅地址即可。
 
+## JS 覆写（扩展脚本）
+
+已经在客户端里挂了机场订阅、只想套用本仓库的分流规则时，用覆写脚本，别用整份配置：
+
+| 文件 | 对应配置 |
+| --- | --- |
+| `urltest.js` | `urltest.yaml` |
+| `smart.js` | `smart.yaml` |
+
+Clash Verge Rev / Clash Party 的「扩展脚本」，或 Stash / ClashX 的 JS 覆写，都是
+`function main(config)` 这一套。脚本只覆盖 DNS、TUN、嗅探、策略组、规则这些段落，
+订阅带来的 `proxies` 与 `proxy-providers` 原样保留。
+
+端口、`external-controller`、`secret` **故意不覆写** —— 那几项由客户端自己管，
+盖掉会让客户端连不上内核。
+
 ## 维护方式
 
-两份配置由脚本生成，**不要直接编辑 smart.yaml / urltest.yaml**：
+两份配置由脚本生成，**不要直接编辑 smart.yaml / urltest.yaml / *.js**：
 
 - `common_head.yaml` — 端口、TUN、DNS、嗅探等通用头部
 - `common_rules.yaml` — rule-providers 与 rules（两份共用，保证分流行为一致）

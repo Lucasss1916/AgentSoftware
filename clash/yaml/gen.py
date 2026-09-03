@@ -150,6 +150,36 @@ HEADER = ("# ============================================================\n"
           "# ============================================================\n\n")
 
 
+# 覆写脚本里不该出现的键：
+#   default / rule-anchor 只是 YAML 锚点容器，转成 JS 后没有意义；
+#   端口和 external-controller/secret 由客户端自己管，覆写掉会让客户端连不上内核。
+JS_DROP = {"default", "rule-anchor",
+           "port", "socks-port", "redir-port", "mixed-port", "tproxy-port",
+           "external-controller", "secret"}
+
+JS_TMPL = """// {title}
+// 由 gen.py 生成，勿手改。改完 common_head.yaml / common_rules.yaml / routes.yaml
+// 后重跑： cd clash/yaml && python3 gen.py
+//
+// 用法：Clash Verge Rev / Clash Party「扩展脚本」，或 Stash / ClashX 的 JS 覆写。
+// 订阅自带的 proxies 与 proxy-providers 原样保留，其余段落全部换成本仓库的配置。
+
+const override = {body};
+
+function main(config) {{
+  return Object.assign({{}}, config, override);
+}}
+"""
+
+
+def build_js(yaml_text, title):
+    import yaml, json
+    cfg = yaml.safe_load(yaml_text)          # safe_load 会把 <<: *default 展开成实值
+    cfg = {k: v for k, v in cfg.items() if k not in JS_DROP}
+    return JS_TMPL.format(title=title,
+                          body=json.dumps(cfg, ensure_ascii=False, indent=2))
+
+
 if __name__ == "__main__":
     head = (BUILD / "common_head.yaml").read_text(encoding="utf-8")
     rules = (BUILD / "common_rules.yaml").read_text(encoding="utf-8")
@@ -163,3 +193,6 @@ if __name__ == "__main__":
         body = HEADER.format(title=title) + head + "\n\n" + build_groups(suffix, kind) + "\n" + rules
         (BUILD / out).write_text(body, encoding="utf-8")
         print("wrote", out)
+        js = out.replace(".yaml", ".js")
+        (BUILD / js).write_text(build_js(body, title), encoding="utf-8")
+        print("wrote", js)

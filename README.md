@@ -1,6 +1,6 @@
 # AgentSoftware
 
-[![GitHub Pulse](https://github-pulse-git-main-lucasss1916s-projects.vercel.app/r/Lucasss1916/AgentSoftware?theme=phosphor)](https://github-pulse-git-main-lucasss1916s-projects.vercel.app)
+[![GitHub Pulse](https://github-pulse-git-main-lucasss1916s-projects.vercel.app/r/Lucasss1916/AgentSoftware)](https://github-pulse-git-main-lucasss1916s-projects.vercel.app)
 
 各代理客户端的规则与配置集合。
 

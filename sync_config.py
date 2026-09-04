@@ -520,8 +520,10 @@ def forward(check: bool) -> int:
         SB_CONFIG.write_text(new_json, encoding="utf-8")
 
     # clash 两份主配置由既有 gen.py 生成
-    before = {p: p.read_bytes() for p in CLASH_DIR.glob("*.yaml") if p.name in
-              ("smart.yaml", "urltest.yaml")}
+    # gen.py 同时产出 .yaml 和 .js，两种都得快照。漏掉 .js 的后果是双重的：
+    # --check 检测不到 .js 漂移，还会把工作区里的手改静默覆盖掉（--check 必须只读）。
+    GENERATED = ("smart.yaml", "urltest.yaml", "smart.js", "urltest.js")
+    before = {p: p.read_bytes() for p in CLASH_DIR.iterdir() if p.name in GENERATED}
     subprocess.run([sys.executable, "gen.py"], cwd=CLASH_DIR, check=True,
                    stdout=subprocess.DEVNULL)
     if check:

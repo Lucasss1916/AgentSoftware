@@ -153,9 +153,13 @@ HEADER = ("# ============================================================\n"
 # 覆写脚本里不该出现的键：
 #   default / rule-anchor 只是 YAML 锚点容器，转成 JS 后没有意义；
 #   端口和 external-controller/secret 由客户端自己管，覆写掉会让客户端连不上内核。
+#   proxies / proxy-providers 必须留给订阅自己 —— 覆写掉等于把节点清空。
+#   （现在 common_head.yaml 里 proxy-providers 是注释掉的，但一旦启用就会踩到，
+#     所以在这里显式排除，而不是指望它恰好不存在。）
 JS_DROP = {"default", "rule-anchor",
            "port", "socks-port", "redir-port", "mixed-port", "tproxy-port",
-           "external-controller", "secret"}
+           "external-controller", "secret",
+           "proxies", "proxy-providers"}
 
 JS_TMPL = """// {title}
 // 由 gen.py 生成，勿手改。改完 common_head.yaml / common_rules.yaml / routes.yaml

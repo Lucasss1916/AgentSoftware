@@ -1,7 +1,5 @@
 # AgentSoftware
 
-[![GitHub Pulse](https://github-pulse-git-main-lucasss1916s-projects.vercel.app/r/Lucasss1916/AgentSoftware)](https://github-pulse-git-main-lucasss1916s-projects.vercel.app)
-
 各代理客户端的规则与配置集合。
 
 ## 规则同步
@@ -120,3 +118,8 @@ Surge、Clash、sing-box 只有自定义协议头（`surge:///`、`mihomo://`、
 | `Egern/` | 规则、模块 |
 | `singbox/` | 规则、配置 |
 | `Surge/` | 规则、配置、模块、BoxJS |
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="https://github-pulse-git-main-lucasss1916s-projects.vercel.app/r/Lucasss1916/AgentSoftware">
+  <img alt="GitHub Pulse" src="https://github-pulse-git-main-lucasss1916s-projects.vercel.app/r/Lucasss1916/AgentSoftware?theme=paper">
+</picture>

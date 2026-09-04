@@ -2,8 +2,12 @@
 // 由 gen.py 生成，勿手改。改完 common_head.yaml / common_rules.yaml / routes.yaml
 // 后重跑： cd clash/yaml && python3 gen.py
 //
-// 用法：Clash Verge Rev / Clash Party「扩展脚本」，或 Stash / ClashX 的 JS 覆写。
-// 订阅自带的 proxies 与 proxy-providers 原样保留，其余段落全部换成本仓库的配置。
+// 用法：Clash Verge Rev「扩展脚本」/ Mihomo Party(Clash Party)「覆写」。
+// 这两家的 JS 接口一致：入口 main，拿到解析后的 config 对象，返回改完的它。
+// Stash 的「覆写」是 .stoverride（YAML，非 JS），ClashX 没有覆写机制，都用不了本文件。
+//
+// 订阅自带的 proxies / proxy-providers 不在 override 里（见 JS_DROP），故原样保留；
+// 其余段落整段替换成本仓库的配置。
 
 const override = {
   "allow-lan": true,
@@ -881,6 +885,7 @@ const override = {
   ]
 };
 
-function main(config) {
-  return Object.assign({}, config, override);
+function main(config, profileName) {
+  // 文档要求「返回修改后的该参数」，所以就地改 config 再返回，不要返回新对象。
+  return Object.assign(config, override);
 }

@@ -1,6 +1,11 @@
-name: Sync Rules
+# 唯一的云端自动同步工作流。
+# 规则源位于 loon/rule(主)与 routes.yaml(主配置分流)。
+# 任何人在云端(GitHub Web / 手机)改动源文件并推送后,此工作流自动:
+#   生成全部客户端产物 -> 用官方内核校验 -> 机器人把产物提交回 main。
+# 本地完全不需要运行任何脚本,也无需人工同步。
+name: Auto Sync Rules
 
-on:
+"on":
   push:
     branches: [ main ]
     paths:
@@ -28,12 +33,19 @@ on:
       - '.github/workflows/sync-rules.yml'
   workflow_dispatch:
 
+permissions:
+  contents: write
+
+# 连续推送时新任务取代旧任务,防止两个 job 抢 push
+concurrency:
+  group: sync-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   sync:
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
-
+    # 机器人自己提交的产物改动不再次触发,避免无限循环
+    if: github.actor != 'github-actions[bot]'
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -49,27 +61,24 @@ jobs:
       - name: Test Anywhere rule generation
         run: python3 -m unittest discover -s tests -v
 
-      # CI 只校验、永不写回。
-      # 早先 push 时会跑生成器再 commit 回 main —— 于是每次 push 远端都自动多一个
-      # 机器人提交，本地必然落后，下次 push 必被拒。改为纯校验后 main 只由人推进。
-      # 忘了本地生成就在这里失败，照提示跑一遍再推。
-      - name: Check rules are in sync
-        run: python3 sync_rules.py --check
+      # ---- 生成:云端编辑源文件后,所有客户端产物在这里自动铺开 ----
+      - name: Generate rules for all clients
+        run: python3 sync_rules.py
 
-      # 主配置：clash 与 sing-box 是否都与 routes.yaml 一致
-      - name: Check main configs are in sync
-        run: python3 sync_config.py --check
+      - name: Regenerate folder READMEs
+        run: python3 gen_readme.py
 
-      - name: Check folder READMEs are in sync
-        run: python3 gen_readme.py --check
+      - name: Regenerate main configs (routes.yaml -> clash + sing-box)
+        run: python3 sync_config.py
 
+      # ---- 校验:官方内核把关,不合格就不提交 ----
       - name: Validate clash configs
         run: |
           curl -sL -o mihomo.gz \
             https://github.com/MetaCubeX/mihomo/releases/download/v1.19.2/mihomo-linux-amd64-v1.19.2.gz
           gunzip mihomo.gz && chmod +x mihomo
           mkdir -p .mihomo-test
-          # smart.yaml 需要 smart 内核，官方内核无法校验，故只验通用版
+          # smart.yaml 需要 smart 内核,官方内核无法校验,故只验通用版
           cp clash/yaml/urltest.yaml .mihomo-test/config.yaml
           ./mihomo -t -d .mihomo-test -f .mihomo-test/config.yaml
           rm -rf .mihomo-test mihomo
@@ -82,3 +91,19 @@ jobs:
           tar xzf sb.tar.gz
           ./sing-box-${V}-linux-amd64/sing-box check -c singbox/config/config.json
           rm -rf sb.tar.gz sing-box-${V}-linux-amd64
+
+      # ---- 提交:仅 push 到 main 时把产物交回;PR 只校验不提交 ----
+      - name: Commit generated products back to main
+        if: github.event_name == 'push'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          if git diff --cached --quiet; then
+            echo "产物与源已一致,无需提交"
+            exit 0
+          fi
+          git commit -m "🤖 auto: 根据源文件重新生成各客户端产物"
+          # 云端可能有人同时改了源文件,先 rebase 远端再推,避免提交被拒
+          git pull --rebase origin main
+          git push

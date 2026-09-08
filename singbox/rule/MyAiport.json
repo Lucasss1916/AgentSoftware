@@ -3,7 +3,8 @@
   "rules": [
     {
       "domain_suffix": [
-        "checkhere.top"
+        "checkhere.top",
+        "avaulon.com"
       ]
     }
   ]

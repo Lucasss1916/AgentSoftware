@@ -1,0 +1,75 @@
+# Cloud Sync GitHub Action Workflow
+
+```yaml
+# .github/workflows/cloud-sync.yml
+name: Cloud Sync - Auto Sync Rules from Web
+
+on:
+  push:
+    paths:
+      - "loon/rule/**"          # 当 loon/rule 目录下的文件被推送时触发
+    branches: [main]
+
+  workflow_dispatch:          # 手动触发（适合云端修改后立即同步）
+
+jobs:
+  sync-rules:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write          # 需要写入产物文件
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}  # 使用仓库 token 保持分支同步
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: pip install pyyaml
+
+      - name: Sync rules to all formats
+        run: |
+          python3 sync_rules.py --cloud
+
+      - name: Commit changes
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          git add clash/rule/ quanx/rule/ Egern/rule/ singbox/rule/ Surge/rule/ anywhere/rule/
+          git commit -m "🤖 Cloud sync: update rules from loon/rule" || echo "No changes to commit"
+
+          git push
+
+      - name: Notify
+        if: success()
+        run: |
+          echo "✅ Rules have been synced from web to all clients!"
+```
+
+## 使用说明
+
+### 1. 手动触发（云端修改后立即同步）
+
+```bash
+# 在 GitHub Actions 页面手动运行工作流
+```
+
+### 2. 自动触发（推荐）
+
+把 `loon/rule/` 里的文件提交到主分支后，GitHub Actions 会自动检测并同步。
+
+---
+
+**注意事项**：
+- 需要在仓库设置中授予 `GITHUB_TOKEN` 写权限
+- 产物文件会被自动生成到对应目录
+- 建议在云端修改前先 `git pull` 保持本地最新
+
+---
+
+**现在直接同步吗？**
+直接说 **「同步」** 我就帮你执行 `python3 sync_rules.py --cloud` 并更新所有产物。

@@ -1,23 +1,3 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-"""把 loon/rule/*.list 同步为各代理客户端的规则格式。
-
-loon/rule 是全仓库唯一的规则源，其余规则目录均由本脚本生成，请勿手工编辑。
-
-用法：
-    python3 sync_rules.py            # 同步全部格式
-    python3 sync_rules.py --check    # 只校验不写入（CI 用，不一致时退出码非 0）
-
-输出：
-    clash/rule/*.yaml     Clash / mihomo   (payload: 结构，behavior: classical)
-    quanx/rule/*.list     Quantumult X     (HOST 系写法)
-    Egern/rule/*.yaml     Egern            (xxx_set 分组)
-    singbox/rule/*.json   sing-box         (rule-set source v2)
-    Surge/rule/*.list     Surge            (与 Loon 语法基本一致)
-    anywhere/rule/*.arrs  Anywhere         (数字类型 ID 的分流规则集)
-"""
-from __future__ import annotations
-
 import argparse
 import json
 import sys
@@ -217,6 +197,8 @@ def main() -> int:
     ap = argparse.ArgumentParser(description="把 loon/rule 同步到各客户端格式")
     ap.add_argument("--check", action="store_true",
                     help="只校验产物是否与源一致，不写入（CI 用）")
+    ap.add_argument("--cloud", action="store_true",
+                    help="云端同步模式：只生成产物，不自动提交")
     args = ap.parse_args()
 
     sources = sorted(SRC_DIR.glob("*.list"))
@@ -297,6 +279,10 @@ def main() -> int:
             return 1
         print("\n校验通过：所有产物与源一致")
         return 1 if all_warnings else 0
+
+    if args.cloud:
+        print("\n云端同步完成（产物已生成，不自动提交）")
+        return 0
 
     print("\n同步完成")
     return 1 if all_warnings else 0

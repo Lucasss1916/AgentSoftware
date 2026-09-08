@@ -7,20 +7,25 @@ on:
       - 'loon/rule/**'
       - 'clash/yaml/**'
       - 'singbox/config/**'
+      - 'anywhere/rule/**'
       - 'routes.yaml'
       - 'sync_rules.py'
       - 'sync_config.py'
       - 'gen_readme.py'
+      - 'tests/**'
       - '.github/workflows/sync-rules.yml'
   pull_request:
     paths:
       - 'loon/rule/**'
       - 'clash/yaml/**'
       - 'singbox/config/**'
+      - 'anywhere/rule/**'
       - 'routes.yaml'
       - 'sync_rules.py'
       - 'sync_config.py'
       - 'gen_readme.py'
+      - 'tests/**'
+      - '.github/workflows/sync-rules.yml'
   workflow_dispatch:
 
 jobs:
@@ -40,6 +45,9 @@ jobs:
 
       - name: Install dependencies
         run: pip install pyyaml
+
+      - name: Test Anywhere rule generation
+        run: python3 -m unittest discover -s tests -v
 
       # CI 只校验、永不写回。
       # 早先 push 时会跑生成器再 commit 回 main —— 于是每次 push 远端都自动多一个

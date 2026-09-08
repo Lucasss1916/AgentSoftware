@@ -14,6 +14,7 @@ loon/rule 是全仓库唯一的规则源，其余规则目录均由本脚本生�
     Egern/rule/*.yaml     Egern            (xxx_set 分组)
     singbox/rule/*.json   sing-box         (rule-set source v2)
     Surge/rule/*.list     Surge            (与 Loon 语法基本一致)
+    anywhere/rule/*.arrs  Anywhere         (数字类型 ID 的分流规则集)
 """
 from __future__ import annotations
 
@@ -30,21 +31,22 @@ SRC_DIR = ROOT / "loon" / "rule"
 
 # ---------------------------------------------------------------- 规则类型表
 #
-# 单一事实来源：新增规则类型只需在这里加一行，五种格式同时生效。
+# 单一事实来源：新增规则类型只需在这里加一行，六种格式同时生效。
 # 值为 None 表示该格式无法表达此类型，会被显式统计为跳过，而不是静默丢弃。
+# Anywhere 没有精确 DOMAIN 类型，转换为后缀匹配会额外匹配其子域名。
 #
 TYPES: dict[str, dict[str, str | None]] = {
-    "DOMAIN":         {"clash": "DOMAIN",         "qx": "HOST",         "egern": "domain_set",         "singbox": "domain",         "surge": "DOMAIN"},
-    "DOMAIN-SUFFIX":  {"clash": "DOMAIN-SUFFIX",  "qx": "HOST-SUFFIX",  "egern": "domain_suffix_set",  "singbox": "domain_suffix",  "surge": "DOMAIN-SUFFIX"},
-    "DOMAIN-KEYWORD": {"clash": "DOMAIN-KEYWORD", "qx": "HOST-KEYWORD", "egern": "domain_keyword_set", "singbox": "domain_keyword", "surge": "DOMAIN-KEYWORD"},
-    "DOMAIN-REGEX":   {"clash": "DOMAIN-REGEX",   "qx": None,           "egern": "domain_regex_set",   "singbox": "domain_regex",   "surge": None},
-    "IP-CIDR":        {"clash": "IP-CIDR",        "qx": "IP-CIDR",      "egern": "ip_cidr_set",        "singbox": "ip_cidr",        "surge": "IP-CIDR"},
-    "IP-CIDR6":       {"clash": "IP-CIDR6",       "qx": "IP6-CIDR",     "egern": "ip_cidr6_set",       "singbox": "ip_cidr",        "surge": "IP-CIDR6"},
-    "GEOIP":          {"clash": "GEOIP",          "qx": "GEOIP",        "egern": "geoip_set",          "singbox": None,             "surge": "GEOIP"},
-    "ASN":            {"clash": "IP-ASN",         "qx": None,           "egern": "asn_set",            "singbox": None,             "surge": "IP-ASN"},
-    "PROCESS-NAME":   {"clash": "PROCESS-NAME",   "qx": None,           "egern": None,                 "singbox": "process_name",   "surge": "PROCESS-NAME"},
-    "USER-AGENT":     {"clash": "USER-AGENT",     "qx": "USER-AGENT",   "egern": None,                 "singbox": None,             "surge": "USER-AGENT"},
-    "URL-REGEX":      {"clash": None,             "qx": "URL-REGEX",    "egern": "url_regex_set",      "singbox": None,             "surge": "URL-REGEX"},
+    "DOMAIN":         {"clash": "DOMAIN",         "qx": "HOST",         "egern": "domain_set",         "singbox": "domain",         "surge": "DOMAIN",         "anywhere": "2"},
+    "DOMAIN-SUFFIX":  {"clash": "DOMAIN-SUFFIX",  "qx": "HOST-SUFFIX",  "egern": "domain_suffix_set",  "singbox": "domain_suffix",  "surge": "DOMAIN-SUFFIX",  "anywhere": "2"},
+    "DOMAIN-KEYWORD": {"clash": "DOMAIN-KEYWORD", "qx": "HOST-KEYWORD", "egern": "domain_keyword_set", "singbox": "domain_keyword", "surge": "DOMAIN-KEYWORD", "anywhere": "3"},
+    "DOMAIN-REGEX":   {"clash": "DOMAIN-REGEX",   "qx": None,           "egern": "domain_regex_set",   "singbox": "domain_regex",   "surge": None,             "anywhere": None},
+    "IP-CIDR":        {"clash": "IP-CIDR",        "qx": "IP-CIDR",      "egern": "ip_cidr_set",        "singbox": "ip_cidr",        "surge": "IP-CIDR",        "anywhere": "0"},
+    "IP-CIDR6":       {"clash": "IP-CIDR6",       "qx": "IP6-CIDR",     "egern": "ip_cidr6_set",       "singbox": "ip_cidr",        "surge": "IP-CIDR6",       "anywhere": "1"},
+    "GEOIP":          {"clash": "GEOIP",          "qx": "GEOIP",        "egern": "geoip_set",          "singbox": None,             "surge": "GEOIP",          "anywhere": None},
+    "ASN":            {"clash": "IP-ASN",         "qx": None,           "egern": "asn_set",            "singbox": None,             "surge": "IP-ASN",         "anywhere": None},
+    "PROCESS-NAME":   {"clash": "PROCESS-NAME",   "qx": None,           "egern": None,                 "singbox": "process_name",   "surge": "PROCESS-NAME",   "anywhere": None},
+    "USER-AGENT":     {"clash": "USER-AGENT",     "qx": "USER-AGENT",   "egern": None,                 "singbox": None,             "surge": "USER-AGENT",     "anywhere": None},
+    "URL-REGEX":      {"clash": None,             "qx": "URL-REGEX",    "egern": "url_regex_set",      "singbox": None,             "surge": "URL-REGEX",      "anywhere": None},
 }
 
 # 别名 → 标准类型。QX 的 HOST 系写法与旧脚本的下划线误写都在这里归一。
@@ -119,15 +121,15 @@ def parse_source(path: Path) -> tuple[list[Rule], list[str]]:
 # 每个 emit_* 返回 (文本内容, 跳过条数)
 
 
-def _flat(rules: list[Rule], fmt: str) -> tuple[list[str], int]:
-    """行式格式（clash / qx / surge）的共同逻辑。"""
+def _flat(rules: list[Rule], fmt: str, preserve_no_resolve: bool = True) -> tuple[list[str], int]:
+    """行式格式（clash / qx / surge / anywhere）的共同逻辑。"""
     lines, skipped = [], 0
     for r in rules:
         t = TYPES[r.type][fmt]
         if t is None:
             skipped += 1
             continue
-        suffix = ",no-resolve" if (r.no_resolve and r.type in IP_TYPES) else ""
+        suffix = ",no-resolve" if (preserve_no_resolve and r.no_resolve and r.type in IP_TYPES) else ""
         lines.append(f"{t},{r.value}{suffix}")
     return lines, skipped
 
@@ -145,6 +147,22 @@ def emit_qx(rules: list[Rule]) -> tuple[str, int]:
 def emit_surge(rules: list[Rule]) -> tuple[str, int]:
     lines, skipped = _flat(rules, "surge")
     return "\n".join(lines) + "\n", skipped
+
+
+def emit_anywhere(rules: list[Rule]) -> tuple[str, int]:
+    # .arrs 把首个逗号后的整段文本当作值，追加 no-resolve 会导致 CIDR 失效。
+    lines, skipped = _flat(rules, "anywhere", preserve_no_resolve=False)
+    comments = ["# Generated by sync_rules.py; edit loon/rule/*.list instead."]
+    domain_count = sum(rule.type == "DOMAIN" for rule in rules)
+    no_resolve_count = sum(rule.no_resolve and rule.type in {"IP-CIDR", "IP-CIDR6"}
+                           for rule in rules)
+    if domain_count:
+        comments.append(f"# {domain_count} DOMAIN rules use suffix matching, including subdomains.")
+    if no_resolve_count:
+        comments.append(f"# {no_resolve_count} no-resolve modifiers omitted; configure DNS behavior in Anywhere.")
+    if skipped:
+        comments.append(f"# {skipped} unsupported rules omitted; see README.md for format limitations.")
+    return "\n".join(comments + lines) + "\n", skipped
 
 
 def _grouped(rules: list[Rule], fmt: str) -> tuple[dict[str, list[str]], int]:
@@ -185,6 +203,7 @@ TARGETS = [
     ("Egern",   Path("Egern")   / "rule", ".yaml", emit_egern),
     ("singbox", Path("singbox") / "rule", ".json", emit_singbox),
     ("Surge",   Path("Surge")   / "rule", ".list", emit_surge),
+    ("Anywhere", Path("anywhere") / "rule", ".arrs", emit_anywhere),
 ]
 
 # 这些文件只存在于个别客户端、不由 loon/rule 生成，同步时不得删除。

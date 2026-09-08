@@ -34,6 +34,7 @@ def enc(url: str) -> str:
 #   Egern     https://egernapp.com/docs/url-scheme/
 #   Surge     https://manual.nssurge.com/tools/url-scheme.html
 #   QX        https://github.com/crossutility/Quantumult-X/blob/master/url-scheme.md
+#   Anywhere  https://github.com/NodePassProject/Anywhere#deep-links
 #
 # 返回 (scheme_url, universal_url | None)。universal 为 None 表示该客户端
 # 没有 Universal Link，只能复制 scheme 手动打开 —— GitHub 会把非 http(s)
@@ -69,6 +70,10 @@ def quanx(field: str):
         q = f"add-resource?remote-resource={enc(payload)}"
         return f"quantumult-x:///{q}", f"https://quantumult.app/x/open-app/{q}"
     return f
+
+
+def anywhere_ruleset(url: str, name: str):
+    return f"anywhere://add-rule-set?link={enc(url)}", None
 
 
 # ------------------------------------------------------------------ 目录配置
@@ -173,6 +178,17 @@ DIRS: list[dict] = [
         "link": None,
         "note": "sing-box 没有导入单个规则集的 Scheme，需写进主配置的 `route.rule_set`"
                 "（`type: remote` + `format: source`）。主配置见 [`singbox/config`](../config/README.md)。",
+    },
+    {
+        "path": "anywhere/rule",
+        "title": "Anywhere 分流规则",
+        "ext": [".arrs"],
+        "link": anywhere_ruleset,
+        "note": "本目录由 `loon/rule/*.list` 自动生成，每个 `.arrs` 文件是一个可独立订阅的规则集。"
+                "在 Anywhere 的「分流 / Routing」页面用原始地址添加订阅，或复制上方对应 Scheme 导入；"
+                "文件名会作为默认规则集名称。请使用规则模式，并按用途为每个规则集选择"
+                " DIRECT、REJECT、PROXY 或具体节点 / 链；订阅刷新会保留本地名称与策略。"
+                "转换差异与更新方法见[仓库说明](../../README.md#anywhere-规则订阅)。",
     },
 ]
 

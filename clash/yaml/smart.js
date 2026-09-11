@@ -18,6 +18,8 @@ const override = {
   "tcp-concurrent": true,
   "find-process-mode": "strict",
   "keep-alive-interval": 30,
+  "external-controller": "0.0.0.0:9090",
+  "secret": "anv4SIzOSEWGMXcIoT-hGT-5LigNk9v0",
   "profile": {
     "store-selected": true,
     "store-fake-ip": true

@@ -158,7 +158,6 @@ HEADER = ("# ============================================================\n"
 #     所以在这里显式排除，而不是指望它恰好不存在。）
 JS_DROP = {"default", "rule-anchor",
            "port", "socks-port", "redir-port", "mixed-port", "tproxy-port",
-           "external-controller", "secret",
            "proxies", "proxy-providers"}
 
 JS_TMPL = """// {title}

@@ -198,7 +198,22 @@ if __name__ == "__main__":
          "Mihomo 配置 — 通用版（type: url-test，官方 mihomo 内核即可）"),
     ]
     for suffix, kind, out, title in targets:
-        body = HEADER.format(title=title) + head + "\n\n" + build_groups(suffix, kind) + "\n" + rules
+        # LightGBM 模型配置仅属于 Smart 内核，避免污染通用 url-test 配置。
+        target_head = head
+        if kind == "smart":
+            smart_model_config = """# Smart LightGBM 模型自动更新
+lgbm-auto-update: true
+lgbm-update-interval: 72
+lgbm-url: "https://github.com/vernesong/mihomo/releases/download/LightGBM-Model/Model.bin"
+
+"""
+            target_head = target_head.replace("profile:\n", smart_model_config + "profile:\n", 1)
+            target_head = target_head.replace(
+                "  store-fake-ip: true\n",
+                "  store-fake-ip: true\n  smart-collector-size: 100\n",
+                1,
+            )
+        body = HEADER.format(title=title) + target_head + "\n\n" + build_groups(suffix, kind) + "\n" + rules
         (BUILD / out).write_text(body, encoding="utf-8")
         print("wrote", out)
         js = out.replace(".yaml", ".js")

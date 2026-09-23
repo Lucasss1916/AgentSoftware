@@ -20,9 +20,13 @@ const override = {
   "keep-alive-interval": 30,
   "external-controller": "0.0.0.0:9090",
   "secret": "anv4SIzOSEWGMXcIoT-hGT-5LigNk9v0",
+  "lgbm-auto-update": true,
+  "lgbm-update-interval": 72,
+  "lgbm-url": "https://github.com/vernesong/mihomo/releases/download/LightGBM-Model/Model.bin",
   "profile": {
     "store-selected": true,
-    "store-fake-ip": true
+    "store-fake-ip": true,
+    "smart-collector-size": 100
   },
   "tun": {
     "enable": true,

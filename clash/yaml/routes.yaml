@@ -1,0 +1,166 @@
+# Clash 专用分流源；参考 Egern，保留首条命中顺序。
+# 运行 python3 sync_config.py 重新生成。根目录 routes.yaml 继续供 sing-box 使用。
+rule_sets:
+- name: Myairport
+  clash:
+    anchor: yamlclass
+    url: https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/clash/rule/MyAiport.yaml
+- name: DirectDomain
+  clash:
+    anchor: yamlclass
+    url: https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/clash/rule/DirectDomain.yaml
+- name: TalktoneProxy
+  clash:
+    anchor: yamlclass
+    url: https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/clash/rule/TalktoneProxy.yaml
+- name: TalktoneAds
+  clash:
+    anchor: yamlclass
+    url: https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/clash/rule/TalktoneAds.yaml
+- name: TalktoneDirect
+  clash:
+    anchor: yamlclass
+    url: https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/clash/rule/TalktoneDirect.yaml
+- name: MyVideo
+  clash:
+    anchor: yamlclass
+    url: https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/clash/rule/myvideorule.yaml
+- name: AI-category
+  clash:
+    anchor: domain
+    url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/category-ai-!cn.mrs
+- name: AI-fmz200
+  clash:
+    anchor: class
+    url: https://raw.githubusercontent.com/fmz200/wool_scripts/main/Loon/rule/AI.list
+- name: Duolingo
+  clash:
+    anchor: class
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Duolingo/Duolingo.list
+- name: Apple
+  clash:
+    anchor: class
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Apple/Apple.list
+- name: GitHub
+  clash:
+    anchor: class
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/GitHub/GitHub.list
+- name: Microsoft
+  clash:
+    anchor: class
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Microsoft/Microsoft.list
+- name: Telegram
+  clash:
+    anchor: class
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Telegram/Telegram.list
+- name: Epic
+  clash:
+    anchor: class
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Epic/Epic.list
+- name: Sony
+  clash:
+    anchor: class
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Sony/Sony.list
+- name: Steam
+  clash:
+    anchor: class
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Steam/Steam.list
+- name: Nintendo
+  clash:
+    anchor: class
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Nintendo/Nintendo.list
+- name: YouTube
+  clash:
+    anchor: class
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/YouTube/YouTube.list
+- name: GlobalMedia
+  clash:
+    anchor: class
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/GlobalMedia/GlobalMedia.list
+- name: Proxy
+  clash:
+    anchor: class
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Proxy/Proxy.list
+- name: ChinaMedia
+  clash:
+    anchor: class
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/ChinaMedia/ChinaMedia.list
+- name: ChinaMax
+  clash:
+    anchor: class
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/ChinaMax/ChinaMax.list
+- name: WeChat
+  clash:
+    anchor: class
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/WeChat/WeChat.list
+- name: ChinaDNS
+  clash:
+    anchor: domain
+    url: https://raw.githubusercontent.com/metacubex/meta-rules-dat/meta/geo/geosite/cn.mrs
+- name: PrivateDNS
+  clash:
+    anchor: domain
+    url: https://raw.githubusercontent.com/metacubex/meta-rules-dat/meta/geo/geosite/private.mrs
+rules:
+- DOMAIN,linux.do,🇸🇬 新加坡节点
+- DOMAIN,agentrouter.org,🍿 国外媒体
+- RULE-SET,Myairport,🍿 国外媒体
+- DOMAIN-SUFFIX,alidns.com,DIRECT
+- DOMAIN-SUFFIX,doh.pub,DIRECT
+- DOMAIN-SUFFIX,cloudflare-dns.com,🍿 国外媒体
+- DOMAIN-SUFFIX,dns.google,🍿 国外媒体
+- RULE-SET,PrivateDNS,DIRECT
+- DOMAIN,localhost,DIRECT
+- DOMAIN-SUFFIX,local,DIRECT
+- IP-CIDR,192.168.0.0/16,DIRECT,no-resolve
+- IP-CIDR,10.0.0.0/8,DIRECT,no-resolve
+- IP-CIDR,172.16.0.0/12,DIRECT,no-resolve
+- IP-CIDR,127.0.0.0/8,DIRECT,no-resolve
+- IP-CIDR,100.64.0.0/10,DIRECT,no-resolve
+- IP-CIDR6,::1/128,DIRECT,no-resolve
+- IP-CIDR6,fc00::/7,DIRECT,no-resolve
+- IP-CIDR6,fe80::/10,DIRECT,no-resolve
+- DOMAIN-KEYWORD,emby.991600.xyz,DIRECT
+- DOMAIN-KEYWORD,osaka.991600.xyz,DIRECT
+- IP-CIDR,141.147.153.168/32,DIRECT,no-resolve
+- DOMAIN-SUFFIX,oraclecloud.com,✈️ 节点选择
+- DOMAIN-SUFFIX,muyuan.do,🍿 国外媒体
+- DOMAIN-SUFFIX,anyrouter.top,✈️ 节点选择
+- DOMAIN-SUFFIX,hgemby.qzz.io,🎥 视频
+- RULE-SET,AI-category,📟 智能助理
+- RULE-SET,AI-fmz200,📟 智能助理
+- DOMAIN-SUFFIX,lucky.991600.xyz,🌐 全球直连
+- DOMAIN-SUFFIX,e5.991600.xyz,🌐 全球直连
+- DOMAIN-SUFFIX,fnos.991600.xyz,✈️ 节点选择
+- RULE-SET,DirectDomain,🌐 全球直连
+- DOMAIN-SUFFIX,991600.xyz,🍿 国外媒体
+- DOMAIN-SUFFIX,netflav.com,🎥 视频
+- DOMAIN-SUFFIX,surrit.com,🎥 视频
+- RULE-SET,Duolingo,🌐 全球直连
+- RULE-SET,WeChat,DIRECT
+- DOMAIN-SUFFIX,macapp.org.cn,🍿 国外媒体
+- DOMAIN-SUFFIX,cloudflare.com,🌐 全球直连
+- DOMAIN-SUFFIX,sharepoint.com,Ⓜ️ 微软服务
+- RULE-SET,TalktoneProxy,📞 TalkTone
+- RULE-SET,TalktoneAds,REJECT
+- RULE-SET,TalktoneDirect,🌐 全球直连
+- DOMAIN-SUFFIX,testflight.apple.com,🍿 国外媒体
+- DOMAIN,beta.itunes.apple.com,🍿 国外媒体
+- DOMAIN,iosapps.itunes.apple.com,🌐 全球直连
+- DOMAIN-SUFFIX,mzstatic.com,🌐 全球直连
+- RULE-SET,Apple,🍎 苹果服务,no-resolve
+- RULE-SET,GitHub,🍿 国外媒体
+- RULE-SET,Microsoft,Ⓜ️ 微软服务
+- RULE-SET,Telegram,📲 电报信息
+- RULE-SET,Epic,🎮 游戏平台
+- RULE-SET,Sony,🎮 游戏平台
+- RULE-SET,Steam,🎮 游戏平台
+- RULE-SET,Nintendo,🎮 游戏平台
+- RULE-SET,YouTube,🍿 国外媒体
+- RULE-SET,MyVideo,🎥 视频
+- RULE-SET,GlobalMedia,🍿 国外媒体,no-resolve
+- RULE-SET,Proxy,🍿 国外媒体,no-resolve
+- RULE-SET,ChinaMedia,🌐 全球直连
+- RULE-SET,ChinaMax,🌐 全球直连
+- GEOIP,CN,🌐 全球直连
+- MATCH,🐟漏网之鱼

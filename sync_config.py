@@ -1,14 +1,14 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-主配置双向同步：routes.yaml  <->  clash/yaml/*.yaml + singbox/config/config.json
+主配置生成：clash/yaml/routes.yaml -> Clash；routes.yaml -> sing-box
 
 正向（默认）  python3 sync_config.py
-    routes.yaml + clash/yaml/common_head.yaml + gen.py  ->  两份 clash 配置 + sing-box 配置
+    各自 routes.yaml + clash/yaml/common_head.yaml + gen.py -> 两份 Clash 配置 + sing-box 配置
 
 反向          python3 sync_config.py --from-clash
               python3 sync_config.py --from-singbox
-    把手改回的分流顺序 / 规则集抽回 routes.yaml，再由正向重新铺开到两侧。
+    把手改后的分流顺序 / 规则集抽回对应客户端的 routes.yaml，再正向生成。
 
 校验          python3 sync_config.py --check      产物与源不一致则退出码 1
 """
@@ -21,6 +21,7 @@ ROOT = Path(__file__).resolve().parent
 ROUTES = ROOT / "routes.yaml"
 CLASH_DIR = ROOT / "clash" / "yaml"
 COMMON_RULES = CLASH_DIR / "common_rules.yaml"
+CLASH_ROUTES = CLASH_DIR / "routes.yaml"
 SB_CONFIG = ROOT / "singbox" / "config" / "config.json"
 SB_RAW = ("https://raw.githubusercontent.com/Lucasss1916/AgentSoftware"
           "/main/singbox/config/config.json")
@@ -34,18 +35,18 @@ SELF_JSON_URL = ("https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/"
 BUILTIN = {"DIRECT": "direct", "REJECT": "block"}
 
 # ---------------------------------------------------------------- 读 routes
-def load_routes():
+def load_routes(path=ROUTES):
     import yaml
-    txt = ROUTES.read_text(encoding="utf-8")
+    txt = path.read_text(encoding="utf-8")
     d = yaml.safe_load(txt)
     return d["rule_sets"], d["rules"]
 
 
-def load_comments():
+def load_comments(path=ROUTES):
     """解析 routes.yaml 里的 '# ---- 分节 ----' 注释，附到其后第一个条目。
     这些注释记录了排序理由（如 Apple-CN 必须早于 Apple），必须随产物一起保留。"""
     pc, rc, pending, in_rules = {}, {}, [], False
-    for line in ROUTES.read_text(encoding="utf-8").splitlines():
+    for line in path.read_text(encoding="utf-8").splitlines():
         s = line.strip()
         if s == "rules:":
             in_rules, pending = True, []; continue
@@ -79,8 +80,8 @@ rule-anchor:
 rule-providers:
 """
 
-def build_common_rules(rule_sets, rules) -> str:
-    pc, rc = load_comments()
+def build_common_rules(rule_sets, rules, source=ROUTES) -> str:
+    pc, rc = load_comments(source)
     out = [ANCHOR_DECL.rstrip("\n")]
     first = True
     for r in rule_sets:
@@ -95,8 +96,8 @@ def build_common_rules(rule_sets, rules) -> str:
     out.append("# ========================")
     out.append("# 规则引擎")
     out.append("# ========================")
-    out.append("# 顺序原则：进程直连 > 局域网 > 广告拦截 > 个人自定义 > 业务分流 > 国内直连 > 兜底")
-    out.append("# 本段由 sync_config.py 依 routes.yaml 生成，勿直接编辑。")
+    out.append("# 按源文件顺序首条命中，具体域名例外置于通用规则集之前。")
+    out.append(f"# 本段由 sync_config.py 依 {source.relative_to(ROOT)} 生成，勿直接编辑。")
     out.append("rules:")
     for x in rules:
         for cm in rc.get(x, []):
@@ -387,10 +388,10 @@ def parse_singbox_rules(cfg: dict, rule_sets):
                     raise SystemExit(f"config.json 引用了 routes.yaml 未定义的规则集: {t}")
     return out
 
-def write_routes(rule_sets, rules):
+def write_routes(rule_sets, rules, path=ROUTES):
     """把 rule_sets/rules 回写 routes.yaml，保留原有注释头与分节注释。"""
-    pc, rc = load_comments()
-    old = ROUTES.read_text(encoding="utf-8")
+    pc, rc = load_comments(path)
+    old = path.read_text(encoding="utf-8")
     head = old.split("rule_sets:")[0]
     L = [head.rstrip("\n"), "rule_sets:"]
     first = True
@@ -403,6 +404,8 @@ def write_routes(rule_sets, rules):
         first = False
         L.append(f"  - name: {r['name']!r}")
         L.append(f"    clash: {{anchor: {c['anchor']}, url: {c['url']!r}}}")
+        if path == CLASH_ROUTES:
+            continue
         sb = r.get("singbox")
         if not sb:
             L.append("    singbox: null   # 上游无 .srs，sing-box 侧跳过")
@@ -413,7 +416,7 @@ def write_routes(rule_sets, rules):
                      "  # 上游无同源 .srs，改用通用广告表")
         else:
             L.append(f"    singbox: {{kind: remote, path: {sb['path']!r}}}")
-    L += ["", "# ---- 分流顺序：两侧严格一致 ----",
+    L += ["", "# ---- 分流顺序：按本文件首条命中 ----",
           "# 顺序原则：进程直连 > 局域网 > 广告拦截 > 个人自定义 > 业务分流 > 国内直连 > 兜底",
           "rules:"]
     for x in rules:
@@ -422,7 +425,7 @@ def write_routes(rule_sets, rules):
             L.append(f"  # {cm}")
         L.append(f"  - {x}")
     L.append("")
-    ROUTES.write_text("\n".join(L), encoding="utf-8")
+    path.write_text("\n".join(L), encoding="utf-8")
 
 def reconcile_from_singbox(orig_rules, sb_rules_text, rule_sets):
     """把 sing-box 侧的改动合并回 routes.yaml。
@@ -493,7 +496,8 @@ def forward(check: bool) -> int:
     rule_sets, rules = load_routes()
     drift = []
 
-    new_common = build_common_rules(rule_sets, rules)
+    clash_sets, clash_rules = load_routes(CLASH_ROUTES)
+    new_common = build_common_rules(clash_sets, clash_rules, CLASH_ROUTES)
     if check:
         if COMMON_RULES.read_text(encoding="utf-8") != new_common:
             drift.append(str(COMMON_RULES.relative_to(ROOT)))
@@ -539,11 +543,12 @@ def forward(check: bool) -> int:
             for d in drift:
                 print("  -", d)
             return 1
-        print("校验通过：clash 与 sing-box 配置均与 routes.yaml 一致")
+        print("校验通过：clash 与 sing-box 配置均与各自分流源一致")
         return 0
 
     print(f"已生成： common_rules.yaml / smart.yaml / urltest.yaml / singbox/config/config.json")
-    print(f"  规则集 {len(rule_sets)}  分流规则 {len(rules)}")
+    print(f"  Clash：规则集 {len(clash_sets)}，分流规则 {len(clash_rules)}；"
+          f"sing-box 源：规则集 {len(rule_sets)}，分流规则 {len(rules)}")
     if skipped:
         print(f"  sing-box 跳过 {len(skipped)} 条（上游无 .srs）：")
         for n, t in skipped:
@@ -555,7 +560,8 @@ def forward(check: bool) -> int:
 
 # ---------------------------------------------------------------- 反向
 def backward(src: str) -> int:
-    rule_sets, rules = load_routes()
+    source = CLASH_ROUTES if src == "clash" else ROUTES
+    rule_sets, rules = load_routes(source)
     _orig_rules = list(rules)
     if src == "clash":
         prov, new_rules = parse_clash_rules(COMMON_RULES.read_text(encoding="utf-8"))
@@ -575,11 +581,11 @@ def backward(src: str) -> int:
         sb_rules = parse_singbox_rules(cfg, rule_sets)
         added, removed = [], []
         rules = reconcile_from_singbox(_orig_rules, sb_rules, rule_sets)
-    write_routes(rule_sets, rules)
-    print(f"已从 {src} 回写 routes.yaml：规则集 {len(rule_sets)}  分流规则 {len(rules)}")
+    write_routes(rule_sets, rules, source)
+    print(f"已从 {src} 回写 {source.relative_to(ROOT)}：规则集 {len(rule_sets)}  分流规则 {len(rules)}")
     if added:   print("  新增规则集：", ", ".join(added))
     if removed: print("  删除规则集：", ", ".join(removed))
-    print("现在运行 python3 sync_config.py 把改动铺到两侧。")
+    print("现在运行 python3 sync_config.py 重新生成对应客户端配置。")
     return 0
 
 def main():

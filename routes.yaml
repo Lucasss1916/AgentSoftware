@@ -1,7 +1,7 @@
 # ============================================================
-#  routes.yaml —— 分流规则唯一源
+#  routes.yaml —— sing-box 分流源
 #
-#  clash（smart/urltest.yaml）与 sing-box（config.json）都由本文件生成。
+#  sing-box（config.json）由本文件生成；Clash 使用 clash/yaml/routes.yaml。
 #  改分流请只改这里，然后运行：  python3 sync_config.py
 #  CI 会用 --check 卡住任何绕过本文件的手改。
 # ============================================================

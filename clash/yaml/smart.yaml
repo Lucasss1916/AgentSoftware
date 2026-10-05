@@ -1,7 +1,7 @@
 # ============================================================
 #  Mihomo 配置 — Smart 内核版（type: smart，需 vernesong/mihomo smart 内核）
 #  由 gen.py + common_head.yaml + common_rules.yaml 生成
-#  修改请编辑上述三个源文件后重跑： python3 gen.py
+#  修改 Clash routes.yaml / common_head.yaml / gen.py 后在仓库根运行 sync_config.py
 # ============================================================
 
 # ============================================================
@@ -13,14 +13,14 @@
 #     type: http
 #     interval: 86400
 #     health-check: {enable: true, url: https://www.gstatic.com/generate_204, interval: 300}
-#     proxy: 所有-手选
+#     proxy: ✈️ 节点选择
 #
 #   69yun:
 #     url: "机场订阅地址"
 #     type: http
 #     interval: 86400
 #     health-check: {enable: true, url: https://www.gstatic.com/generate_204, interval: 300}
-#     proxy: 所有-手选
+#     proxy: ✈️ 节点选择
 
 # ========================
 # 主要端口设置
@@ -71,7 +71,11 @@ tun:
   strict-route: false
   dns-hijack:
     - any:53
-  route-exclude-address: []
+  route-exclude-address:
+    - 192.168.0.0/16
+    - 10.0.0.0/8
+    - 172.16.0.0/12
+    - 127.0.0.0/8
   mtu: 1350
 
 # 【场景 B】旁路由 / 网关：由路由器做网关，Clash 只做转发
@@ -110,8 +114,16 @@ sniffer:
   skip-src-address: []
 
 # ========================
-# DNS 设置
+# Hosts 与 DNS：国外默认，国内规则集 / cn 使用国内 DoH。
 # ========================
+hosts:
+  updates.g.aaplimg.com: updates.cdn-apple.com.download.ks-cdn.com
+  iosapps.itunes.apple.com: iosapps.itunes.apple.com.download.ks-cdn.com
+  dns.alidns.com: [223.5.5.5, 223.6.6.6]
+  doh.pub: [1.12.12.12, 120.53.53.53]
+  cloudflare-dns.com: [104.16.249.249, 104.16.248.249]
+  dns.google: [8.8.8.8, 8.8.4.4]
+
 dns:
   enable: true
   listen: 0.0.0.0:7874
@@ -119,229 +131,263 @@ dns:
   prefer-h3: false
   enhanced-mode: fake-ip
   fake-ip-range: 198.18.0.0/16
-  use-hosts: false
-  use-system-hosts: false
-  # 让 DNS 查询遵循 rules 分流（依赖 proxy-server-nameserver）
+  use-hosts: true
+  use-system-hosts: true
   respect-rules: true
-
-  # 解析 DNS 服务器自身域名用，必须是纯 IP
-  default-nameserver:
-    - 223.5.5.5
-    - 119.29.29.29
-
-  # 默认解析：国内 DoH，直连域名秒解析
+  default-nameserver: [system, 223.5.5.5, 119.29.29.29]
   nameserver:
-    - https://223.5.5.5/dns-query
-    - https://doh.pub/dns-query
-
-  # 解析机场节点域名，必须走国内 DNS，否则会死锁
-  proxy-server-nameserver:
-    - https://223.5.5.5/dns-query
-
-  # 命中 DIRECT 的域名走这里
-  direct-nameserver:
-    - https://223.5.5.5/dns-query
-    - https://doh.pub/dns-query
-
-  # respect-rules 开启后 fallback 不再生效，留空
-  fallback: []
-
-  # 分流解析。注意：nameserver-policy 的 rule-set 只支持 behavior: domain 的
-  # provider（本配置中即 *domain 锚点那批 .mrs），classical 的列表不能写在这里。
+    - https://cloudflare-dns.com/dns-query
+    - https://dns.google/dns-query
+  # 节点域名独立引导，避免国外 DoH 经代理查询时循环依赖。
+  proxy-server-nameserver: [223.5.5.5, 119.29.29.29]
   nameserver-policy:
-    "rule-set:ChatGPT / Domain,GitHub / Domain,Telegram / Domain,Google / Domain,Youtube / Domain,Twitter / Domain,Facebook / Domain,Netflix / Domain,TikTok / Domain,Disney / Domain,Spotify / Domain,Reddit / Domain":
-      - https://dns.google/dns-query
-      - https://cloudflare-dns.com/dns-query
-    "rule-set:China / Domain,Apple-CN / Domain":
-      - https://223.5.5.5/dns-query
+    "*.linux.do": https://stellafortuna.ddd.oaifree.com/query-dns
+    # Egern 的 value 是 DNS 服务器地址，并非将 api64 映射为该 IPv6。
+    "api64.ipify.org": "udp://[2001:4860:4860::8888]:53"
+    "rule-set:ChinaDNS":
+      - https://dns.alidns.com/dns-query
       - https://doh.pub/dns-query
-    "rule-set:Private / Domain":
-      - system
-
-  # 避免游戏 NAT / STUN / 局域网发现被 fake-ip 劫持
+    "+.cn":
+      - https://dns.alidns.com/dns-query
+      - https://doh.pub/dns-query
+    "+.local": [system]
+    "localhost": [system]
+    "rule-set:PrivateDNS": [system]
+  # 保留原有兼容条目，并补齐 Egern 的游戏和局域网域名。
   fake-ip-filter:
     - "*.lan"
     - "*.local"
+    - "*.orb.local"
+    - localhost
     - "+.market.xiaomi.com"
     - "+.weixin.qq.com"
     - "+.qpic.cn"
     - "+.qq.com"
     - localhost.ptlogin2.qq.com
-    # 时间同步
     - time.*.com
     - time.*.gov
     - ntp.*.com
     - "+.pool.ntp.org"
-    # STUN / P2P
     - "*.stun.*"
     - "*.stun.*.*"
     - stun.l.google.com
     - stun1.l.google.com
     - stun2.l.google.com
-    # 游戏 NAT
     - "+.srv.nintendo.net"
     - "+.stun.playstation.net"
     - xbox.*.microsoft.com
     - "+.xboxlive.com"
-    # 网络连通性检测
-    - msftconnecttest.com
-    - msftncsi.com
+    - "+.battlenet.com.cn"
+    - "+.battlenet.com"
+    - "+.blzstatic.cn"
+    - "+.battle.net"
+    - stun.ugreengroup.com
     - "+.msftconnecttest.com"
     - "+.msftncsi.com"
     - captive.apple.com
 
 
-# ========================
-# 策略组定义
-# ========================
-default: &default
+# 策略组：业务组手选，地区组按所选内核自动选路。
+proxy-groups:
+- name: ✈️ 节点选择
   type: select
   proxies:
-    - 所有-手选
-    - 香港-智选
-    - 台湾-智选
-    - 日本-智选
-    - 新加坡-智选
-    - 韩国-智选
-    - 美国-智选
-    - 英国-智选
-    - 其他
-    - DIRECT
-    - REJECT
-
-proxy-groups:
-
-  # ---- 业务分流组 ----
-  - {name: AIGC, icon: https://raw.githubusercontent.com/Orz-3/mini/master/Color/OpenAI.png, <<: *default}
-  - {name: GitHub, icon: https://raw.githubusercontent.com/Orz-3/mini/master/Color/github.png, <<: *default}
-  - {name: Telegram, icon: https://raw.githubusercontent.com/Orz-3/mini/master/Color/Telegram.png, <<: *default}
-  - {name: Video, icon: https://raw.githubusercontent.com/Orz-3/mini/master/Color/Emby.png, <<: *default}
-  - {name: 国外媒体, icon: https://raw.githubusercontent.com/Orz-3/mini/master/Color/Google.png, <<: *default}
-  - {name: Spotify, icon: https://raw.githubusercontent.com/Orz-3/mini/master/Color/Spotify.png, <<: *default}
-  - {name: Apple, icon: https://raw.githubusercontent.com/Orz-3/mini/master/Color/Apple.png, <<: *default}
-  - {name: Microsoft, icon: https://raw.githubusercontent.com/Orz-3/mini/master/Color/Microsoft.png, <<: *default}
-  - {name: Steam, icon: https://raw.githubusercontent.com/Orz-3/mini/master/Color/Steam.png, <<: *default}
-  - {name: Game, icon: https://raw.githubusercontent.com/Orz-3/mini/master/Color/GAME.png, <<: *default}
-  - {name: Test, icon: https://raw.githubusercontent.com/Orz-3/mini/master/Color/Urltest.png, <<: *default}
-
-  # 广告拦截：只在 REJECT / DIRECT 间选，不继承 *default
-  - name: Block
-    type: select
-    icon: https://raw.githubusercontent.com/Orz-3/mini/master/Color/Adblock.png
-    proxies:
-      - REJECT
-      - DIRECT
-
-  # ---- 全部节点手选 ----
-  - name: 所有-手选
-    type: select
-    include-all: true
-    icon: https://www.clashverge.dev/assets/icons/adjust.svg
-
-  # ---- 兜底 ----
-  - name: 漏网之鱼
-    type: fallback
-    icon: https://www.clashverge.dev/assets/icons/fish.svg
-    proxies:
-      - 香港-智选
-      - 台湾-智选
-      - 日本-智选
-      - 新加坡-智选
-      - 韩国-智选
-      - 美国-智选
-      - 英国-智选
-      - 所有-手选
-      - 其他
-      - DIRECT
-
-  # ---- 地区组 ----
-
-  # 香港
-  - name: 香港-智选
-    type: smart
-    uselightgbm: true
-    collectdata: true
-    policy-priority: "Mitce:0.7"
-    include-all: true
-    interval: 300
-    filter: "(?!.*(?i:10x))(?=.*(广港|香港|HK|Hong ?Kong|🇭🇰|HongKong)).*$"
-    icon: https://fastly.jsdelivr.net/gh/Semporia/Hand-Painted-icon@master/Rounded_Rectangle/Hong_Kong.png
-
-  # 台湾
-  - name: 台湾-智选
-    type: smart
-    uselightgbm: true
-    collectdata: true
-    policy-priority: "Mitce:0.7"
-    include-all: true
-    interval: 300
-    filter: "(?!.*(?i:10x))(?=.*(广台|台湾|台灣|TW|Tai ?Wan|🇹🇼|TaiWan|Taiwan)).*$"
-    icon: https://fastly.jsdelivr.net/gh/Semporia/Hand-Painted-icon@master/Rounded_Rectangle/Taiwan.png
-
-  # 日本
-  - name: 日本-智选
-    type: smart
-    uselightgbm: true
-    collectdata: true
-    policy-priority: "Mitce:0.7"
-    include-all: true
-    interval: 300
-    filter: "(?!.*(?i:10x))(?=.*(广日|日本|JP|川日|东京|大阪|泉日|埼玉|沪日|深日|🇯🇵|Japan)).*$"
-    icon: https://fastly.jsdelivr.net/gh/Semporia/Hand-Painted-icon@master/Rounded_Rectangle/Japan.png
-
-  # 新加坡
-  - name: 新加坡-智选
-    type: smart
-    uselightgbm: true
-    collectdata: true
-    policy-priority: "Mitce:0.7"
-    include-all: true
-    interval: 300
-    filter: "(?!.*(?i:10x))(?=.*(广新|新加坡|SG|坡|狮城|🇸🇬|Singapore)).*$"
-    icon: https://fastly.jsdelivr.net/gh/Semporia/Hand-Painted-icon@master/Rounded_Rectangle/Singapore.png
-
-  # 韩国
-  - name: 韩国-智选
-    type: smart
-    uselightgbm: true
-    collectdata: true
-#   policy-priority: "机场名:0.8"
-    include-all: true
-    interval: 300
-    filter: "(?!.*(?i:10x))(?=.*(广韩|韩国|韓國|KR|首尔|春川|🇰🇷|Korea)).*$"
-    icon: https://fastly.jsdelivr.net/gh/Semporia/Hand-Painted-icon@master/Rounded_Rectangle/South_Korea.png
-
-  # 美国
-  - name: 美国-智选
-    type: smart
-    uselightgbm: true
-    collectdata: true
-#   policy-priority: "机场名:0.8"
-    include-all: true
-    interval: 300
-    filter: "(?!.*(?i:10x))(?=.*(广美|美国|US|纽约|波特兰|达拉斯|俄勒|凤凰城|费利蒙|拉斯|洛杉|圣何塞|圣克拉|西雅|芝加|🇺🇸|United ?States)).*$"
-    icon: https://fastly.jsdelivr.net/gh/Semporia/Hand-Painted-icon@master/Rounded_Rectangle/United_States.png
-
-  # 英国
-  - name: 英国-智选
-    type: smart
-    uselightgbm: true
-    collectdata: true
-#   policy-priority: "机场名:0.8"
-    include-all: true
-    interval: 300
-    filter: "(?!.*(?i:10x))(?=.*(英国|伦敦|UK|United ?Kingdom|🇬🇧|London)).*$"
-    icon: https://fastly.jsdelivr.net/gh/Semporia/Hand-Painted-icon@master/Rounded_Rectangle/England.png
-
-  # 其他（未匹配到上述地区的节点）
-  - name: 其他
-    type: smart
-    uselightgbm: true
-    collectdata: true
-    include-all: true
-    interval: 300
-    filter: "^((?!(10x|10X|直连|拒绝|广港|香港|HK|Hong ?Kong|🇭🇰|HongKong|广台|台湾|台灣|TW|Tai ?Wan|🇹🇼|TaiWan|Taiwan|广日|日本|JP|川日|东京|大阪|泉日|埼玉|沪日|深日|🇯🇵|Japan|广新|新加坡|SG|坡|狮城|🇸🇬|Singapore|广韩|韩国|韓國|KR|首尔|春川|🇰🇷|Korea|广美|美国|US|纽约|波特兰|达拉斯|俄勒|凤凰城|费利蒙|拉斯|洛杉|圣何塞|圣克拉|西雅|芝加|🇺🇸|United ?States|英国|UK|United ?Kingdom|伦敦|London|🇬🇧|过期|剩余|流量|官网|套餐|机场|返利|订阅|重置)).)*$"
-    icon: https://www.clashverge.dev/assets/icons/adjust.svg
+  - 🚀 我的节点
+  - 🌐 全球直连
+- name: 🚀 我的节点
+  type: select
+  include-all: true
+  exclude-filter: 过期|剩余|流量|官网|套餐|返利|订阅|重置
+- name: 🌐 全球直连
+  type: select
+  proxies:
+  - DIRECT
+- name: 📲 电报信息
+  type: select
+  proxies:
+  - 🇸🇬 新加坡节点
+  - 🇯🇵 日本节点
+  - 🇨🇳 台湾节点
+  - 🇭🇰 香港节点
+  - ✈️ 节点选择
+  - 🇺🇲 北美节点
+  - 🇰🇷 韩国节点
+  - 🚀 我的节点
+  - 🌏 其他亚洲节点
+  - 🇪🇺 欧洲节点
+- name: 📞 TalkTone
+  type: select
+  include-all: true
+  exclude-filter: 过期|剩余|流量|官网|套餐|返利|订阅|重置
+- name: 🎥 视频
+  type: select
+  include-all: true
+  exclude-filter: 过期|剩余|流量|官网|套餐|返利|订阅|重置
+  proxies:
+  - 🚀 我的节点
+  - ✈️ 节点选择
+  - 🇰🇷 韩国节点
+  - 🇺🇲 北美节点
+  - 🇨🇳 台湾节点
+  - 🇸🇬 新加坡节点
+  - 🇯🇵 日本节点
+  - 🌐 全球直连
+  - 🌏 其他亚洲节点
+  - 🇪🇺 欧洲节点
+- name: 🍿 国外媒体
+  type: select
+  proxies:
+  - ✈️ 节点选择
+  - 🇭🇰 香港节点
+  - 🇺🇲 北美节点
+  - 🇯🇵 日本节点
+  - 🇰🇷 韩国节点
+  - 🇸🇬 新加坡节点
+  - 🇨🇳 台湾节点
+  - 🌏 其他亚洲节点
+  - 🇪🇺 欧洲节点
+- name: 📟 智能助理
+  type: select
+  proxies:
+  - ✈️ 节点选择
+  - 🇺🇲 北美节点
+  - 🇯🇵 日本节点
+  - 🇰🇷 韩国节点
+  - 🇸🇬 新加坡节点
+  - 🇨🇳 台湾节点
+  - 🌏 其他亚洲节点
+  - 🇪🇺 欧洲节点
+- name: Ⓜ️ 微软服务
+  type: select
+  proxies:
+  - 🌐 全球直连
+  - ✈️ 节点选择
+  - 🇭🇰 香港节点
+  - 🇺🇲 北美节点
+  - 🇯🇵 日本节点
+  - 🇰🇷 韩国节点
+  - 🇸🇬 新加坡节点
+  - 🇨🇳 台湾节点
+  - 🌏 其他亚洲节点
+  - 🇪🇺 欧洲节点
+- name: 🍎 苹果服务
+  type: select
+  proxies:
+  - 🌐 全球直连
+  - ✈️ 节点选择
+  - 🇭🇰 香港节点
+  - 🇺🇲 北美节点
+  - 🇯🇵 日本节点
+  - 🇰🇷 韩国节点
+  - 🇸🇬 新加坡节点
+  - 🇨🇳 台湾节点
+  - 🌏 其他亚洲节点
+  - 🇪🇺 欧洲节点
+- name: 🎮 游戏平台
+  type: select
+  proxies:
+  - 🌐 全球直连
+  - ✈️ 节点选择
+  - 🇭🇰 香港节点
+  - 🇺🇲 北美节点
+  - 🇯🇵 日本节点
+  - 🇰🇷 韩国节点
+  - 🇸🇬 新加坡节点
+  - 🇨🇳 台湾节点
+  - 🌏 其他亚洲节点
+  - 🇪🇺 欧洲节点
+- name: 🐟漏网之鱼
+  type: select
+  proxies:
+  - 🇸🇬 新加坡节点
+  - 🇯🇵 日本节点
+  - 🇨🇳 台湾节点
+  - 🇭🇰 香港节点
+  - 🚀 我的节点
+  - 🇺🇲 北美节点
+  - 🇰🇷 韩国节点
+  - 🌏 其他亚洲节点
+  - 🇪🇺 欧洲节点
+- name: 🇭🇰 香港节点
+  type: smart
+  include-all: true
+  filter: (?i)(🇭🇰|香港|Hong|HK)
+  exclude-filter: 过期|剩余|流量|官网|套餐|返利|订阅|重置
+  hidden: true
+  interval: 300
+  uselightgbm: true
+  collectdata: true
+  policy-priority: Mitce:0.3;iku:0.3;kitty:0.6
+- name: 🇯🇵 日本节点
+  type: smart
+  include-all: true
+  filter: (?i)(🇯🇵|日本|Japan|JP)
+  exclude-filter: 过期|剩余|流量|官网|套餐|返利|订阅|重置|美国|美國
+  hidden: true
+  interval: 300
+  uselightgbm: true
+  collectdata: true
+  policy-priority: Mitce:0.3;iku:0.3;kitty:0.6
+- name: 🇨🇳 台湾节点
+  type: smart
+  include-all: true
+  filter: (?i)(🇹🇼|台湾|臺灣|台灣|Taiwan|Tai|TW|mv)
+  exclude-filter: 过期|剩余|流量|官网|套餐|返利|订阅|重置
+  hidden: true
+  interval: 300
+  uselightgbm: true
+  collectdata: true
+  policy-priority: Mitce:0.3;iku:0.3;kitty:0.6
+- name: 🇸🇬 新加坡节点
+  type: smart
+  include-all: true
+  filter: (?i)(🇸🇬|新加坡|Singapore|SG)
+  exclude-filter: 过期|剩余|流量|官网|套餐|返利|订阅|重置
+  hidden: true
+  interval: 300
+  uselightgbm: true
+  collectdata: true
+  policy-priority: Mitce:0.3;iku:0.3;kitty:0.6
+- name: 🇰🇷 韩国节点
+  type: smart
+  include-all: true
+  filter: (?i)(🇰🇷|韩国|韓國|Korea|KR)
+  exclude-filter: 过期|剩余|流量|官网|套餐|返利|订阅|重置
+  hidden: true
+  interval: 300
+  uselightgbm: true
+  collectdata: true
+  policy-priority: Mitce:0.3;iku:0.3;kitty:0.6
+- name: 🇺🇲 北美节点
+  type: smart
+  include-all: true
+  filter: (?i)(🇺🇸|🇨🇦|🇲🇽|美国|美國|加拿大|墨西哥|States|Canada|Mexico|USA|(^|[^A-Za-z])US([^A-Za-z]|$)|(^|[^A-Za-z])CA([^A-Za-z]|$)|洛杉矶|圣何塞|西雅图|达拉斯|纽约|芝加哥|硅谷|凤凰城|亚特兰大|迈阿密|拉斯维加斯|波特兰|费利蒙|阿什本|多伦多|温哥华|蒙特利尔|Los Angeles|San Jose|Seattle|Dallas|New York|Chicago|Miami|Ashburn|Phoenix|Fremont|Portland|Las Vegas|Atlanta|Silicon Valley|Toronto|Vancouver|Montreal)
+  exclude-filter: 过期|剩余|流量|官网|套餐|返利|订阅|重置
+  hidden: true
+  interval: 300
+  uselightgbm: true
+  collectdata: true
+  policy-priority: Mitce:0.3;iku:0.3;kitty:0.6
+- name: 🌏 其他亚洲节点
+  type: smart
+  include-all: true
+  filter: (?i)(🇲🇾|马来|大马|吉隆坡|Malaysia|🇹🇭|泰国|曼谷|Thailand|🇻🇳|越南|胡志明|Vietnam|🇵🇭|菲律宾|马尼拉|Philippines|🇮🇩|印尼|印度尼西亚|雅加达|Indonesia|🇮🇳|印度|孟买|India|🇰🇭|柬埔寨|金边|Cambodia|🇱🇦|老挝|Laos|🇲🇲|缅甸|Myanmar|🇧🇳|文莱|Brunei|🇧🇩|孟加拉|Bangladesh|🇵🇰|巴基斯坦|Pakistan|🇳🇵|尼泊尔|Nepal|🇱🇰|斯里兰卡|Lanka)
+  exclude-filter: 过期|剩余|流量|官网|套餐|返利|订阅|重置
+  hidden: true
+  interval: 300
+  uselightgbm: true
+  collectdata: true
+  policy-priority: Mitce:0.3;iku:0.3;kitty:0.6
+- name: 🇪🇺 欧洲节点
+  type: smart
+  include-all: true
+  filter: (?i)(🇬🇧|英国|伦敦|United Kingdom|Britain|London|(^|[^A-Za-z])UK([^A-Za-z]|$)|🇩🇪|德国|德國|法兰克福|Germany|Frankfurt|🇫🇷|法国|法國|巴黎|France|Paris|🇳🇱|荷兰|荷蘭|阿姆斯特丹|Netherlands|Amsterdam|🇷🇺|俄罗斯|俄羅斯|莫斯科|Russia|Moscow|🇹🇷|土耳其|Turkey|Istanbul|🇮🇹|意大利|米兰|Italy|Milan|🇪🇸|西班牙|马德里|Spain|Madrid|🇸🇪|瑞典|Sweden|🇨🇭|瑞士|Switzerland|Zurich|🇵🇱|波兰|Poland|Warsaw|🇺🇦|乌克兰|Ukraine|🇮🇪|爱尔兰|Ireland|Dublin|🇫🇮|芬兰|Finland|🇳🇴|挪威|Norway|🇩🇰|丹麦|Denmark|🇧🇪|比利时|Belgium|🇦🇹|奥地利|Austria|Vienna|🇵🇹|葡萄牙|Portugal|Lisbon|🇨🇿|捷克|Czech|Prague|🇷🇴|罗马尼亚|Romania|🇭🇺|匈牙利|Hungary|🇬🇷|希腊|Greece|Athens|🇷🇸|塞尔维亚|Serbia|🇧🇬|保加利亚|Bulgaria|🇱🇻|拉脱维亚|Latvia|🇱🇹|立陶宛|Lithuania|🇪🇪|爱沙尼亚|Estonia|🇲🇩|摩尔多瓦|Moldova|🇮🇸|冰岛|Iceland|欧洲|Europe)
+  exclude-filter: 过期|剩余|流量|官网|套餐|返利|订阅|重置
+  hidden: true
+  interval: 300
+  uselightgbm: true
+  collectdata: true
+  policy-priority: Mitce:0.3;iku:0.3;kitty:0.6
 
 # ========================
 # 规则集提供者
@@ -353,168 +399,97 @@ rule-anchor:
   yamlclass: &yamlclass {type: http, interval: 86400, behavior: classical, format: yaml}
 
 rule-providers:
-  # ---- 自建规则（本仓库 clash/rule/*.yaml 是 payload: 结构，须用 format: yaml）----
-  MyVideo / Domain: {<<: *yamlclass, url: "https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/refs/heads/main/clash/rule/myvideorule.yaml"}
-  DirectDomain / Domain: {<<: *yamlclass, url: "https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/refs/heads/main/clash/rule/DirectDomain.yaml"}
-  ProxyDomain / Domain: {<<: *yamlclass, url: "https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/refs/heads/main/clash/rule/ProxyDomain.yaml"}
-  NeedHighQualityNodeDomain: {<<: *yamlclass, url: "https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/refs/heads/main/clash/rule/NeedHighQualityNodeDomain.yaml"}
-  SteamCDN / Domain: {<<: *yamlclass, url: "https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/refs/heads/main/clash/rule/steamCDN.yaml"}
-
-  # ---- 检测 / 广告 ----
-  TEST / Domain: {<<: *class, url: "https://gh-proxy.com/raw.githubusercontent.com/liandu2024/clash/refs/heads/main/list/Check.list"}
-  Block / Domain: {<<: *class, url: "https://gh-proxy.com/raw.githubusercontent.com/liandu2024/clash/refs/heads/main/list/Block.list"}
-
-  # ---- AI ----
-  ChatGPT / Domain: {<<: *domain, url: "https://gh-proxy.com/github.com/metacubex/meta-rules-dat/raw/refs/heads/meta/geo/geosite/openai.mrs"}
-  Claude / Domain: {<<: *class, url: "https://gh-proxy.com/raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Clash/Claude/Claude.list"}
-  Gemini / Domain: {<<: *class, url: "https://gh-proxy.com/raw.githubusercontent.com/liandu2024/clash/refs/heads/main/list/Gemini.list"}
-  Copilot / Domain: {<<: *class, url: "https://gh-proxy.com/raw.githubusercontent.com/liandu2024/clash/refs/heads/main/list/Copilot.list"}
-  Meta AI / Domain: {<<: *class, url: "https://gh-proxy.com/raw.githubusercontent.com/liandu2024/clash/refs/heads/main/list/MetaAi.list"}
-
-  # ---- 社交 / 开发 ----
-  GitHub / Domain: {<<: *domain, url: "https://gh-proxy.com/github.com/metacubex/meta-rules-dat/raw/refs/heads/meta/geo/geosite/github.mrs"}
-  Telegram / Domain: {<<: *domain, url: "https://gh-proxy.com/github.com/metacubex/meta-rules-dat/raw/refs/heads/meta/geo/geosite/telegram.mrs"}
-  Telegram / IP: {<<: *ip, url: "https://gh-proxy.com/github.com/metacubex/meta-rules-dat/raw/refs/heads/meta/geo/geoip/telegram.mrs"}
-  Twitter / Domain: {<<: *domain, url: "https://gh-proxy.com/github.com/metacubex/meta-rules-dat/raw/refs/heads/meta/geo/geosite/x.mrs"}
-  Facebook / Domain: {<<: *domain, url: "https://gh-proxy.com/github.com/metacubex/meta-rules-dat/raw/refs/heads/meta/geo/geosite/facebook.mrs"}
-  WhatsApp / Domain: {<<: *class, url: "https://gh-proxy.com/raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Clash/Whatsapp/Whatsapp.list"}
-  Reddit / Domain: {<<: *domain, url: "https://gh-proxy.com/github.com/metacubex/meta-rules-dat/raw/refs/heads/meta/geo/geosite/reddit.mrs"}
-
-  # ---- 大厂 ----
-  Apple-CN / Domain: {<<: *domain, url: "https://gh-proxy.com/github.com/metacubex/meta-rules-dat/raw/refs/heads/meta/geo/geosite/apple-cn.mrs"}
-  Apple / Domain: {<<: *domain, url: "https://gh-proxy.com/github.com/metacubex/meta-rules-dat/raw/refs/heads/meta/geo/geosite/apple.mrs"}
-  Microsoft / Domain: {<<: *domain, url: "https://gh-proxy.com/github.com/metacubex/meta-rules-dat/raw/refs/heads/meta/geo/geosite/microsoft.mrs"}
-  Amazon / Domain: {<<: *domain, url: "https://gh-proxy.com/github.com/metacubex/meta-rules-dat/raw/refs/heads/meta/geo/geosite/amazon.mrs"}
-  Nvidia / Domain: {<<: *class, url: "https://gh-proxy.com/raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Clash/Nvidia/Nvidia.list"}
-  Unity / Domain: {<<: *class, url: "https://gh-proxy.com/raw.githubusercontent.com/LM-Firefly/Rules/master/PROXY/Unity.list"}
-  Google / Domain: {<<: *domain, url: "https://gh-proxy.com/github.com/metacubex/meta-rules-dat/raw/refs/heads/meta/geo/geosite/google.mrs"}
-  Google / IP: {<<: *ip, url: "https://gh-proxy.com/github.com/metacubex/meta-rules-dat/raw/refs/heads/meta/geo/geoip/google.mrs"}
-
-  # ---- 金融 ----
-  OKX / Domain: {<<: *domain, url: "https://gh-proxy.com/github.com/metacubex/meta-rules-dat/raw/refs/heads/meta/geo/geosite/okx.mrs"}
-  Bybit / Domain: {<<: *domain, url: "https://gh-proxy.com/github.com/metacubex/meta-rules-dat/raw/refs/heads/meta/geo/geosite/bybit.mrs"}
-  Binance / Domain: {<<: *domain, url: "https://gh-proxy.com/github.com/metacubex/meta-rules-dat/raw/refs/heads/meta/geo/geosite/binance.mrs"}
-
-  # ---- 流媒体 ----
-  Youtube / Domain: {<<: *domain, url: "https://gh-proxy.com/github.com/metacubex/meta-rules-dat/raw/refs/heads/meta/geo/geosite/youtube.mrs"}
-  TikTok / Domain: {<<: *domain, url: "https://gh-proxy.com/github.com/metacubex/meta-rules-dat/raw/refs/heads/meta/geo/geosite/tiktok.mrs"}
-  Netflix / Domain: {<<: *domain, url: "https://gh-proxy.com/github.com/metacubex/meta-rules-dat/raw/refs/heads/meta/geo/geosite/netflix.mrs"}
-  Netflix / IP: {<<: *ip, url: "https://gh-proxy.com/github.com/metacubex/meta-rules-dat/raw/refs/heads/meta/geo/geoip/netflix.mrs"}
-  Disney / Domain: {<<: *domain, url: "https://gh-proxy.com/github.com/metacubex/meta-rules-dat/raw/refs/heads/meta/geo/geosite/disney.mrs"}
-  HBO / Domain: {<<: *domain, url: "https://gh-proxy.com/github.com/metacubex/meta-rules-dat/raw/refs/heads/meta/geo/geosite/hbo.mrs"}
-  Crunchyroll / Domain: {<<: *class, url: "https://gh-proxy.com/raw.githubusercontent.com/liandu2024/clash/refs/heads/main/list/Crunchyroll.list"}
-  Spotify / Domain: {<<: *domain, url: "https://gh-proxy.com/github.com/metacubex/meta-rules-dat/raw/refs/heads/meta/geo/geosite/spotify.mrs"}
-
-  # ---- 游戏 ----
-  Steam / Domain: {<<: *domain, url: "https://gh-proxy.com/github.com/metacubex/meta-rules-dat/raw/refs/heads/meta/geo/geosite/steam.mrs"}
-  Epic / Domain: {<<: *class, url: "https://gh-proxy.com/raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Epic/Epic.list"}
-  EA / Domain: {<<: *class, url: "https://gh-proxy.com/raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/EA/EA.list"}
-  Blizzard / Domain: {<<: *class, url: "https://gh-proxy.com/raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Blizzard/Blizzard.list"}
-  UBI / Domain: {<<: *class, url: "https://gh-proxy.com/raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/UBI/UBI.list"}
-  PlayStation / Domain: {<<: *class, url: "https://gh-proxy.com/raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Clash/PlayStation/PlayStation.list"}
-  Nintend / Domain: {<<: *class, url: "https://gh-proxy.com/raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Nintendo/Nintendo.list"}
-  Discord / Domain: {<<: *class, url: "https://gh-proxy.com/raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Discord/Discord.list"}
-
-  # ---- 兜底分流 ----
-  Proxy / Domain: {<<: *class, url: "https://gh-proxy.com/raw.githubusercontent.com/liandu2024/clash/refs/heads/main/list/Proxy.list"}
-  Globe / Domain: {<<: *class, url: "https://gh-proxy.com/raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Clash/Global/Global.list"}
-  Direct / Domain: {<<: *class, url: "https://gh-proxy.com/raw.githubusercontent.com/liandu2024/clash/refs/heads/main/list/Direct.list"}
-  China / Domain: {<<: *domain, url: "https://gh-proxy.com/github.com/metacubex/meta-rules-dat/raw/refs/heads/meta/geo/geosite/cn.mrs"}
-  China / IP: {<<: *ip, url: "https://gh-proxy.com/github.com/metacubex/meta-rules-dat/raw/refs/heads/meta/geo/geoip/cn.mrs"}
-  Private / Domain: {<<: *domain, url: "https://gh-proxy.com/github.com/metacubex/meta-rules-dat/raw/refs/heads/meta/geo/geosite/private.mrs"}
+  Myairport: {<<: *yamlclass, url: "https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/clash/rule/MyAiport.yaml"}
+  DirectDomain: {<<: *yamlclass, url: "https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/clash/rule/DirectDomain.yaml"}
+  TalktoneProxy: {<<: *yamlclass, url: "https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/clash/rule/TalktoneProxy.yaml"}
+  TalktoneAds: {<<: *yamlclass, url: "https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/clash/rule/TalktoneAds.yaml"}
+  TalktoneDirect: {<<: *yamlclass, url: "https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/clash/rule/TalktoneDirect.yaml"}
+  MyVideo: {<<: *yamlclass, url: "https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/clash/rule/myvideorule.yaml"}
+  AI-category: {<<: *domain, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/category-ai-!cn.mrs"}
+  AI-fmz200: {<<: *class, url: "https://raw.githubusercontent.com/fmz200/wool_scripts/main/Loon/rule/AI.list"}
+  Duolingo: {<<: *class, url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Duolingo/Duolingo.list"}
+  Apple: {<<: *class, url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Apple/Apple.list"}
+  GitHub: {<<: *class, url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/GitHub/GitHub.list"}
+  Microsoft: {<<: *class, url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Microsoft/Microsoft.list"}
+  Telegram: {<<: *class, url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Telegram/Telegram.list"}
+  Epic: {<<: *class, url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Epic/Epic.list"}
+  Sony: {<<: *class, url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Sony/Sony.list"}
+  Steam: {<<: *class, url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Steam/Steam.list"}
+  Nintendo: {<<: *class, url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Nintendo/Nintendo.list"}
+  YouTube: {<<: *class, url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/YouTube/YouTube.list"}
+  GlobalMedia: {<<: *class, url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/GlobalMedia/GlobalMedia.list"}
+  Proxy: {<<: *class, url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Proxy/Proxy.list"}
+  ChinaMedia: {<<: *class, url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/ChinaMedia/ChinaMedia.list"}
+  ChinaMax: {<<: *class, url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/ChinaMax/ChinaMax.list"}
+  WeChat: {<<: *class, url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/WeChat/WeChat.list"}
+  ChinaDNS: {<<: *domain, url: "https://raw.githubusercontent.com/metacubex/meta-rules-dat/meta/geo/geosite/cn.mrs"}
+  PrivateDNS: {<<: *domain, url: "https://raw.githubusercontent.com/metacubex/meta-rules-dat/meta/geo/geosite/private.mrs"}
 
 # ========================
 # 规则引擎
 # ========================
-# 顺序原则：进程直连 > 局域网 > 广告拦截 > 个人自定义 > 业务分流 > 国内直连 > 兜底
-# 本段由 sync_config.py 依 routes.yaml 生成，勿直接编辑。
+# 按源文件顺序首条命中，具体域名例外置于通用规则集之前。
+# 本段由 sync_config.py 依 clash/yaml/routes.yaml 生成，勿直接编辑。
 rules:
-
-  # ---- 本地进程强制直连 ----
-  - PROCESS-NAME,Weixin.exe,DIRECT
-  - PROCESS-NAME,WeChatAppEx.exe,DIRECT
-  - PROCESS-NAME,plastic.exe,DIRECT
-
-  # ---- 局域网 / 私有地址 ----
-  - RULE-SET,Private / Domain,DIRECT
-  - IP-CIDR,127.0.0.0/8,DIRECT,no-resolve
+  - DOMAIN,linux.do,🇸🇬 新加坡节点
+  - DOMAIN,agentrouter.org,🍿 国外媒体
+  - RULE-SET,Myairport,🍿 国外媒体
+  - DOMAIN-SUFFIX,alidns.com,DIRECT
+  - DOMAIN-SUFFIX,doh.pub,DIRECT
+  - DOMAIN-SUFFIX,cloudflare-dns.com,🍿 国外媒体
+  - DOMAIN-SUFFIX,dns.google,🍿 国外媒体
+  - RULE-SET,PrivateDNS,DIRECT
+  - DOMAIN,localhost,DIRECT
+  - DOMAIN-SUFFIX,local,DIRECT
+  - IP-CIDR,192.168.0.0/16,DIRECT,no-resolve
   - IP-CIDR,10.0.0.0/8,DIRECT,no-resolve
   - IP-CIDR,172.16.0.0/12,DIRECT,no-resolve
-  - IP-CIDR,192.168.0.0/16,DIRECT,no-resolve
+  - IP-CIDR,127.0.0.0/8,DIRECT,no-resolve
   - IP-CIDR,100.64.0.0/10,DIRECT,no-resolve
-
-  # ---- 广告拦截（必须早于业务分流，否则会被业务规则截胡）----
-  - RULE-SET,Block / Domain,Block
-
-  # ---- 个人自定义（优先级最高的业务规则）----
-  - RULE-SET,NeedHighQualityNodeDomain,所有-手选
-  - RULE-SET,DirectDomain / Domain,DIRECT
-  - RULE-SET,ProxyDomain / Domain,国外媒体
-  - RULE-SET,MyVideo / Domain,Video
-  - RULE-SET,TEST / Domain,Test
-  - DOMAIN-SUFFIX,linux.do,国外媒体
-
-  # ---- AI ----
-  - RULE-SET,ChatGPT / Domain,AIGC
-  - RULE-SET,Claude / Domain,AIGC
-  - RULE-SET,Gemini / Domain,AIGC
-  - RULE-SET,Copilot / Domain,AIGC
-  - RULE-SET,Meta AI / Domain,AIGC
-
-  # ---- 社交 / 开发 ----
-  - RULE-SET,GitHub / Domain,GitHub
-  - RULE-SET,Telegram / Domain,Telegram
-  - RULE-SET,Telegram / IP,Telegram,no-resolve
-  - RULE-SET,Twitter / Domain,国外媒体
-  - RULE-SET,Facebook / Domain,国外媒体
-  - RULE-SET,WhatsApp / Domain,国外媒体
-  - RULE-SET,Reddit / Domain,国外媒体
-
-  # ---- 流媒体 ----
-  - RULE-SET,Spotify / Domain,Spotify
-  - RULE-SET,Youtube / Domain,国外媒体
-  - RULE-SET,TikTok / Domain,国外媒体
-  - RULE-SET,Netflix / Domain,国外媒体
-  - RULE-SET,Netflix / IP,国外媒体,no-resolve
-  - RULE-SET,Disney / Domain,国外媒体
-  - RULE-SET,HBO / Domain,国外媒体
-  - RULE-SET,Crunchyroll / Domain,国外媒体
-
-  # ---- 游戏（Steam CDN 走直连，避免下载跑代理流量）----
-  - RULE-SET,SteamCDN / Domain,DIRECT
-  - RULE-SET,Steam / Domain,Steam
-  - RULE-SET,Epic / Domain,Game
-  - RULE-SET,EA / Domain,Game
-  - RULE-SET,Blizzard / Domain,Game
-  - RULE-SET,UBI / Domain,Game
-  - RULE-SET,PlayStation / Domain,Game
-  - RULE-SET,Nintend / Domain,Game
-  - RULE-SET,Discord / Domain,Game
-
-  # ---- 大厂（Apple-CN 必须在 Apple 之前，否则国区服务会被整体代理）----
-  - RULE-SET,Apple-CN / Domain,DIRECT
-  - RULE-SET,Apple / Domain,Apple
-  - RULE-SET,Microsoft / Domain,Microsoft
-  - RULE-SET,Amazon / Domain,国外媒体
-  - RULE-SET,Nvidia / Domain,国外媒体
-  - RULE-SET,Unity / Domain,国外媒体
-
-  # ---- 金融 ----
-  - RULE-SET,OKX / Domain,国外媒体
-  - RULE-SET,Bybit / Domain,国外媒体
-  - RULE-SET,Binance / Domain,国外媒体
-
-  # ---- Google 放在通用代理之前 ----
-  - RULE-SET,Google / Domain,国外媒体
-  - RULE-SET,Google / IP,国外媒体,no-resolve
-
-  # ---- 通用代理 / 直连 ----
-  - RULE-SET,Proxy / Domain,国外媒体
-  - RULE-SET,Globe / Domain,国外媒体
-  - RULE-SET,Direct / Domain,DIRECT
-  - RULE-SET,China / Domain,DIRECT
-  - RULE-SET,China / IP,DIRECT,no-resolve
-  - GEOIP,CN,DIRECT,no-resolve
-
-  # ---- 兜底 ----
-  - MATCH,漏网之鱼
+  - IP-CIDR6,::1/128,DIRECT,no-resolve
+  - IP-CIDR6,fc00::/7,DIRECT,no-resolve
+  - IP-CIDR6,fe80::/10,DIRECT,no-resolve
+  - DOMAIN-KEYWORD,emby.991600.xyz,DIRECT
+  - DOMAIN-KEYWORD,osaka.991600.xyz,DIRECT
+  - IP-CIDR,141.147.153.168/32,DIRECT,no-resolve
+  - DOMAIN-SUFFIX,oraclecloud.com,✈️ 节点选择
+  - DOMAIN-SUFFIX,muyuan.do,🍿 国外媒体
+  - DOMAIN-SUFFIX,anyrouter.top,✈️ 节点选择
+  - DOMAIN-SUFFIX,hgemby.qzz.io,🎥 视频
+  - RULE-SET,AI-category,📟 智能助理
+  - RULE-SET,AI-fmz200,📟 智能助理
+  - DOMAIN-SUFFIX,lucky.991600.xyz,🌐 全球直连
+  - DOMAIN-SUFFIX,e5.991600.xyz,🌐 全球直连
+  - DOMAIN-SUFFIX,fnos.991600.xyz,✈️ 节点选择
+  - RULE-SET,DirectDomain,🌐 全球直连
+  - DOMAIN-SUFFIX,991600.xyz,🍿 国外媒体
+  - DOMAIN-SUFFIX,netflav.com,🎥 视频
+  - DOMAIN-SUFFIX,surrit.com,🎥 视频
+  - RULE-SET,Duolingo,🌐 全球直连
+  - RULE-SET,WeChat,DIRECT
+  - DOMAIN-SUFFIX,macapp.org.cn,🍿 国外媒体
+  - DOMAIN-SUFFIX,cloudflare.com,🌐 全球直连
+  - DOMAIN-SUFFIX,sharepoint.com,Ⓜ️ 微软服务
+  - RULE-SET,TalktoneProxy,📞 TalkTone
+  - RULE-SET,TalktoneAds,REJECT
+  - RULE-SET,TalktoneDirect,🌐 全球直连
+  - DOMAIN-SUFFIX,testflight.apple.com,🍿 国外媒体
+  - DOMAIN,beta.itunes.apple.com,🍿 国外媒体
+  - DOMAIN,iosapps.itunes.apple.com,🌐 全球直连
+  - DOMAIN-SUFFIX,mzstatic.com,🌐 全球直连
+  - RULE-SET,Apple,🍎 苹果服务,no-resolve
+  - RULE-SET,GitHub,🍿 国外媒体
+  - RULE-SET,Microsoft,Ⓜ️ 微软服务
+  - RULE-SET,Telegram,📲 电报信息
+  - RULE-SET,Epic,🎮 游戏平台
+  - RULE-SET,Sony,🎮 游戏平台
+  - RULE-SET,Steam,🎮 游戏平台
+  - RULE-SET,Nintendo,🎮 游戏平台
+  - RULE-SET,YouTube,🍿 国外媒体
+  - RULE-SET,MyVideo,🎥 视频
+  - RULE-SET,GlobalMedia,🍿 国外媒体,no-resolve
+  - RULE-SET,Proxy,🍿 国外媒体,no-resolve
+  - RULE-SET,ChinaMedia,🌐 全球直连
+  - RULE-SET,ChinaMax,🌐 全球直连
+  - GEOIP,CN,🌐 全球直连
+  - MATCH,🐟漏网之鱼

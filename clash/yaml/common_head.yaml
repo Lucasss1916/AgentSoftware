@@ -7,14 +7,14 @@
 #     type: http
 #     interval: 86400
 #     health-check: {enable: true, url: https://www.gstatic.com/generate_204, interval: 300}
-#     proxy: 所有-手选
+#     proxy: ✈️ 节点选择
 #
 #   69yun:
 #     url: "机场订阅地址"
 #     type: http
 #     interval: 86400
 #     health-check: {enable: true, url: https://www.gstatic.com/generate_204, interval: 300}
-#     proxy: 所有-手选
+#     proxy: ✈️ 节点选择
 
 # ========================
 # 主要端口设置
@@ -59,7 +59,11 @@ tun:
   strict-route: false
   dns-hijack:
     - any:53
-  route-exclude-address: []
+  route-exclude-address:
+    - 192.168.0.0/16
+    - 10.0.0.0/8
+    - 172.16.0.0/12
+    - 127.0.0.0/8
   mtu: 1350
 
 # 【场景 B】旁路由 / 网关：由路由器做网关，Clash 只做转发
@@ -98,8 +102,16 @@ sniffer:
   skip-src-address: []
 
 # ========================
-# DNS 设置
+# Hosts 与 DNS：国外默认，国内规则集 / cn 使用国内 DoH。
 # ========================
+hosts:
+  updates.g.aaplimg.com: updates.cdn-apple.com.download.ks-cdn.com
+  iosapps.itunes.apple.com: iosapps.itunes.apple.com.download.ks-cdn.com
+  dns.alidns.com: [223.5.5.5, 223.6.6.6]
+  doh.pub: [1.12.12.12, 120.53.53.53]
+  cloudflare-dns.com: [104.16.249.249, 104.16.248.249]
+  dns.google: [8.8.8.8, 8.8.4.4]
+
 dns:
   enable: true
   listen: 0.0.0.0:7874
@@ -107,73 +119,57 @@ dns:
   prefer-h3: false
   enhanced-mode: fake-ip
   fake-ip-range: 198.18.0.0/16
-  use-hosts: false
-  use-system-hosts: false
-  # 让 DNS 查询遵循 rules 分流（依赖 proxy-server-nameserver）
+  use-hosts: true
+  use-system-hosts: true
   respect-rules: true
-
-  # 解析 DNS 服务器自身域名用，必须是纯 IP
-  default-nameserver:
-    - 223.5.5.5
-    - 119.29.29.29
-
-  # 默认解析：国内 DoH，直连域名秒解析
+  default-nameserver: [system, 223.5.5.5, 119.29.29.29]
   nameserver:
-    - https://223.5.5.5/dns-query
-    - https://doh.pub/dns-query
-
-  # 解析机场节点域名，必须走国内 DNS，否则会死锁
-  proxy-server-nameserver:
-    - https://223.5.5.5/dns-query
-
-  # 命中 DIRECT 的域名走这里
-  direct-nameserver:
-    - https://223.5.5.5/dns-query
-    - https://doh.pub/dns-query
-
-  # respect-rules 开启后 fallback 不再生效，留空
-  fallback: []
-
-  # 分流解析。注意：nameserver-policy 的 rule-set 只支持 behavior: domain 的
-  # provider（本配置中即 *domain 锚点那批 .mrs），classical 的列表不能写在这里。
+    - https://cloudflare-dns.com/dns-query
+    - https://dns.google/dns-query
+  # 节点域名独立引导，避免国外 DoH 经代理查询时循环依赖。
+  proxy-server-nameserver: [223.5.5.5, 119.29.29.29]
   nameserver-policy:
-    "rule-set:ChatGPT / Domain,GitHub / Domain,Telegram / Domain,Google / Domain,Youtube / Domain,Twitter / Domain,Facebook / Domain,Netflix / Domain,TikTok / Domain,Disney / Domain,Spotify / Domain,Reddit / Domain":
-      - https://dns.google/dns-query
-      - https://cloudflare-dns.com/dns-query
-    "rule-set:China / Domain,Apple-CN / Domain":
-      - https://223.5.5.5/dns-query
+    "*.linux.do": https://stellafortuna.ddd.oaifree.com/query-dns
+    # Egern 的 value 是 DNS 服务器地址，并非将 api64 映射为该 IPv6。
+    "api64.ipify.org": "udp://[2001:4860:4860::8888]:53"
+    "rule-set:ChinaDNS":
+      - https://dns.alidns.com/dns-query
       - https://doh.pub/dns-query
-    "rule-set:Private / Domain":
-      - system
-
-  # 避免游戏 NAT / STUN / 局域网发现被 fake-ip 劫持
+    "+.cn":
+      - https://dns.alidns.com/dns-query
+      - https://doh.pub/dns-query
+    "+.local": [system]
+    "localhost": [system]
+    "rule-set:PrivateDNS": [system]
+  # 保留原有兼容条目，并补齐 Egern 的游戏和局域网域名。
   fake-ip-filter:
     - "*.lan"
     - "*.local"
+    - "*.orb.local"
+    - localhost
     - "+.market.xiaomi.com"
     - "+.weixin.qq.com"
     - "+.qpic.cn"
     - "+.qq.com"
     - localhost.ptlogin2.qq.com
-    # 时间同步
     - time.*.com
     - time.*.gov
     - ntp.*.com
     - "+.pool.ntp.org"
-    # STUN / P2P
     - "*.stun.*"
     - "*.stun.*.*"
     - stun.l.google.com
     - stun1.l.google.com
     - stun2.l.google.com
-    # 游戏 NAT
     - "+.srv.nintendo.net"
     - "+.stun.playstation.net"
     - xbox.*.microsoft.com
     - "+.xboxlive.com"
-    # 网络连通性检测
-    - msftconnecttest.com
-    - msftncsi.com
+    - "+.battlenet.com.cn"
+    - "+.battlenet.com"
+    - "+.blzstatic.cn"
+    - "+.battle.net"
+    - stun.ugreengroup.com
     - "+.msftconnecttest.com"
     - "+.msftncsi.com"
     - captive.apple.com

@@ -1,5 +1,5 @@
 // Mihomo 配置 — 通用版（type: url-test，官方 mihomo 内核即可）
-// 由 gen.py 生成，勿手改。改完 common_head.yaml / common_rules.yaml / routes.yaml
+// 由 gen.py 生成，勿手改。改完 common_head.yaml / routes.yaml / gen.py
 // 后重跑： cd clash/yaml && python3 gen.py
 //
 // 用法：Clash Verge Rev「扩展脚本」/ Mihomo Party(Clash Party)「覆写」。
@@ -18,8 +18,6 @@ const override = {
   "tcp-concurrent": true,
   "find-process-mode": "strict",
   "keep-alive-interval": 30,
-  "external-controller": "0.0.0.0:9090",
-  "secret": "anv4SIzOSEWGMXcIoT-hGT-5LigNk9v0",
   "profile": {
     "store-selected": true,
     "store-fake-ip": true
@@ -36,7 +34,12 @@ const override = {
     "dns-hijack": [
       "any:53"
     ],
-    "route-exclude-address": [],
+    "route-exclude-address": [
+      "192.168.0.0/16",
+      "10.0.0.0/8",
+      "172.16.0.0/12",
+      "127.0.0.0/8"
+    ],
     "mtu": 1350
   },
   "sniffer": {
@@ -71,6 +74,26 @@ const override = {
     "force-domain": [],
     "skip-src-address": []
   },
+  "hosts": {
+    "updates.g.aaplimg.com": "updates.cdn-apple.com.download.ks-cdn.com",
+    "iosapps.itunes.apple.com": "iosapps.itunes.apple.com.download.ks-cdn.com",
+    "dns.alidns.com": [
+      "223.5.5.5",
+      "223.6.6.6"
+    ],
+    "doh.pub": [
+      "1.12.12.12",
+      "120.53.53.53"
+    ],
+    "cloudflare-dns.com": [
+      "104.16.249.249",
+      "104.16.248.249"
+    ],
+    "dns.google": [
+      "8.8.8.8",
+      "8.8.4.4"
+    ]
+  },
   "dns": {
     "enable": true,
     "listen": "0.0.0.0:7874",
@@ -78,41 +101,48 @@ const override = {
     "prefer-h3": false,
     "enhanced-mode": "fake-ip",
     "fake-ip-range": "198.18.0.0/16",
-    "use-hosts": false,
-    "use-system-hosts": false,
+    "use-hosts": true,
+    "use-system-hosts": true,
     "respect-rules": true,
     "default-nameserver": [
+      "system",
       "223.5.5.5",
       "119.29.29.29"
     ],
     "nameserver": [
-      "https://223.5.5.5/dns-query",
-      "https://doh.pub/dns-query"
+      "https://cloudflare-dns.com/dns-query",
+      "https://dns.google/dns-query"
     ],
     "proxy-server-nameserver": [
-      "https://223.5.5.5/dns-query"
+      "223.5.5.5",
+      "119.29.29.29"
     ],
-    "direct-nameserver": [
-      "https://223.5.5.5/dns-query",
-      "https://doh.pub/dns-query"
-    ],
-    "fallback": [],
     "nameserver-policy": {
-      "rule-set:ChatGPT / Domain,GitHub / Domain,Telegram / Domain,Google / Domain,Youtube / Domain,Twitter / Domain,Facebook / Domain,Netflix / Domain,TikTok / Domain,Disney / Domain,Spotify / Domain,Reddit / Domain": [
-        "https://dns.google/dns-query",
-        "https://cloudflare-dns.com/dns-query"
-      ],
-      "rule-set:China / Domain,Apple-CN / Domain": [
-        "https://223.5.5.5/dns-query",
+      "*.linux.do": "https://stellafortuna.ddd.oaifree.com/query-dns",
+      "api64.ipify.org": "udp://[2001:4860:4860::8888]:53",
+      "rule-set:ChinaDNS": [
+        "https://dns.alidns.com/dns-query",
         "https://doh.pub/dns-query"
       ],
-      "rule-set:Private / Domain": [
+      "+.cn": [
+        "https://dns.alidns.com/dns-query",
+        "https://doh.pub/dns-query"
+      ],
+      "+.local": [
+        "system"
+      ],
+      "localhost": [
+        "system"
+      ],
+      "rule-set:PrivateDNS": [
         "system"
       ]
     },
     "fake-ip-filter": [
       "*.lan",
       "*.local",
+      "*.orb.local",
+      "localhost",
       "+.market.xiaomi.com",
       "+.weixin.qq.com",
       "+.qpic.cn",
@@ -131,8 +161,11 @@ const override = {
       "+.stun.playstation.net",
       "xbox.*.microsoft.com",
       "+.xboxlive.com",
-      "msftconnecttest.com",
-      "msftncsi.com",
+      "+.battlenet.com.cn",
+      "+.battlenet.com",
+      "+.blzstatic.cn",
+      "+.battle.net",
+      "stun.ugreengroup.com",
       "+.msftconnecttest.com",
       "+.msftncsi.com",
       "captive.apple.com"
@@ -140,754 +173,495 @@ const override = {
   },
   "proxy-groups": [
     {
+      "name": "✈️ 节点选择",
       "type": "select",
       "proxies": [
-        "所有-手选",
-        "香港-延时优选",
-        "台湾-延时优选",
-        "日本-延时优选",
-        "新加坡-延时优选",
-        "韩国-延时优选",
-        "美国-延时优选",
-        "英国-延时优选",
-        "其他",
-        "DIRECT",
-        "REJECT"
-      ],
-      "name": "AIGC",
-      "icon": "https://raw.githubusercontent.com/Orz-3/mini/master/Color/OpenAI.png"
+        "🚀 我的节点",
+        "🌐 全球直连"
+      ]
     },
     {
+      "name": "🚀 我的节点",
       "type": "select",
-      "proxies": [
-        "所有-手选",
-        "香港-延时优选",
-        "台湾-延时优选",
-        "日本-延时优选",
-        "新加坡-延时优选",
-        "韩国-延时优选",
-        "美国-延时优选",
-        "英国-延时优选",
-        "其他",
-        "DIRECT",
-        "REJECT"
-      ],
-      "name": "GitHub",
-      "icon": "https://raw.githubusercontent.com/Orz-3/mini/master/Color/github.png"
+      "include-all": true,
+      "exclude-filter": "过期|剩余|流量|官网|套餐|返利|订阅|重置"
     },
     {
+      "name": "🌐 全球直连",
       "type": "select",
       "proxies": [
-        "所有-手选",
-        "香港-延时优选",
-        "台湾-延时优选",
-        "日本-延时优选",
-        "新加坡-延时优选",
-        "韩国-延时优选",
-        "美国-延时优选",
-        "英国-延时优选",
-        "其他",
-        "DIRECT",
-        "REJECT"
-      ],
-      "name": "Telegram",
-      "icon": "https://raw.githubusercontent.com/Orz-3/mini/master/Color/Telegram.png"
-    },
-    {
-      "type": "select",
-      "proxies": [
-        "所有-手选",
-        "香港-延时优选",
-        "台湾-延时优选",
-        "日本-延时优选",
-        "新加坡-延时优选",
-        "韩国-延时优选",
-        "美国-延时优选",
-        "英国-延时优选",
-        "其他",
-        "DIRECT",
-        "REJECT"
-      ],
-      "name": "Video",
-      "icon": "https://raw.githubusercontent.com/Orz-3/mini/master/Color/Emby.png"
-    },
-    {
-      "type": "select",
-      "proxies": [
-        "所有-手选",
-        "香港-延时优选",
-        "台湾-延时优选",
-        "日本-延时优选",
-        "新加坡-延时优选",
-        "韩国-延时优选",
-        "美国-延时优选",
-        "英国-延时优选",
-        "其他",
-        "DIRECT",
-        "REJECT"
-      ],
-      "name": "国外媒体",
-      "icon": "https://raw.githubusercontent.com/Orz-3/mini/master/Color/Google.png"
-    },
-    {
-      "type": "select",
-      "proxies": [
-        "所有-手选",
-        "香港-延时优选",
-        "台湾-延时优选",
-        "日本-延时优选",
-        "新加坡-延时优选",
-        "韩国-延时优选",
-        "美国-延时优选",
-        "英国-延时优选",
-        "其他",
-        "DIRECT",
-        "REJECT"
-      ],
-      "name": "Spotify",
-      "icon": "https://raw.githubusercontent.com/Orz-3/mini/master/Color/Spotify.png"
-    },
-    {
-      "type": "select",
-      "proxies": [
-        "所有-手选",
-        "香港-延时优选",
-        "台湾-延时优选",
-        "日本-延时优选",
-        "新加坡-延时优选",
-        "韩国-延时优选",
-        "美国-延时优选",
-        "英国-延时优选",
-        "其他",
-        "DIRECT",
-        "REJECT"
-      ],
-      "name": "Apple",
-      "icon": "https://raw.githubusercontent.com/Orz-3/mini/master/Color/Apple.png"
-    },
-    {
-      "type": "select",
-      "proxies": [
-        "所有-手选",
-        "香港-延时优选",
-        "台湾-延时优选",
-        "日本-延时优选",
-        "新加坡-延时优选",
-        "韩国-延时优选",
-        "美国-延时优选",
-        "英国-延时优选",
-        "其他",
-        "DIRECT",
-        "REJECT"
-      ],
-      "name": "Microsoft",
-      "icon": "https://raw.githubusercontent.com/Orz-3/mini/master/Color/Microsoft.png"
-    },
-    {
-      "type": "select",
-      "proxies": [
-        "所有-手选",
-        "香港-延时优选",
-        "台湾-延时优选",
-        "日本-延时优选",
-        "新加坡-延时优选",
-        "韩国-延时优选",
-        "美国-延时优选",
-        "英国-延时优选",
-        "其他",
-        "DIRECT",
-        "REJECT"
-      ],
-      "name": "Steam",
-      "icon": "https://raw.githubusercontent.com/Orz-3/mini/master/Color/Steam.png"
-    },
-    {
-      "type": "select",
-      "proxies": [
-        "所有-手选",
-        "香港-延时优选",
-        "台湾-延时优选",
-        "日本-延时优选",
-        "新加坡-延时优选",
-        "韩国-延时优选",
-        "美国-延时优选",
-        "英国-延时优选",
-        "其他",
-        "DIRECT",
-        "REJECT"
-      ],
-      "name": "Game",
-      "icon": "https://raw.githubusercontent.com/Orz-3/mini/master/Color/GAME.png"
-    },
-    {
-      "type": "select",
-      "proxies": [
-        "所有-手选",
-        "香港-延时优选",
-        "台湾-延时优选",
-        "日本-延时优选",
-        "新加坡-延时优选",
-        "韩国-延时优选",
-        "美国-延时优选",
-        "英国-延时优选",
-        "其他",
-        "DIRECT",
-        "REJECT"
-      ],
-      "name": "Test",
-      "icon": "https://raw.githubusercontent.com/Orz-3/mini/master/Color/Urltest.png"
-    },
-    {
-      "name": "Block",
-      "type": "select",
-      "icon": "https://raw.githubusercontent.com/Orz-3/mini/master/Color/Adblock.png",
-      "proxies": [
-        "REJECT",
         "DIRECT"
       ]
     },
     {
-      "name": "所有-手选",
+      "name": "📲 电报信息",
       "type": "select",
-      "include-all": true,
-      "icon": "https://www.clashverge.dev/assets/icons/adjust.svg"
-    },
-    {
-      "name": "漏网之鱼",
-      "type": "fallback",
-      "icon": "https://www.clashverge.dev/assets/icons/fish.svg",
       "proxies": [
-        "香港-延时优选",
-        "台湾-延时优选",
-        "日本-延时优选",
-        "新加坡-延时优选",
-        "韩国-延时优选",
-        "美国-延时优选",
-        "英国-延时优选",
-        "所有-手选",
-        "其他",
-        "DIRECT"
+        "🇸🇬 新加坡节点",
+        "🇯🇵 日本节点",
+        "🇨🇳 台湾节点",
+        "🇭🇰 香港节点",
+        "✈️ 节点选择",
+        "🇺🇲 北美节点",
+        "🇰🇷 韩国节点",
+        "🚀 我的节点",
+        "🌏 其他亚洲节点",
+        "🇪🇺 欧洲节点"
       ]
     },
     {
-      "name": "香港-延时优选",
-      "type": "url-test",
-      "url": "https://www.gstatic.com/generate_204",
-      "tolerance": 30,
-      "lazy": true,
+      "name": "📞 TalkTone",
+      "type": "select",
       "include-all": true,
-      "interval": 300,
-      "filter": "(?!.*(?i:10x))(?=.*(广港|香港|HK|Hong ?Kong|🇭🇰|HongKong)).*$",
-      "icon": "https://fastly.jsdelivr.net/gh/Semporia/Hand-Painted-icon@master/Rounded_Rectangle/Hong_Kong.png"
+      "exclude-filter": "过期|剩余|流量|官网|套餐|返利|订阅|重置"
     },
     {
-      "name": "台湾-延时优选",
-      "type": "url-test",
-      "url": "https://www.gstatic.com/generate_204",
-      "tolerance": 30,
-      "lazy": true,
+      "name": "🎥 视频",
+      "type": "select",
       "include-all": true,
-      "interval": 300,
-      "filter": "(?!.*(?i:10x))(?=.*(广台|台湾|台灣|TW|Tai ?Wan|🇹🇼|TaiWan|Taiwan)).*$",
-      "icon": "https://fastly.jsdelivr.net/gh/Semporia/Hand-Painted-icon@master/Rounded_Rectangle/Taiwan.png"
+      "exclude-filter": "过期|剩余|流量|官网|套餐|返利|订阅|重置",
+      "proxies": [
+        "🚀 我的节点",
+        "✈️ 节点选择",
+        "🇰🇷 韩国节点",
+        "🇺🇲 北美节点",
+        "🇨🇳 台湾节点",
+        "🇸🇬 新加坡节点",
+        "🇯🇵 日本节点",
+        "🌐 全球直连",
+        "🌏 其他亚洲节点",
+        "🇪🇺 欧洲节点"
+      ]
     },
     {
-      "name": "日本-延时优选",
-      "type": "url-test",
-      "url": "https://www.gstatic.com/generate_204",
-      "tolerance": 30,
-      "lazy": true,
-      "include-all": true,
-      "interval": 300,
-      "filter": "(?!.*(?i:10x))(?=.*(广日|日本|JP|川日|东京|大阪|泉日|埼玉|沪日|深日|🇯🇵|Japan)).*$",
-      "icon": "https://fastly.jsdelivr.net/gh/Semporia/Hand-Painted-icon@master/Rounded_Rectangle/Japan.png"
+      "name": "🍿 国外媒体",
+      "type": "select",
+      "proxies": [
+        "✈️ 节点选择",
+        "🇭🇰 香港节点",
+        "🇺🇲 北美节点",
+        "🇯🇵 日本节点",
+        "🇰🇷 韩国节点",
+        "🇸🇬 新加坡节点",
+        "🇨🇳 台湾节点",
+        "🌏 其他亚洲节点",
+        "🇪🇺 欧洲节点"
+      ]
     },
     {
-      "name": "新加坡-延时优选",
-      "type": "url-test",
-      "url": "https://www.gstatic.com/generate_204",
-      "tolerance": 30,
-      "lazy": true,
-      "include-all": true,
-      "interval": 300,
-      "filter": "(?!.*(?i:10x))(?=.*(广新|新加坡|SG|坡|狮城|🇸🇬|Singapore)).*$",
-      "icon": "https://fastly.jsdelivr.net/gh/Semporia/Hand-Painted-icon@master/Rounded_Rectangle/Singapore.png"
+      "name": "📟 智能助理",
+      "type": "select",
+      "proxies": [
+        "✈️ 节点选择",
+        "🇺🇲 北美节点",
+        "🇯🇵 日本节点",
+        "🇰🇷 韩国节点",
+        "🇸🇬 新加坡节点",
+        "🇨🇳 台湾节点",
+        "🌏 其他亚洲节点",
+        "🇪🇺 欧洲节点"
+      ]
     },
     {
-      "name": "韩国-延时优选",
-      "type": "url-test",
-      "url": "https://www.gstatic.com/generate_204",
-      "tolerance": 30,
-      "lazy": true,
-      "include-all": true,
-      "interval": 300,
-      "filter": "(?!.*(?i:10x))(?=.*(广韩|韩国|韓國|KR|首尔|春川|🇰🇷|Korea)).*$",
-      "icon": "https://fastly.jsdelivr.net/gh/Semporia/Hand-Painted-icon@master/Rounded_Rectangle/South_Korea.png"
+      "name": "Ⓜ️ 微软服务",
+      "type": "select",
+      "proxies": [
+        "🌐 全球直连",
+        "✈️ 节点选择",
+        "🇭🇰 香港节点",
+        "🇺🇲 北美节点",
+        "🇯🇵 日本节点",
+        "🇰🇷 韩国节点",
+        "🇸🇬 新加坡节点",
+        "🇨🇳 台湾节点",
+        "🌏 其他亚洲节点",
+        "🇪🇺 欧洲节点"
+      ]
     },
     {
-      "name": "美国-延时优选",
-      "type": "url-test",
-      "url": "https://www.gstatic.com/generate_204",
-      "tolerance": 30,
-      "lazy": true,
-      "include-all": true,
-      "interval": 300,
-      "filter": "(?!.*(?i:10x))(?=.*(广美|美国|US|纽约|波特兰|达拉斯|俄勒|凤凰城|费利蒙|拉斯|洛杉|圣何塞|圣克拉|西雅|芝加|🇺🇸|United ?States)).*$",
-      "icon": "https://fastly.jsdelivr.net/gh/Semporia/Hand-Painted-icon@master/Rounded_Rectangle/United_States.png"
+      "name": "🍎 苹果服务",
+      "type": "select",
+      "proxies": [
+        "🌐 全球直连",
+        "✈️ 节点选择",
+        "🇭🇰 香港节点",
+        "🇺🇲 北美节点",
+        "🇯🇵 日本节点",
+        "🇰🇷 韩国节点",
+        "🇸🇬 新加坡节点",
+        "🇨🇳 台湾节点",
+        "🌏 其他亚洲节点",
+        "🇪🇺 欧洲节点"
+      ]
     },
     {
-      "name": "英国-延时优选",
-      "type": "url-test",
-      "url": "https://www.gstatic.com/generate_204",
-      "tolerance": 30,
-      "lazy": true,
-      "include-all": true,
-      "interval": 300,
-      "filter": "(?!.*(?i:10x))(?=.*(英国|伦敦|UK|United ?Kingdom|🇬🇧|London)).*$",
-      "icon": "https://fastly.jsdelivr.net/gh/Semporia/Hand-Painted-icon@master/Rounded_Rectangle/England.png"
+      "name": "🎮 游戏平台",
+      "type": "select",
+      "proxies": [
+        "🌐 全球直连",
+        "✈️ 节点选择",
+        "🇭🇰 香港节点",
+        "🇺🇲 北美节点",
+        "🇯🇵 日本节点",
+        "🇰🇷 韩国节点",
+        "🇸🇬 新加坡节点",
+        "🇨🇳 台湾节点",
+        "🌏 其他亚洲节点",
+        "🇪🇺 欧洲节点"
+      ]
     },
     {
-      "name": "其他",
+      "name": "🐟漏网之鱼",
+      "type": "select",
+      "proxies": [
+        "🇸🇬 新加坡节点",
+        "🇯🇵 日本节点",
+        "🇨🇳 台湾节点",
+        "🇭🇰 香港节点",
+        "🚀 我的节点",
+        "🇺🇲 北美节点",
+        "🇰🇷 韩国节点",
+        "🌏 其他亚洲节点",
+        "🇪🇺 欧洲节点"
+      ]
+    },
+    {
+      "name": "🇭🇰 香港节点",
       "type": "url-test",
+      "include-all": true,
+      "filter": "(?i)(🇭🇰|香港|Hong|HK)",
+      "exclude-filter": "过期|剩余|流量|官网|套餐|返利|订阅|重置",
+      "hidden": true,
+      "interval": 300,
       "url": "https://www.gstatic.com/generate_204",
       "tolerance": 30,
-      "lazy": true,
+      "lazy": true
+    },
+    {
+      "name": "🇯🇵 日本节点",
+      "type": "url-test",
       "include-all": true,
+      "filter": "(?i)(🇯🇵|日本|Japan|JP)",
+      "exclude-filter": "过期|剩余|流量|官网|套餐|返利|订阅|重置|美国|美國",
+      "hidden": true,
       "interval": 300,
-      "filter": "^((?!(10x|10X|直连|拒绝|广港|香港|HK|Hong ?Kong|🇭🇰|HongKong|广台|台湾|台灣|TW|Tai ?Wan|🇹🇼|TaiWan|Taiwan|广日|日本|JP|川日|东京|大阪|泉日|埼玉|沪日|深日|🇯🇵|Japan|广新|新加坡|SG|坡|狮城|🇸🇬|Singapore|广韩|韩国|韓國|KR|首尔|春川|🇰🇷|Korea|广美|美国|US|纽约|波特兰|达拉斯|俄勒|凤凰城|费利蒙|拉斯|洛杉|圣何塞|圣克拉|西雅|芝加|🇺🇸|United ?States|英国|UK|United ?Kingdom|伦敦|London|🇬🇧|过期|剩余|流量|官网|套餐|机场|返利|订阅|重置)).)*$",
-      "icon": "https://www.clashverge.dev/assets/icons/adjust.svg"
+      "url": "https://www.gstatic.com/generate_204",
+      "tolerance": 30,
+      "lazy": true
+    },
+    {
+      "name": "🇨🇳 台湾节点",
+      "type": "url-test",
+      "include-all": true,
+      "filter": "(?i)(🇹🇼|台湾|臺灣|台灣|Taiwan|Tai|TW|mv)",
+      "exclude-filter": "过期|剩余|流量|官网|套餐|返利|订阅|重置",
+      "hidden": true,
+      "interval": 300,
+      "url": "https://www.gstatic.com/generate_204",
+      "tolerance": 30,
+      "lazy": true
+    },
+    {
+      "name": "🇸🇬 新加坡节点",
+      "type": "url-test",
+      "include-all": true,
+      "filter": "(?i)(🇸🇬|新加坡|Singapore|SG)",
+      "exclude-filter": "过期|剩余|流量|官网|套餐|返利|订阅|重置",
+      "hidden": true,
+      "interval": 300,
+      "url": "https://www.gstatic.com/generate_204",
+      "tolerance": 30,
+      "lazy": true
+    },
+    {
+      "name": "🇰🇷 韩国节点",
+      "type": "url-test",
+      "include-all": true,
+      "filter": "(?i)(🇰🇷|韩国|韓國|Korea|KR)",
+      "exclude-filter": "过期|剩余|流量|官网|套餐|返利|订阅|重置",
+      "hidden": true,
+      "interval": 300,
+      "url": "https://www.gstatic.com/generate_204",
+      "tolerance": 30,
+      "lazy": true
+    },
+    {
+      "name": "🇺🇲 北美节点",
+      "type": "url-test",
+      "include-all": true,
+      "filter": "(?i)(🇺🇸|🇨🇦|🇲🇽|美国|美國|加拿大|墨西哥|States|Canada|Mexico|USA|(^|[^A-Za-z])US([^A-Za-z]|$)|(^|[^A-Za-z])CA([^A-Za-z]|$)|洛杉矶|圣何塞|西雅图|达拉斯|纽约|芝加哥|硅谷|凤凰城|亚特兰大|迈阿密|拉斯维加斯|波特兰|费利蒙|阿什本|多伦多|温哥华|蒙特利尔|Los Angeles|San Jose|Seattle|Dallas|New York|Chicago|Miami|Ashburn|Phoenix|Fremont|Portland|Las Vegas|Atlanta|Silicon Valley|Toronto|Vancouver|Montreal)",
+      "exclude-filter": "过期|剩余|流量|官网|套餐|返利|订阅|重置",
+      "hidden": true,
+      "interval": 300,
+      "url": "https://www.gstatic.com/generate_204",
+      "tolerance": 30,
+      "lazy": true
+    },
+    {
+      "name": "🌏 其他亚洲节点",
+      "type": "url-test",
+      "include-all": true,
+      "filter": "(?i)(🇲🇾|马来|大马|吉隆坡|Malaysia|🇹🇭|泰国|曼谷|Thailand|🇻🇳|越南|胡志明|Vietnam|🇵🇭|菲律宾|马尼拉|Philippines|🇮🇩|印尼|印度尼西亚|雅加达|Indonesia|🇮🇳|印度|孟买|India|🇰🇭|柬埔寨|金边|Cambodia|🇱🇦|老挝|Laos|🇲🇲|缅甸|Myanmar|🇧🇳|文莱|Brunei|🇧🇩|孟加拉|Bangladesh|🇵🇰|巴基斯坦|Pakistan|🇳🇵|尼泊尔|Nepal|🇱🇰|斯里兰卡|Lanka)",
+      "exclude-filter": "过期|剩余|流量|官网|套餐|返利|订阅|重置",
+      "hidden": true,
+      "interval": 300,
+      "url": "https://www.gstatic.com/generate_204",
+      "tolerance": 30,
+      "lazy": true
+    },
+    {
+      "name": "🇪🇺 欧洲节点",
+      "type": "url-test",
+      "include-all": true,
+      "filter": "(?i)(🇬🇧|英国|伦敦|United Kingdom|Britain|London|(^|[^A-Za-z])UK([^A-Za-z]|$)|🇩🇪|德国|德國|法兰克福|Germany|Frankfurt|🇫🇷|法国|法國|巴黎|France|Paris|🇳🇱|荷兰|荷蘭|阿姆斯特丹|Netherlands|Amsterdam|🇷🇺|俄罗斯|俄羅斯|莫斯科|Russia|Moscow|🇹🇷|土耳其|Turkey|Istanbul|🇮🇹|意大利|米兰|Italy|Milan|🇪🇸|西班牙|马德里|Spain|Madrid|🇸🇪|瑞典|Sweden|🇨🇭|瑞士|Switzerland|Zurich|🇵🇱|波兰|Poland|Warsaw|🇺🇦|乌克兰|Ukraine|🇮🇪|爱尔兰|Ireland|Dublin|🇫🇮|芬兰|Finland|🇳🇴|挪威|Norway|🇩🇰|丹麦|Denmark|🇧🇪|比利时|Belgium|🇦🇹|奥地利|Austria|Vienna|🇵🇹|葡萄牙|Portugal|Lisbon|🇨🇿|捷克|Czech|Prague|🇷🇴|罗马尼亚|Romania|🇭🇺|匈牙利|Hungary|🇬🇷|希腊|Greece|Athens|🇷🇸|塞尔维亚|Serbia|🇧🇬|保加利亚|Bulgaria|🇱🇻|拉脱维亚|Latvia|🇱🇹|立陶宛|Lithuania|🇪🇪|爱沙尼亚|Estonia|🇲🇩|摩尔多瓦|Moldova|🇮🇸|冰岛|Iceland|欧洲|Europe)",
+      "exclude-filter": "过期|剩余|流量|官网|套餐|返利|订阅|重置",
+      "hidden": true,
+      "interval": 300,
+      "url": "https://www.gstatic.com/generate_204",
+      "tolerance": 30,
+      "lazy": true
     }
   ],
   "rule-providers": {
-    "MyVideo / Domain": {
+    "Myairport": {
       "type": "http",
       "interval": 86400,
       "behavior": "classical",
       "format": "yaml",
-      "url": "https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/refs/heads/main/clash/rule/myvideorule.yaml"
+      "url": "https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/clash/rule/MyAiport.yaml"
     },
-    "DirectDomain / Domain": {
+    "DirectDomain": {
       "type": "http",
       "interval": 86400,
       "behavior": "classical",
       "format": "yaml",
-      "url": "https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/refs/heads/main/clash/rule/DirectDomain.yaml"
+      "url": "https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/clash/rule/DirectDomain.yaml"
     },
-    "ProxyDomain / Domain": {
+    "TalktoneProxy": {
       "type": "http",
       "interval": 86400,
       "behavior": "classical",
       "format": "yaml",
-      "url": "https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/refs/heads/main/clash/rule/ProxyDomain.yaml"
+      "url": "https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/clash/rule/TalktoneProxy.yaml"
     },
-    "NeedHighQualityNodeDomain": {
+    "TalktoneAds": {
       "type": "http",
       "interval": 86400,
       "behavior": "classical",
       "format": "yaml",
-      "url": "https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/refs/heads/main/clash/rule/NeedHighQualityNodeDomain.yaml"
+      "url": "https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/clash/rule/TalktoneAds.yaml"
     },
-    "SteamCDN / Domain": {
+    "TalktoneDirect": {
       "type": "http",
       "interval": 86400,
       "behavior": "classical",
       "format": "yaml",
-      "url": "https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/refs/heads/main/clash/rule/steamCDN.yaml"
+      "url": "https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/clash/rule/TalktoneDirect.yaml"
     },
-    "TEST / Domain": {
+    "MyVideo": {
+      "type": "http",
+      "interval": 86400,
+      "behavior": "classical",
+      "format": "yaml",
+      "url": "https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/clash/rule/myvideorule.yaml"
+    },
+    "AI-category": {
+      "type": "http",
+      "interval": 86400,
+      "behavior": "domain",
+      "format": "mrs",
+      "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/category-ai-!cn.mrs"
+    },
+    "AI-fmz200": {
       "type": "http",
       "interval": 86400,
       "behavior": "classical",
       "format": "text",
-      "url": "https://gh-proxy.com/raw.githubusercontent.com/liandu2024/clash/refs/heads/main/list/Check.list"
+      "url": "https://raw.githubusercontent.com/fmz200/wool_scripts/main/Loon/rule/AI.list"
     },
-    "Block / Domain": {
+    "Duolingo": {
       "type": "http",
       "interval": 86400,
       "behavior": "classical",
       "format": "text",
-      "url": "https://gh-proxy.com/raw.githubusercontent.com/liandu2024/clash/refs/heads/main/list/Block.list"
+      "url": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Duolingo/Duolingo.list"
     },
-    "ChatGPT / Domain": {
-      "type": "http",
-      "interval": 86400,
-      "behavior": "domain",
-      "format": "mrs",
-      "url": "https://gh-proxy.com/github.com/metacubex/meta-rules-dat/raw/refs/heads/meta/geo/geosite/openai.mrs"
-    },
-    "Claude / Domain": {
+    "Apple": {
       "type": "http",
       "interval": 86400,
       "behavior": "classical",
       "format": "text",
-      "url": "https://gh-proxy.com/raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Clash/Claude/Claude.list"
+      "url": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Apple/Apple.list"
     },
-    "Gemini / Domain": {
+    "GitHub": {
       "type": "http",
       "interval": 86400,
       "behavior": "classical",
       "format": "text",
-      "url": "https://gh-proxy.com/raw.githubusercontent.com/liandu2024/clash/refs/heads/main/list/Gemini.list"
+      "url": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/GitHub/GitHub.list"
     },
-    "Copilot / Domain": {
+    "Microsoft": {
       "type": "http",
       "interval": 86400,
       "behavior": "classical",
       "format": "text",
-      "url": "https://gh-proxy.com/raw.githubusercontent.com/liandu2024/clash/refs/heads/main/list/Copilot.list"
+      "url": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Microsoft/Microsoft.list"
     },
-    "Meta AI / Domain": {
+    "Telegram": {
       "type": "http",
       "interval": 86400,
       "behavior": "classical",
       "format": "text",
-      "url": "https://gh-proxy.com/raw.githubusercontent.com/liandu2024/clash/refs/heads/main/list/MetaAi.list"
+      "url": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Telegram/Telegram.list"
     },
-    "GitHub / Domain": {
-      "type": "http",
-      "interval": 86400,
-      "behavior": "domain",
-      "format": "mrs",
-      "url": "https://gh-proxy.com/github.com/metacubex/meta-rules-dat/raw/refs/heads/meta/geo/geosite/github.mrs"
-    },
-    "Telegram / Domain": {
-      "type": "http",
-      "interval": 86400,
-      "behavior": "domain",
-      "format": "mrs",
-      "url": "https://gh-proxy.com/github.com/metacubex/meta-rules-dat/raw/refs/heads/meta/geo/geosite/telegram.mrs"
-    },
-    "Telegram / IP": {
-      "type": "http",
-      "interval": 86400,
-      "behavior": "ipcidr",
-      "format": "mrs",
-      "url": "https://gh-proxy.com/github.com/metacubex/meta-rules-dat/raw/refs/heads/meta/geo/geoip/telegram.mrs"
-    },
-    "Twitter / Domain": {
-      "type": "http",
-      "interval": 86400,
-      "behavior": "domain",
-      "format": "mrs",
-      "url": "https://gh-proxy.com/github.com/metacubex/meta-rules-dat/raw/refs/heads/meta/geo/geosite/x.mrs"
-    },
-    "Facebook / Domain": {
-      "type": "http",
-      "interval": 86400,
-      "behavior": "domain",
-      "format": "mrs",
-      "url": "https://gh-proxy.com/github.com/metacubex/meta-rules-dat/raw/refs/heads/meta/geo/geosite/facebook.mrs"
-    },
-    "WhatsApp / Domain": {
+    "Epic": {
       "type": "http",
       "interval": 86400,
       "behavior": "classical",
       "format": "text",
-      "url": "https://gh-proxy.com/raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Clash/Whatsapp/Whatsapp.list"
+      "url": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Epic/Epic.list"
     },
-    "Reddit / Domain": {
-      "type": "http",
-      "interval": 86400,
-      "behavior": "domain",
-      "format": "mrs",
-      "url": "https://gh-proxy.com/github.com/metacubex/meta-rules-dat/raw/refs/heads/meta/geo/geosite/reddit.mrs"
-    },
-    "Apple-CN / Domain": {
-      "type": "http",
-      "interval": 86400,
-      "behavior": "domain",
-      "format": "mrs",
-      "url": "https://gh-proxy.com/github.com/metacubex/meta-rules-dat/raw/refs/heads/meta/geo/geosite/apple-cn.mrs"
-    },
-    "Apple / Domain": {
-      "type": "http",
-      "interval": 86400,
-      "behavior": "domain",
-      "format": "mrs",
-      "url": "https://gh-proxy.com/github.com/metacubex/meta-rules-dat/raw/refs/heads/meta/geo/geosite/apple.mrs"
-    },
-    "Microsoft / Domain": {
-      "type": "http",
-      "interval": 86400,
-      "behavior": "domain",
-      "format": "mrs",
-      "url": "https://gh-proxy.com/github.com/metacubex/meta-rules-dat/raw/refs/heads/meta/geo/geosite/microsoft.mrs"
-    },
-    "Amazon / Domain": {
-      "type": "http",
-      "interval": 86400,
-      "behavior": "domain",
-      "format": "mrs",
-      "url": "https://gh-proxy.com/github.com/metacubex/meta-rules-dat/raw/refs/heads/meta/geo/geosite/amazon.mrs"
-    },
-    "Nvidia / Domain": {
+    "Sony": {
       "type": "http",
       "interval": 86400,
       "behavior": "classical",
       "format": "text",
-      "url": "https://gh-proxy.com/raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Clash/Nvidia/Nvidia.list"
+      "url": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Sony/Sony.list"
     },
-    "Unity / Domain": {
+    "Steam": {
       "type": "http",
       "interval": 86400,
       "behavior": "classical",
       "format": "text",
-      "url": "https://gh-proxy.com/raw.githubusercontent.com/LM-Firefly/Rules/master/PROXY/Unity.list"
+      "url": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Steam/Steam.list"
     },
-    "Google / Domain": {
-      "type": "http",
-      "interval": 86400,
-      "behavior": "domain",
-      "format": "mrs",
-      "url": "https://gh-proxy.com/github.com/metacubex/meta-rules-dat/raw/refs/heads/meta/geo/geosite/google.mrs"
-    },
-    "Google / IP": {
-      "type": "http",
-      "interval": 86400,
-      "behavior": "ipcidr",
-      "format": "mrs",
-      "url": "https://gh-proxy.com/github.com/metacubex/meta-rules-dat/raw/refs/heads/meta/geo/geoip/google.mrs"
-    },
-    "OKX / Domain": {
-      "type": "http",
-      "interval": 86400,
-      "behavior": "domain",
-      "format": "mrs",
-      "url": "https://gh-proxy.com/github.com/metacubex/meta-rules-dat/raw/refs/heads/meta/geo/geosite/okx.mrs"
-    },
-    "Bybit / Domain": {
-      "type": "http",
-      "interval": 86400,
-      "behavior": "domain",
-      "format": "mrs",
-      "url": "https://gh-proxy.com/github.com/metacubex/meta-rules-dat/raw/refs/heads/meta/geo/geosite/bybit.mrs"
-    },
-    "Binance / Domain": {
-      "type": "http",
-      "interval": 86400,
-      "behavior": "domain",
-      "format": "mrs",
-      "url": "https://gh-proxy.com/github.com/metacubex/meta-rules-dat/raw/refs/heads/meta/geo/geosite/binance.mrs"
-    },
-    "Youtube / Domain": {
-      "type": "http",
-      "interval": 86400,
-      "behavior": "domain",
-      "format": "mrs",
-      "url": "https://gh-proxy.com/github.com/metacubex/meta-rules-dat/raw/refs/heads/meta/geo/geosite/youtube.mrs"
-    },
-    "TikTok / Domain": {
-      "type": "http",
-      "interval": 86400,
-      "behavior": "domain",
-      "format": "mrs",
-      "url": "https://gh-proxy.com/github.com/metacubex/meta-rules-dat/raw/refs/heads/meta/geo/geosite/tiktok.mrs"
-    },
-    "Netflix / Domain": {
-      "type": "http",
-      "interval": 86400,
-      "behavior": "domain",
-      "format": "mrs",
-      "url": "https://gh-proxy.com/github.com/metacubex/meta-rules-dat/raw/refs/heads/meta/geo/geosite/netflix.mrs"
-    },
-    "Netflix / IP": {
-      "type": "http",
-      "interval": 86400,
-      "behavior": "ipcidr",
-      "format": "mrs",
-      "url": "https://gh-proxy.com/github.com/metacubex/meta-rules-dat/raw/refs/heads/meta/geo/geoip/netflix.mrs"
-    },
-    "Disney / Domain": {
-      "type": "http",
-      "interval": 86400,
-      "behavior": "domain",
-      "format": "mrs",
-      "url": "https://gh-proxy.com/github.com/metacubex/meta-rules-dat/raw/refs/heads/meta/geo/geosite/disney.mrs"
-    },
-    "HBO / Domain": {
-      "type": "http",
-      "interval": 86400,
-      "behavior": "domain",
-      "format": "mrs",
-      "url": "https://gh-proxy.com/github.com/metacubex/meta-rules-dat/raw/refs/heads/meta/geo/geosite/hbo.mrs"
-    },
-    "Crunchyroll / Domain": {
+    "Nintendo": {
       "type": "http",
       "interval": 86400,
       "behavior": "classical",
       "format": "text",
-      "url": "https://gh-proxy.com/raw.githubusercontent.com/liandu2024/clash/refs/heads/main/list/Crunchyroll.list"
+      "url": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Nintendo/Nintendo.list"
     },
-    "Spotify / Domain": {
+    "YouTube": {
+      "type": "http",
+      "interval": 86400,
+      "behavior": "classical",
+      "format": "text",
+      "url": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/YouTube/YouTube.list"
+    },
+    "GlobalMedia": {
+      "type": "http",
+      "interval": 86400,
+      "behavior": "classical",
+      "format": "text",
+      "url": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/GlobalMedia/GlobalMedia.list"
+    },
+    "Proxy": {
+      "type": "http",
+      "interval": 86400,
+      "behavior": "classical",
+      "format": "text",
+      "url": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Proxy/Proxy.list"
+    },
+    "ChinaMedia": {
+      "type": "http",
+      "interval": 86400,
+      "behavior": "classical",
+      "format": "text",
+      "url": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/ChinaMedia/ChinaMedia.list"
+    },
+    "ChinaMax": {
+      "type": "http",
+      "interval": 86400,
+      "behavior": "classical",
+      "format": "text",
+      "url": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/ChinaMax/ChinaMax.list"
+    },
+    "WeChat": {
+      "type": "http",
+      "interval": 86400,
+      "behavior": "classical",
+      "format": "text",
+      "url": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/WeChat/WeChat.list"
+    },
+    "ChinaDNS": {
       "type": "http",
       "interval": 86400,
       "behavior": "domain",
       "format": "mrs",
-      "url": "https://gh-proxy.com/github.com/metacubex/meta-rules-dat/raw/refs/heads/meta/geo/geosite/spotify.mrs"
+      "url": "https://raw.githubusercontent.com/metacubex/meta-rules-dat/meta/geo/geosite/cn.mrs"
     },
-    "Steam / Domain": {
+    "PrivateDNS": {
       "type": "http",
       "interval": 86400,
       "behavior": "domain",
       "format": "mrs",
-      "url": "https://gh-proxy.com/github.com/metacubex/meta-rules-dat/raw/refs/heads/meta/geo/geosite/steam.mrs"
-    },
-    "Epic / Domain": {
-      "type": "http",
-      "interval": 86400,
-      "behavior": "classical",
-      "format": "text",
-      "url": "https://gh-proxy.com/raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Epic/Epic.list"
-    },
-    "EA / Domain": {
-      "type": "http",
-      "interval": 86400,
-      "behavior": "classical",
-      "format": "text",
-      "url": "https://gh-proxy.com/raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/EA/EA.list"
-    },
-    "Blizzard / Domain": {
-      "type": "http",
-      "interval": 86400,
-      "behavior": "classical",
-      "format": "text",
-      "url": "https://gh-proxy.com/raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Blizzard/Blizzard.list"
-    },
-    "UBI / Domain": {
-      "type": "http",
-      "interval": 86400,
-      "behavior": "classical",
-      "format": "text",
-      "url": "https://gh-proxy.com/raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/UBI/UBI.list"
-    },
-    "PlayStation / Domain": {
-      "type": "http",
-      "interval": 86400,
-      "behavior": "classical",
-      "format": "text",
-      "url": "https://gh-proxy.com/raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Clash/PlayStation/PlayStation.list"
-    },
-    "Nintend / Domain": {
-      "type": "http",
-      "interval": 86400,
-      "behavior": "classical",
-      "format": "text",
-      "url": "https://gh-proxy.com/raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Nintendo/Nintendo.list"
-    },
-    "Discord / Domain": {
-      "type": "http",
-      "interval": 86400,
-      "behavior": "classical",
-      "format": "text",
-      "url": "https://gh-proxy.com/raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Discord/Discord.list"
-    },
-    "Proxy / Domain": {
-      "type": "http",
-      "interval": 86400,
-      "behavior": "classical",
-      "format": "text",
-      "url": "https://gh-proxy.com/raw.githubusercontent.com/liandu2024/clash/refs/heads/main/list/Proxy.list"
-    },
-    "Globe / Domain": {
-      "type": "http",
-      "interval": 86400,
-      "behavior": "classical",
-      "format": "text",
-      "url": "https://gh-proxy.com/raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Clash/Global/Global.list"
-    },
-    "Direct / Domain": {
-      "type": "http",
-      "interval": 86400,
-      "behavior": "classical",
-      "format": "text",
-      "url": "https://gh-proxy.com/raw.githubusercontent.com/liandu2024/clash/refs/heads/main/list/Direct.list"
-    },
-    "China / Domain": {
-      "type": "http",
-      "interval": 86400,
-      "behavior": "domain",
-      "format": "mrs",
-      "url": "https://gh-proxy.com/github.com/metacubex/meta-rules-dat/raw/refs/heads/meta/geo/geosite/cn.mrs"
-    },
-    "China / IP": {
-      "type": "http",
-      "interval": 86400,
-      "behavior": "ipcidr",
-      "format": "mrs",
-      "url": "https://gh-proxy.com/github.com/metacubex/meta-rules-dat/raw/refs/heads/meta/geo/geoip/cn.mrs"
-    },
-    "Private / Domain": {
-      "type": "http",
-      "interval": 86400,
-      "behavior": "domain",
-      "format": "mrs",
-      "url": "https://gh-proxy.com/github.com/metacubex/meta-rules-dat/raw/refs/heads/meta/geo/geosite/private.mrs"
+      "url": "https://raw.githubusercontent.com/metacubex/meta-rules-dat/meta/geo/geosite/private.mrs"
     }
   },
   "rules": [
-    "PROCESS-NAME,Weixin.exe,DIRECT",
-    "PROCESS-NAME,WeChatAppEx.exe,DIRECT",
-    "PROCESS-NAME,plastic.exe,DIRECT",
-    "RULE-SET,Private / Domain,DIRECT",
-    "IP-CIDR,127.0.0.0/8,DIRECT,no-resolve",
+    "DOMAIN,linux.do,🇸🇬 新加坡节点",
+    "DOMAIN,agentrouter.org,🍿 国外媒体",
+    "RULE-SET,Myairport,🍿 国外媒体",
+    "DOMAIN-SUFFIX,alidns.com,DIRECT",
+    "DOMAIN-SUFFIX,doh.pub,DIRECT",
+    "DOMAIN-SUFFIX,cloudflare-dns.com,🍿 国外媒体",
+    "DOMAIN-SUFFIX,dns.google,🍿 国外媒体",
+    "RULE-SET,PrivateDNS,DIRECT",
+    "DOMAIN,localhost,DIRECT",
+    "DOMAIN-SUFFIX,local,DIRECT",
+    "IP-CIDR,192.168.0.0/16,DIRECT,no-resolve",
     "IP-CIDR,10.0.0.0/8,DIRECT,no-resolve",
     "IP-CIDR,172.16.0.0/12,DIRECT,no-resolve",
-    "IP-CIDR,192.168.0.0/16,DIRECT,no-resolve",
+    "IP-CIDR,127.0.0.0/8,DIRECT,no-resolve",
     "IP-CIDR,100.64.0.0/10,DIRECT,no-resolve",
-    "RULE-SET,Block / Domain,Block",
-    "RULE-SET,NeedHighQualityNodeDomain,所有-手选",
-    "RULE-SET,DirectDomain / Domain,DIRECT",
-    "RULE-SET,ProxyDomain / Domain,国外媒体",
-    "RULE-SET,MyVideo / Domain,Video",
-    "RULE-SET,TEST / Domain,Test",
-    "DOMAIN-SUFFIX,linux.do,国外媒体",
-    "RULE-SET,ChatGPT / Domain,AIGC",
-    "RULE-SET,Claude / Domain,AIGC",
-    "RULE-SET,Gemini / Domain,AIGC",
-    "RULE-SET,Copilot / Domain,AIGC",
-    "RULE-SET,Meta AI / Domain,AIGC",
-    "RULE-SET,GitHub / Domain,GitHub",
-    "RULE-SET,Telegram / Domain,Telegram",
-    "RULE-SET,Telegram / IP,Telegram,no-resolve",
-    "RULE-SET,Twitter / Domain,国外媒体",
-    "RULE-SET,Facebook / Domain,国外媒体",
-    "RULE-SET,WhatsApp / Domain,国外媒体",
-    "RULE-SET,Reddit / Domain,国外媒体",
-    "RULE-SET,Spotify / Domain,Spotify",
-    "RULE-SET,Youtube / Domain,国外媒体",
-    "RULE-SET,TikTok / Domain,国外媒体",
-    "RULE-SET,Netflix / Domain,国外媒体",
-    "RULE-SET,Netflix / IP,国外媒体,no-resolve",
-    "RULE-SET,Disney / Domain,国外媒体",
-    "RULE-SET,HBO / Domain,国外媒体",
-    "RULE-SET,Crunchyroll / Domain,国外媒体",
-    "RULE-SET,SteamCDN / Domain,DIRECT",
-    "RULE-SET,Steam / Domain,Steam",
-    "RULE-SET,Epic / Domain,Game",
-    "RULE-SET,EA / Domain,Game",
-    "RULE-SET,Blizzard / Domain,Game",
-    "RULE-SET,UBI / Domain,Game",
-    "RULE-SET,PlayStation / Domain,Game",
-    "RULE-SET,Nintend / Domain,Game",
-    "RULE-SET,Discord / Domain,Game",
-    "RULE-SET,Apple-CN / Domain,DIRECT",
-    "RULE-SET,Apple / Domain,Apple",
-    "RULE-SET,Microsoft / Domain,Microsoft",
-    "RULE-SET,Amazon / Domain,国外媒体",
-    "RULE-SET,Nvidia / Domain,国外媒体",
-    "RULE-SET,Unity / Domain,国外媒体",
-    "RULE-SET,OKX / Domain,国外媒体",
-    "RULE-SET,Bybit / Domain,国外媒体",
-    "RULE-SET,Binance / Domain,国外媒体",
-    "RULE-SET,Google / Domain,国外媒体",
-    "RULE-SET,Google / IP,国外媒体,no-resolve",
-    "RULE-SET,Proxy / Domain,国外媒体",
-    "RULE-SET,Globe / Domain,国外媒体",
-    "RULE-SET,Direct / Domain,DIRECT",
-    "RULE-SET,China / Domain,DIRECT",
-    "RULE-SET,China / IP,DIRECT,no-resolve",
-    "GEOIP,CN,DIRECT,no-resolve",
-    "MATCH,漏网之鱼"
+    "IP-CIDR6,::1/128,DIRECT,no-resolve",
+    "IP-CIDR6,fc00::/7,DIRECT,no-resolve",
+    "IP-CIDR6,fe80::/10,DIRECT,no-resolve",
+    "DOMAIN-KEYWORD,emby.991600.xyz,DIRECT",
+    "DOMAIN-KEYWORD,osaka.991600.xyz,DIRECT",
+    "IP-CIDR,141.147.153.168/32,DIRECT,no-resolve",
+    "DOMAIN-SUFFIX,oraclecloud.com,✈️ 节点选择",
+    "DOMAIN-SUFFIX,muyuan.do,🍿 国外媒体",
+    "DOMAIN-SUFFIX,anyrouter.top,✈️ 节点选择",
+    "DOMAIN-SUFFIX,hgemby.qzz.io,🎥 视频",
+    "RULE-SET,AI-category,📟 智能助理",
+    "RULE-SET,AI-fmz200,📟 智能助理",
+    "DOMAIN-SUFFIX,lucky.991600.xyz,🌐 全球直连",
+    "DOMAIN-SUFFIX,e5.991600.xyz,🌐 全球直连",
+    "DOMAIN-SUFFIX,fnos.991600.xyz,✈️ 节点选择",
+    "RULE-SET,DirectDomain,🌐 全球直连",
+    "DOMAIN-SUFFIX,991600.xyz,🍿 国外媒体",
+    "DOMAIN-SUFFIX,netflav.com,🎥 视频",
+    "DOMAIN-SUFFIX,surrit.com,🎥 视频",
+    "RULE-SET,Duolingo,🌐 全球直连",
+    "RULE-SET,WeChat,DIRECT",
+    "DOMAIN-SUFFIX,macapp.org.cn,🍿 国外媒体",
+    "DOMAIN-SUFFIX,cloudflare.com,🌐 全球直连",
+    "DOMAIN-SUFFIX,sharepoint.com,Ⓜ️ 微软服务",
+    "RULE-SET,TalktoneProxy,📞 TalkTone",
+    "RULE-SET,TalktoneAds,REJECT",
+    "RULE-SET,TalktoneDirect,🌐 全球直连",
+    "DOMAIN-SUFFIX,testflight.apple.com,🍿 国外媒体",
+    "DOMAIN,beta.itunes.apple.com,🍿 国外媒体",
+    "DOMAIN,iosapps.itunes.apple.com,🌐 全球直连",
+    "DOMAIN-SUFFIX,mzstatic.com,🌐 全球直连",
+    "RULE-SET,Apple,🍎 苹果服务,no-resolve",
+    "RULE-SET,GitHub,🍿 国外媒体",
+    "RULE-SET,Microsoft,Ⓜ️ 微软服务",
+    "RULE-SET,Telegram,📲 电报信息",
+    "RULE-SET,Epic,🎮 游戏平台",
+    "RULE-SET,Sony,🎮 游戏平台",
+    "RULE-SET,Steam,🎮 游戏平台",
+    "RULE-SET,Nintendo,🎮 游戏平台",
+    "RULE-SET,YouTube,🍿 国外媒体",
+    "RULE-SET,MyVideo,🎥 视频",
+    "RULE-SET,GlobalMedia,🍿 国外媒体,no-resolve",
+    "RULE-SET,Proxy,🍿 国外媒体,no-resolve",
+    "RULE-SET,ChinaMedia,🌐 全球直连",
+    "RULE-SET,ChinaMax,🌐 全球直连",
+    "GEOIP,CN,🌐 全球直连",
+    "MATCH,🐟漏网之鱼"
   ]
 };
 

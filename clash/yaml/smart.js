@@ -339,7 +339,7 @@ const override = {
       "interval": 300,
       "uselightgbm": true,
       "collectdata": true,
-      "policy-priority": "Mitce:0.3;iku:0.3;kitty:0.6"
+      "policy-priority": "Mitce:3.333;iku:3.333;kitty:1.667"
     },
     {
       "name": "🇯🇵 日本节点",
@@ -351,7 +351,7 @@ const override = {
       "interval": 300,
       "uselightgbm": true,
       "collectdata": true,
-      "policy-priority": "Mitce:0.3;iku:0.3;kitty:0.6"
+      "policy-priority": "Mitce:3.333;iku:3.333;kitty:1.667"
     },
     {
       "name": "🇨🇳 台湾节点",
@@ -363,7 +363,7 @@ const override = {
       "interval": 300,
       "uselightgbm": true,
       "collectdata": true,
-      "policy-priority": "Mitce:0.3;iku:0.3;kitty:0.6"
+      "policy-priority": "Mitce:3.333;iku:3.333;kitty:1.667"
     },
     {
       "name": "🇸🇬 新加坡节点",
@@ -375,7 +375,7 @@ const override = {
       "interval": 300,
       "uselightgbm": true,
       "collectdata": true,
-      "policy-priority": "Mitce:0.3;iku:0.3;kitty:0.6"
+      "policy-priority": "Mitce:3.333;iku:3.333;kitty:1.667"
     },
     {
       "name": "🇰🇷 韩国节点",
@@ -387,7 +387,7 @@ const override = {
       "interval": 300,
       "uselightgbm": true,
       "collectdata": true,
-      "policy-priority": "Mitce:0.3;iku:0.3;kitty:0.6"
+      "policy-priority": "Mitce:3.333;iku:3.333;kitty:1.667"
     },
     {
       "name": "🇺🇲 北美节点",
@@ -399,7 +399,7 @@ const override = {
       "interval": 300,
       "uselightgbm": true,
       "collectdata": true,
-      "policy-priority": "Mitce:0.3;iku:0.3;kitty:0.6"
+      "policy-priority": "Mitce:3.333;iku:3.333;kitty:1.667"
     },
     {
       "name": "🌏 其他亚洲节点",
@@ -411,7 +411,7 @@ const override = {
       "interval": 300,
       "uselightgbm": true,
       "collectdata": true,
-      "policy-priority": "Mitce:0.3;iku:0.3;kitty:0.6"
+      "policy-priority": "Mitce:3.333;iku:3.333;kitty:1.667"
     },
     {
       "name": "🇪🇺 欧洲节点",
@@ -423,7 +423,7 @@ const override = {
       "interval": 300,
       "uselightgbm": true,
       "collectdata": true,
-      "policy-priority": "Mitce:0.3;iku:0.3;kitty:0.6"
+      "policy-priority": "Mitce:3.333;iku:3.333;kitty:1.667"
     }
   ],
   "rule-providers": {

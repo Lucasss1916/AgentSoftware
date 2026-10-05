@@ -70,7 +70,10 @@ GitHub / YouTube 统一走国外媒体，TalkTone 独立手选。地区组为香
 北美包含美国、加拿大、墨西哥；欧洲覆盖原来的英国组。其他亚洲和欧洲也加入业务组备选项。
 
 - `urltest` 地区组全部使用 `url-test`；`smart` 地区组全部使用 `smart`。
-- Smart 权重为 `Mitce:0.3;iku:0.3;kitty:0.6`，按**节点名**匹配；订阅应给节点名加对应机场前缀。
+- Smart 权重为 `Mitce:3.333;iku:3.333;kitty:1.667`，按**节点名**匹配；订阅应给节点名加对应机场前缀。
+  Egern 的系数越小越优先，Mihomo Smart 的系数越大越优先，因此对 Egern 的 `0.3 / 0.3 / 0.6` 取倒数作为起点。
+  未匹配节点的系数为 `1`；相同基础评分下，偏好为 Mitce＝iku＞kitty＞未匹配节点。
+  两边评分算法不同，倒数仅保留偏好方向，不保证选出相同节点，也不代表流量占比。
 - DNS 默认 Cloudflare / Google DoH；`cn` 与 ChinaDNS 规则集使用阿里 / 腾讯 DoH。
   ChinaDNS 使用 MetaCubeX 国内域名集替代 Egern 的 Repcz 规则集，覆盖范围可能略有不同。
 - `*.linux.do` 使用指定 DoH；`linux.do` 本身的连接按原配置精确匹配到新加坡。

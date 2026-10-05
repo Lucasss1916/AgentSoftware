@@ -14,6 +14,18 @@ spec.loader.exec_module(generator)
 
 
 class ClashConfigTest(unittest.TestCase):
+    def test_smart_priorities_preserve_egern_preference(self):
+        for group in yaml.safe_load(generator.build_groups("smart"))["proxy-groups"]:
+            if group["type"] != "smart":
+                continue
+            factors = dict(entry.split(":") for entry in group["policy-priority"].split(";"))
+            factors = {name: float(value) for name, value in factors.items()}
+            self.assertEqual(factors["Mitce"], factors["iku"])
+            self.assertGreater(factors["Mitce"], factors["kitty"])
+            self.assertGreater(factors["kitty"], 1)
+        for group in yaml.safe_load(generator.build_groups("url-test"))["proxy-groups"]:
+            self.assertNotIn("policy-priority", group)
+
     def test_references_and_core_types(self):
         for filename, kind in [("urltest.yaml", "url-test"), ("smart.yaml", "smart")]:
             config = yaml.safe_load((CLASH / filename).read_text())

@@ -30,8 +30,9 @@ def regional_group(name, pattern, kind):
     if name == "🇯🇵 日本节点":
         group["exclude-filter"] += "|美国|美國"
     if kind == "smart":
+        # Egern 的成本系数越小越优先；Smart 的评分系数越大越优先，取倒数保留偏好方向。
         group.update({"uselightgbm": True, "collectdata": True,
-                      "policy-priority": "Mitce:0.3;iku:0.3;kitty:0.6"})
+                      "policy-priority": "Mitce:3.333;iku:3.333;kitty:1.667"})
     else:
         group.update({"url": "https://www.gstatic.com/generate_204",
                       "tolerance": 30, "lazy": True})

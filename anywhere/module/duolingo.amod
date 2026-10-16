@@ -30,4 +30,4 @@ hostname = ios-api-*.duolingo.com, ios-api-*.duolingo.cn, api*.duolingo.com, api
 
 # ── 方案 B：脚本覆写（推荐，动态时间戳，长期有效）────────────────────
 # 用 script-path 指向兼容脚本；把下面这行取消注释、并注释掉方案 A 那行
- http-response ^https?://(ios-api-[a-z0-9-]+|api\d+)\.duolingo\.c(n|om)/2023-05-23/(batch|users/[^/?#]+)(?:[?#].*)?$ script-response-body https://raw.githubusercontent.com/TAKAGIVEGETA/MyScripts/main/lingoDuo/lingoDuo-xaM.js
+  http-response ^https?://(ios-api-[a-z0-9-]+|api\d+)\.duolingo\.c(n|om)/2023-05-23/(batch|users/[^/?#]+)(?:[?#].*)?$ script-response-body https://raw.githubusercontent.com/TAKAGIVEGETA/MyScripts/main/lingoDuo/lingoDuo-xaM.js

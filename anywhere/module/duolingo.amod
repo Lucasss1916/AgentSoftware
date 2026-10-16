@@ -1,21 +1,10 @@
-[Module]
+# Duolingo Max 解锁 - Anywhere MITM RuleSet
+# 上游: TAKAGIVEGETA/MyScripts (Surge 版) -> Anywhere 适配
+# 脚本 API: function process(ctx) + Anywhere.codec.utf8 + Anywhere.done()
+# ctx.body 类型: Uint8Array（官方规格）
+
 name = Duolingo Max 解锁
-#!name=Duolingo Max 解锁
-#!desc=解锁 Duolingo Max 会员（Anywhere 原生格式）
-#!author=Takagivegeta / adapted for Anywhere
-
-[MITM]
-# Duolingo - Anywhere MITM RuleSet
-# 上游: TAKAGIVEGETA/MyScripts
-# 注意：所有重写规则都写在 [MITM] 段内部，紧跟在 hostname= 之后，不要另起段
-
-name = Duolingo
 hostname = ios-api-*.duolingo.com, ios-api-*.duolingo.cn, api*.duolingo.com, api*.duolingo.cn
 
-[Rule]
-# 重写规则：类型, 动作, URL正则, 参数个数, 替换body
-# 0=通用HTTP重写  2=覆写body
-0, 2, ^https?://(ios-api-[a-z0-9-]+|api\d+)\.duolingo\.c(n|om)/2023-05-23/users/[^/?#]+(?:[?#].*)?$, 2, "{""id"":1,""username"":""anywhere_user"",""subscriberLevel"":""GOLD"",""shopItems"":[{""id"":""gold_subscription"",""purchaseDate"":1740000000,""purchasePrice"":0,""subscriptionInfo"":{""expectedExpiration"":4102444800,""productId"":""com.duolingo.DuolingoMobile.subscription.Gold.TwelveMonth.24Q2Max.168"",""renewer"":""APPLE"",""renewing"":true,""tier"":""twelve_month"",""type"":""gold""}}],""trackingProperties"":{""has_item_immersive_subscription"":true,""has_item_premium_subscription"":true,""has_item_live_subscription"":true,""has_item_gold_subscription"":true,""has_item_max_subscription"":true},""Attention"":""Converted for Anywhere""}"
-
-# 脚本覆写（可选，替代上面静态行；动态生成时间戳，长期有效）
-# http-response ^https?://(ios-api-[a-z0-9-]+|api\d+)\.duolingo\.c(n|om)/2023-05-23/(batch|users/[^/?#]+)(?:[?#].*)?$ script-response-body https://raw.githubusercontent.com/TAKAGIVEGETA/MyScripts/main/lingoDuo/lingoDuo-xaM.js
+# 响应脚本：注入 Gold/Max 订阅数据（动态时间戳）
+1, 100, ^https?://(ios-api-[a-z0-9-]+|api\d+)\.duolingo\.c(n|om)/2023-05-23/(batch|users/[^/?#]+)(?:[?#].*)?$, ZnVuY3Rpb24gcHJvY2VzcyhjdHgpIHsKICBpZiAoY3R4LnBoYXNlICE9PSAicmVzcG9uc2UiKSByZXR1cm47CiAgaWYgKGN0eC5zdGF0dXMgJiYgY3R4LnN0YXR1cyAhPT0gMjAwKSByZXR1cm47CiAgaWYgKCFjdHguYm9keSkgcmV0dXJuOwoKICB2YXIgdXRmODsKICB0cnkgeyB1dGY4ID0gQW55d2hlcmUuY29kZWMudXRmODsgfSBjYXRjaCAoZSkgeyByZXR1cm47IH0KCiAgdmFyIHRleHQ7CiAgdHJ5IHsgdGV4dCA9IHV0ZjguZGVjb2RlKGN0eC5ib2R5KTsgfSBjYXRjaCAoZSkgeyByZXR1cm47IH0KICBpZiAoIXRleHQpIHJldHVybjsKCiAgdmFyIG9iajsKICB0cnkgeyBvYmogPSBKU09OLnBhcnNlKHRleHQpOyB9IGNhdGNoIChlKSB7IHJldHVybjsgfQogIGlmICghb2JqIHx8IHR5cGVvZiBvYmogIT09ICJvYmplY3QiKSByZXR1cm47CgogIHZhciBub3cgPSBNYXRoLmZsb29yKERhdGUubm93KCkgLyAxMDAwKTsKICB2YXIgY2hhbmdlZCA9IGZhbHNlOwoKICBmdW5jdGlvbiBhcHBseUdvbGQodSkgewogICAgaWYgKCF1IHx8IHR5cGVvZiB1ICE9PSAib2JqZWN0IikgcmV0dXJuIGZhbHNlOwogICAgaWYgKCF1LnNob3BJdGVtcyB8fCAhKHUuc2hvcEl0ZW1zIGluc3RhbmNlb2YgQXJyYXkpKSB1LnNob3BJdGVtcyA9IFtdOwoKICAgIHZhciBoYXMgPSBmYWxzZTsKICAgIGZvciAodmFyIGkgPSAwOyBpIDwgdS5zaG9wSXRlbXMubGVuZ3RoOyBpKyspIHsKICAgICAgaWYgKHUuc2hvcEl0ZW1zW2ldICYmIHUuc2hvcEl0ZW1zW2ldLmlkID09PSAiZ29sZF9zdWJzY3JpcHRpb24iKSBoYXMgPSB0cnVlOwogICAgfQogICAgaWYgKCFoYXMpIHsKICAgICAgdS5zaG9wSXRlbXMucHVzaCh7CiAgICAgICAgaWQ6ICJnb2xkX3N1YnNjcmlwdGlvbiIsCiAgICAgICAgcHVyY2hhc2VEYXRlOiBub3cgLSAxNzI4MDAsCiAgICAgICAgcHVyY2hhc2VQcmljZTogMCwKICAgICAgICBzdWJzY3JpcHRpb25JbmZvOiB7CiAgICAgICAgICBleHBlY3RlZEV4cGlyYXRpb246IG5vdyArIDMxNTM2MDAwLAogICAgICAgICAgcHJvZHVjdElkOiAiY29tLmR1b2xpbmdvLkR1b2xpbmdvTW9iaWxlLnN1YnNjcmlwdGlvbi5Hb2xkLlR3ZWx2ZU1vbnRoLjI0UTJNYXguMTY4IiwKICAgICAgICAgIHJlbmV3ZXI6ICJBUFBMRSIsCiAgICAgICAgICByZW5ld2luZzogdHJ1ZSwKICAgICAgICAgIHRpZXI6ICJ0d2VsdmVfbW9udGgiLAogICAgICAgICAgdHlwZTogImdvbGQiCiAgICAgICAgfQogICAgICB9KTsKICAgIH0KCiAgICB1LnN1YnNjcmliZXJMZXZlbCA9ICJHT0xEIjsKCiAgICBpZiAoIXUudHJhY2tpbmdQcm9wZXJ0aWVzIHx8IHR5cGVvZiB1LnRyYWNraW5nUHJvcGVydGllcyAhPT0gIm9iamVjdCIpIHsKICAgICAgdS50cmFja2luZ1Byb3BlcnRpZXMgPSB7fTsKICAgIH0KICAgIHUudHJhY2tpbmdQcm9wZXJ0aWVzLmhhc19pdGVtX2ltbWVyc2l2ZV9zdWJzY3JpcHRpb24gPSB0cnVlOwogICAgdS50cmFja2luZ1Byb3BlcnRpZXMuaGFzX2l0ZW1fcHJlbWl1bV9zdWJzY3JpcHRpb24gPSB0cnVlOwogICAgdS50cmFja2luZ1Byb3BlcnRpZXMuaGFzX2l0ZW1fbGl2ZV9zdWJzY3JpcHRpb24gPSB0cnVlOwogICAgdS50cmFja2luZ1Byb3BlcnRpZXMuaGFzX2l0ZW1fZ29sZF9zdWJzY3JpcHRpb24gPSB0cnVlOwogICAgdS50cmFja2luZ1Byb3BlcnRpZXMuaGFzX2l0ZW1fbWF4X3N1YnNjcmlwdGlvbiA9IHRydWU7CiAgICByZXR1cm4gdHJ1ZTsKICB9CgogIGlmIChvYmoucmVzcG9uc2VzIGluc3RhbmNlb2YgQXJyYXkgJiYgb2JqLnJlc3BvbnNlcy5sZW5ndGggPj0gMikgewogICAgdmFyIHIwID0gb2JqLnJlc3BvbnNlc1swXTsKICAgIGlmICghcjAgfHwgdHlwZW9mIHIwICE9PSAib2JqZWN0IikgcmV0dXJuOwoKICAgIGlmIChyMC5oZWFkZXJzICYmIHR5cGVvZiByMC5oZWFkZXJzID09PSAib2JqZWN0IikgewogICAgICBpZiAoKCJldGFnIiBpbiByMC5oZWFkZXJzKSB8fCAoIkVUYWciIGluIHIwLmhlYWRlcnMpKSByZXR1cm47CiAgICB9CgogICAgdmFyIGIwID0gcjAuYm9keTsKICAgIGlmICh0eXBlb2YgYjAgPT09ICJzdHJpbmciKSB7CiAgICAgIHRyeSB7CiAgICAgICAgdmFyIHUxID0gSlNPTi5wYXJzZShiMCk7CiAgICAgICAgYXBwbHlHb2xkKHUxKTsKICAgICAgICByMC5ib2R5ID0gSlNPTi5zdHJpbmdpZnkodTEpOwogICAgICAgIGNoYW5nZWQgPSB0cnVlOwogICAgICB9IGNhdGNoIChlKSB7fQogICAgfSBlbHNlIGlmIChiMCAmJiB0eXBlb2YgYjAgPT09ICJvYmplY3QiKSB7CiAgICAgIGFwcGx5R29sZChiMCk7CiAgICAgIGNoYW5nZWQgPSB0cnVlOwogICAgfQogIH0gZWxzZSBpZiAob2JqLnNob3BJdGVtcyAhPT0gdW5kZWZpbmVkIHx8CiAgICAgICAgICAgICBvYmouc3Vic2NyaWJlckxldmVsICE9PSB1bmRlZmluZWQgfHwKICAgICAgICAgICAgIG9iai5pZCAhPT0gdW5kZWZpbmVkIHx8CiAgICAgICAgICAgICBvYmoudXNlcm5hbWUgIT09IHVuZGVmaW5lZCkgewogICAgYXBwbHlHb2xkKG9iaik7CiAgICBjaGFuZ2VkID0gdHJ1ZTsKICB9CgogIGlmICghY2hhbmdlZCkgcmV0dXJuOwoKICB0cnkgewogICAgY3R4LmJvZHkgPSB1dGY4LmVuY29kZShKU09OLnN0cmluZ2lmeShvYmopKTsKICAgIEFueXdoZXJlLmRvbmUoKTsKICB9IGNhdGNoIChlKSB7fQp9Cg==

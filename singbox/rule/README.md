@@ -13,6 +13,8 @@
 | `MyAiport.json` | <https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/singbox/rule/MyAiport.json> |
 | `NeedHighQualityNodeDomain.json` | <https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/singbox/rule/NeedHighQualityNodeDomain.json> |
 | `ProxyDomain.json` | <https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/singbox/rule/ProxyDomain.json> |
+| `Saily.json` | <https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/singbox/rule/Saily.json> |
+| `SailyAds.json` | <https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/singbox/rule/SailyAds.json> |
 | `TalktoneAds.json` | <https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/singbox/rule/TalktoneAds.json> |
 | `TalktoneDirect.json` | <https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/singbox/rule/TalktoneDirect.json> |
 | `TalktoneProxy.json` | <https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/singbox/rule/TalktoneProxy.json> |

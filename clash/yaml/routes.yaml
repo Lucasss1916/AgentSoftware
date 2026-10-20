@@ -25,6 +25,14 @@ rule_sets:
   clash:
     anchor: yamlclass
     url: https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/clash/rule/myvideorule.yaml
+- name: Saily
+  clash:
+    anchor: yamlclass
+    url: https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/clash/rule/Saily.yaml
+- name: SailyAds
+  clash:
+    anchor: yamlclass
+    url: https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/clash/rule/SailyAds.yaml
 - name: AI-category
   clash:
     anchor: domain
@@ -144,6 +152,9 @@ rules:
 - RULE-SET,TalktoneProxy,📞 TalkTone
 - RULE-SET,TalktoneAds,REJECT
 - RULE-SET,TalktoneDirect,🌐 全球直连
+# SailyAds 必须早于 Saily：先拦广告埋点，再让功能域名走代理
+- RULE-SET,SailyAds,REJECT
+- RULE-SET,Saily,🍿 国外媒体
 - DOMAIN-SUFFIX,testflight.apple.com,🍿 国外媒体
 - DOMAIN,beta.itunes.apple.com,🍿 国外媒体
 - DOMAIN,iosapps.itunes.apple.com,🌐 全球直连

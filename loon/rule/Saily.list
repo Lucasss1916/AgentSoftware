@@ -1,0 +1,26 @@
+# Saily eSIM 功能域名（保证正常访问：登录 / 购买 / 激活 / 查询流量 / 拉取配置）
+# 数据来源：iOS App 隐私报告截图 + crt.sh / certspotter 证书透明度日志
+# 匹配策略：本次走代理（Saily 服务在境外，直连易失败）
+# 配套文件：SailyAds.list 负责广告与埋点拦截，两者不要混用
+
+# ---- Saily 自有域（含所有子域）----
+# 关键子域：mobile(主 API) / cms / support / survey / geolocation-feed
+#           obs.infra(对象存储) / preview / cisionone-email
+DOMAIN-SUFFIX,saily.com
+
+# ---- Nord Security 同集团基础设施（Saily 账号体系与支付网关跨域）----
+DOMAIN-SUFFIX,nordsecurity.com
+
+# ---- Firebase 实时远程配置（拉取线路与开关，阻断会导致 App 功能异常）----
+DOMAIN,firebaseremoteconfigrealtime.googleapis.com
+DOMAIN,firebaseinstallations.googleapis.com
+
+# ---- 崩溃上报（保留，缺失会让 App 启动告警）----
+DOMAIN-SUFFIX,crashlytics.com
+
+# ---- 登录鉴权（Saily 支持 Google 账号登录）----
+DOMAIN,oauth2.googleapis.com
+DOMAIN,accounts.google.com
+
+# ---- 静态资源分发（Saily 素材 / 网页版资源）----
+DOMAIN,firebasestorage.googleapis.com

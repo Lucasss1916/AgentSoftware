@@ -1,0 +1,27 @@
+payload:
+  - DOMAIN-SUFFIX,featureassets.org
+  - DOMAIN-SUFFIX,prodregistryv2.org
+  - DOMAIN-SUFFIX,app-ads-services.com
+  - DOMAIN-SUFFIX,adsensecustomsearchads.com
+  - DOMAIN-SUFFIX,googlesyndication.com
+  - DOMAIN-SUFFIX,googleadservices.com
+  - DOMAIN-SUFFIX,doubleclick.net
+  - DOMAIN-SUFFIX,googleads.g.doubleclick.net
+  - DOMAIN,firebaselogging-pa.googleapis.com
+  - DOMAIN,firebaselogging.googleapis.com
+  - DOMAIN,app-measurement.com
+  - DOMAIN-SUFFIX,app-analytics-services.com
+  - DOMAIN-SUFFIX,google-analytics.com
+  - DOMAIN-SUFFIX,googletagmanager.com
+  - DOMAIN-SUFFIX,adjust.com
+  - DOMAIN-SUFFIX,appsflyer.com
+  - DOMAIN-SUFFIX,appier.net
+  - DOMAIN-SUFFIX,adsappier.com
+  - DOMAIN-SUFFIX,appiersig.com
+  - DOMAIN-SUFFIX,branch.io
+  - DOMAIN-SUFFIX,amplitude.com
+  - DOMAIN-SUFFIX,mixpanel.com
+  - DOMAIN-SUFFIX,segment.io
+  - DOMAIN-SUFFIX,sentry.io
+  - DOMAIN,graph.facebook.com
+  - DOMAIN,an.facebook.com

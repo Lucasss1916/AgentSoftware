@@ -26,6 +26,12 @@ rule_sets:
   - name: 'SteamCDN / Domain'
     clash: {anchor: yamlclass, url: 'https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/refs/heads/main/clash/rule/steamCDN.yaml'}
     singbox: {kind: self, name: 'steamCDN'}
+  - name: 'Saily / Domain'
+    clash: {anchor: yamlclass, url: 'https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/refs/heads/main/clash/rule/Saily.yaml'}
+    singbox: {kind: self, name: 'Saily'}
+  - name: 'SailyAds / Domain'
+    clash: {anchor: yamlclass, url: 'https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/refs/heads/main/clash/rule/SailyAds.yaml'}
+    singbox: {kind: self, name: 'SailyAds'}
 
   # ---- 检测 / 广告 ----
   - name: 'TEST / Domain'
@@ -203,6 +209,9 @@ rules:
 
   # ---- 广告拦截（必须早于业务分流，否则会被业务规则截胡）----
   - RULE-SET,Block / Domain,Block
+  # SailyAds 必须早于 Saily：功能域名走代理，广告埋点先被拦掉
+  - RULE-SET,SailyAds / Domain,Block
+  - RULE-SET,Saily / Domain,国外媒体
 
   # ---- 个人自定义（优先级最高的业务规则）----
   - RULE-SET,NeedHighQualityNodeDomain,所有-手选

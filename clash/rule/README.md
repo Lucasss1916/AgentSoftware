@@ -13,6 +13,8 @@
 | `MyAiport.yaml` | <https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/clash/rule/MyAiport.yaml> |
 | `NeedHighQualityNodeDomain.yaml` | <https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/clash/rule/NeedHighQualityNodeDomain.yaml> |
 | `ProxyDomain.yaml` | <https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/clash/rule/ProxyDomain.yaml> |
+| `Saily.yaml` | <https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/clash/rule/Saily.yaml> |
+| `SailyAds.yaml` | <https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/clash/rule/SailyAds.yaml> |
 | `TalktoneAds.yaml` | <https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/clash/rule/TalktoneAds.yaml> |
 | `TalktoneDirect.yaml` | <https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/clash/rule/TalktoneDirect.yaml> |
 | `TalktoneProxy.yaml` | <https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/clash/rule/TalktoneProxy.yaml> |

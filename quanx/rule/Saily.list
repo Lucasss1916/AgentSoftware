@@ -1,0 +1,8 @@
+HOST-SUFFIX,saily.com
+HOST-SUFFIX,nordsecurity.com
+HOST,firebaseremoteconfigrealtime.googleapis.com
+HOST,firebaseinstallations.googleapis.com
+HOST-SUFFIX,crashlytics.com
+HOST,oauth2.googleapis.com
+HOST,accounts.google.com
+HOST,firebasestorage.googleapis.com

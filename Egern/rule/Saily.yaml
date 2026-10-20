@@ -1,0 +1,10 @@
+domain_set:
+- firebaseremoteconfigrealtime.googleapis.com
+- firebaseinstallations.googleapis.com
+- oauth2.googleapis.com
+- accounts.google.com
+- firebasestorage.googleapis.com
+domain_suffix_set:
+- saily.com
+- nordsecurity.com
+- crashlytics.com

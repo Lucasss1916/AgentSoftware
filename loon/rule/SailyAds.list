@@ -1,0 +1,50 @@
+# Saily 广告 / 埋点 / 归因域名（拦截合集）
+# 数据来源：iOS App 隐私报告截图（IMG_2870 "最常联系的域"）+ CT 日志与 DNS 归属核实
+#
+# 归属核实结论（2026-10）：
+#   featureassets.org / prodregistryv2.org      -> CNAME latest.api.statsig.com  [Statsig 功能开关]
+#   odm./muf.app-ads-services.com               -> CNAME www3.l.google.com      [Google AdMob 广告下发]
+#   app-ads-services.com                        -> 与 *.adsensecustomsearchads.com 同证书 [Google 广告]
+#   app-analytics-services.com                  -> 与 google-analytics.com 同证书 [Google Analytics]
+#   firebaselogging-pa.googleapis.com           -> Firebase 埋点上报
+#
+# 注意：只拦埋点与广告，不要顺手拦 firebaseremoteconfigrealtime.googleapis.com /
+#       oauth2.googleapis.com —— 那两个是功能域名，已放在 Saily.list 走代理。
+
+# ---- Statsig：功能开关 / 实验分流 / 远程配置上报 ----
+DOMAIN-SUFFIX,featureassets.org
+DOMAIN-SUFFIX,prodregistryv2.org
+
+# ---- Google AdMob / 广告下发（截图中的 odm. 与 muf. 前缀）----
+DOMAIN-SUFFIX,app-ads-services.com
+DOMAIN-SUFFIX,adsensecustomsearchads.com
+DOMAIN-SUFFIX,googlesyndication.com
+DOMAIN-SUFFIX,googleadservices.com
+DOMAIN-SUFFIX,doubleclick.net
+DOMAIN-SUFFIX,googleads.g.doubleclick.net
+
+# ---- Firebase 埋点与日志上报（非功能路径）----
+DOMAIN,firebaselogging-pa.googleapis.com
+DOMAIN,firebaselogging.googleapis.com
+DOMAIN,app-measurement.com
+
+# ---- Google Analytics / 归因 ----
+DOMAIN-SUFFIX,app-analytics-services.com
+DOMAIN-SUFFIX,google-analytics.com
+DOMAIN-SUFFIX,googletagmanager.com
+
+# ---- 常见移动端归因 / 广告网络（Saily 接入的广告 SDK 家族）----
+DOMAIN-SUFFIX,adjust.com
+DOMAIN-SUFFIX,appsflyer.com
+DOMAIN-SUFFIX,appier.net
+DOMAIN-SUFFIX,adsappier.com
+DOMAIN-SUFFIX,appiersig.com
+DOMAIN-SUFFIX,branch.io
+DOMAIN-SUFFIX,amplitude.com
+DOMAIN-SUFFIX,mixpanel.com
+DOMAIN-SUFFIX,segment.io
+DOMAIN-SUFFIX,sentry.io
+
+# ---- Facebook / Meta 广告归因（只拦归因子域，不拦 facebook.com 主域）----
+DOMAIN,graph.facebook.com
+DOMAIN,an.facebook.com

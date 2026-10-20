@@ -1,0 +1,19 @@
+{
+  "version": 2,
+  "rules": [
+    {
+      "domain": [
+        "firebaseremoteconfigrealtime.googleapis.com",
+        "firebaseinstallations.googleapis.com",
+        "oauth2.googleapis.com",
+        "accounts.google.com",
+        "firebasestorage.googleapis.com"
+      ],
+      "domain_suffix": [
+        "saily.com",
+        "nordsecurity.com",
+        "crashlytics.com"
+      ]
+    }
+  ]
+}

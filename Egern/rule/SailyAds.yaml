@@ -1,0 +1,28 @@
+domain_set:
+- firebaselogging-pa.googleapis.com
+- firebaselogging.googleapis.com
+- app-measurement.com
+- graph.facebook.com
+- an.facebook.com
+domain_suffix_set:
+- featureassets.org
+- prodregistryv2.org
+- app-ads-services.com
+- adsensecustomsearchads.com
+- googlesyndication.com
+- googleadservices.com
+- doubleclick.net
+- googleads.g.doubleclick.net
+- app-analytics-services.com
+- google-analytics.com
+- googletagmanager.com
+- adjust.com
+- appsflyer.com
+- appier.net
+- adsappier.com
+- appiersig.com
+- branch.io
+- amplitude.com
+- mixpanel.com
+- segment.io
+- sentry.io

@@ -13,6 +13,8 @@
 | `MyAiport.arrs` | 见下方 Scheme | <https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/anywhere/rule/MyAiport.arrs> |
 | `NeedHighQualityNodeDomain.arrs` | 见下方 Scheme | <https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/anywhere/rule/NeedHighQualityNodeDomain.arrs> |
 | `ProxyDomain.arrs` | 见下方 Scheme | <https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/anywhere/rule/ProxyDomain.arrs> |
+| `Saily.arrs` | 见下方 Scheme | <https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/anywhere/rule/Saily.arrs> |
+| `SailyAds.arrs` | 见下方 Scheme | <https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/anywhere/rule/SailyAds.arrs> |
 | `TalktoneAds.arrs` | 见下方 Scheme | <https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/anywhere/rule/TalktoneAds.arrs> |
 | `TalktoneDirect.arrs` | 见下方 Scheme | <https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/anywhere/rule/TalktoneDirect.arrs> |
 | `TalktoneProxy.arrs` | 见下方 Scheme | <https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/anywhere/rule/TalktoneProxy.arrs> |
@@ -45,6 +47,10 @@ NeedHighQualityNodeDomain.arrs
 anywhere://add-rule-set?link=https%3A%2F%2Fraw.githubusercontent.com%2FLucasss1916%2FAgentSoftware%2Fmain%2Fanywhere%2Frule%2FNeedHighQualityNodeDomain.arrs
 ProxyDomain.arrs
 anywhere://add-rule-set?link=https%3A%2F%2Fraw.githubusercontent.com%2FLucasss1916%2FAgentSoftware%2Fmain%2Fanywhere%2Frule%2FProxyDomain.arrs
+Saily.arrs
+anywhere://add-rule-set?link=https%3A%2F%2Fraw.githubusercontent.com%2FLucasss1916%2FAgentSoftware%2Fmain%2Fanywhere%2Frule%2FSaily.arrs
+SailyAds.arrs
+anywhere://add-rule-set?link=https%3A%2F%2Fraw.githubusercontent.com%2FLucasss1916%2FAgentSoftware%2Fmain%2Fanywhere%2Frule%2FSailyAds.arrs
 TalktoneAds.arrs
 anywhere://add-rule-set?link=https%3A%2F%2Fraw.githubusercontent.com%2FLucasss1916%2FAgentSoftware%2Fmain%2Fanywhere%2Frule%2FTalktoneAds.arrs
 TalktoneDirect.arrs

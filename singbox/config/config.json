@@ -412,6 +412,22 @@
       },
       {
         "type": "remote",
+        "tag": "saily-domain",
+        "format": "source",
+        "url": "https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/refs/heads/main/singbox/rule/Saily.json",
+        "download_detour": "direct",
+        "update_interval": "24h"
+      },
+      {
+        "type": "remote",
+        "tag": "sailyads-domain",
+        "format": "source",
+        "url": "https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/refs/heads/main/singbox/rule/SailyAds.json",
+        "download_detour": "direct",
+        "update_interval": "24h"
+      },
+      {
+        "type": "remote",
         "tag": "block-domain",
         "format": "binary",
         "url": "https://gh-proxy.com/github.com/MetaCubeX/meta-rules-dat/raw/sing/geo/geosite/category-ads-all.srs",
@@ -811,9 +827,16 @@
       },
       {
         "rule_set": [
-          "block-domain"
+          "block-domain",
+          "sailyads-domain"
         ],
         "outbound": "Block"
+      },
+      {
+        "rule_set": [
+          "saily-domain"
+        ],
+        "outbound": "国外媒体"
       },
       {
         "rule_set": [

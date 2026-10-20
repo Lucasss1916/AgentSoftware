@@ -399,6 +399,8 @@ rule-providers:
   TalktoneAds: {<<: *yamlclass, url: "https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/clash/rule/TalktoneAds.yaml"}
   TalktoneDirect: {<<: *yamlclass, url: "https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/clash/rule/TalktoneDirect.yaml"}
   MyVideo: {<<: *yamlclass, url: "https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/clash/rule/myvideorule.yaml"}
+  Saily: {<<: *yamlclass, url: "https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/clash/rule/Saily.yaml"}
+  SailyAds: {<<: *yamlclass, url: "https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/clash/rule/SailyAds.yaml"}
   AI-category: {<<: *domain, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/category-ai-!cn.mrs"}
   AI-fmz200: {<<: *class, url: "https://raw.githubusercontent.com/fmz200/wool_scripts/main/Loon/rule/AI.list"}
   Duolingo: {<<: *class, url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Duolingo/Duolingo.list"}
@@ -467,6 +469,8 @@ rules:
   - RULE-SET,TalktoneProxy,📞 TalkTone
   - RULE-SET,TalktoneAds,REJECT
   - RULE-SET,TalktoneDirect,🌐 全球直连
+  - RULE-SET,SailyAds,REJECT
+  - RULE-SET,Saily,🍿 国外媒体
   - DOMAIN-SUFFIX,testflight.apple.com,🍿 国外媒体
   - DOMAIN,beta.itunes.apple.com,🍿 国外媒体
   - DOMAIN,iosapps.itunes.apple.com,🌐 全球直连

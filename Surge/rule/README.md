@@ -13,6 +13,8 @@
 | `MyAiport.list` | <https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/Surge/rule/MyAiport.list> |
 | `NeedHighQualityNodeDomain.list` | <https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/Surge/rule/NeedHighQualityNodeDomain.list> |
 | `ProxyDomain.list` | <https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/Surge/rule/ProxyDomain.list> |
+| `Saily.list` | <https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/Surge/rule/Saily.list> |
+| `SailyAds.list` | <https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/Surge/rule/SailyAds.list> |
 | `TalktoneAds.list` | <https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/Surge/rule/TalktoneAds.list> |
 | `TalktoneDirect.list` | <https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/Surge/rule/TalktoneDirect.list> |
 | `TalktoneProxy.list` | <https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/Surge/rule/TalktoneProxy.list> |

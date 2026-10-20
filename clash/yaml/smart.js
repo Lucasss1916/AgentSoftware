@@ -469,6 +469,20 @@ const override = {
       "format": "yaml",
       "url": "https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/clash/rule/myvideorule.yaml"
     },
+    "Saily": {
+      "type": "http",
+      "interval": 86400,
+      "behavior": "classical",
+      "format": "yaml",
+      "url": "https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/clash/rule/Saily.yaml"
+    },
+    "SailyAds": {
+      "type": "http",
+      "interval": 86400,
+      "behavior": "classical",
+      "format": "yaml",
+      "url": "https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/clash/rule/SailyAds.yaml"
+    },
     "AI-category": {
       "type": "http",
       "interval": 86400,
@@ -646,6 +660,8 @@ const override = {
     "RULE-SET,TalktoneProxy,📞 TalkTone",
     "RULE-SET,TalktoneAds,REJECT",
     "RULE-SET,TalktoneDirect,🌐 全球直连",
+    "RULE-SET,SailyAds,REJECT",
+    "RULE-SET,Saily,🍿 国外媒体",
     "DOMAIN-SUFFIX,testflight.apple.com,🍿 国外媒体",
     "DOMAIN,beta.itunes.apple.com,🍿 国外媒体",
     "DOMAIN,iosapps.itunes.apple.com,🌐 全球直连",

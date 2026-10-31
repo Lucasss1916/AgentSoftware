@@ -18,6 +18,7 @@
 | `TalktoneAds.list` | <https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/Surge/rule/TalktoneAds.list> |
 | `TalktoneDirect.list` | <https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/Surge/rule/TalktoneDirect.list> |
 | `TalktoneProxy.list` | <https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/Surge/rule/TalktoneProxy.list> |
+| `muse_meta.list` | <https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/Surge/rule/muse_meta.list> |
 | `myvideorule.list` | <https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/Surge/rule/myvideorule.list> |
 | `prevent_dns.list` | <https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/Surge/rule/prevent_dns.list> |
 | `steamCDN.list` | <https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/Surge/rule/steamCDN.list> |

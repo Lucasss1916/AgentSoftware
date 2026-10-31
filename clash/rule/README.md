@@ -18,6 +18,7 @@
 | `TalktoneAds.yaml` | <https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/clash/rule/TalktoneAds.yaml> |
 | `TalktoneDirect.yaml` | <https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/clash/rule/TalktoneDirect.yaml> |
 | `TalktoneProxy.yaml` | <https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/clash/rule/TalktoneProxy.yaml> |
+| `muse_meta.yaml` | <https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/clash/rule/muse_meta.yaml> |
 | `myvideorule.yaml` | <https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/clash/rule/myvideorule.yaml> |
 | `prevent_dns.yaml` | <https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/clash/rule/prevent_dns.yaml> |
 | `steamCDN.yaml` | <https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/clash/rule/steamCDN.yaml> |

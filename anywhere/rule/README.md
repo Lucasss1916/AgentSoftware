@@ -18,6 +18,7 @@
 | `TalktoneAds.arrs` | 见下方 Scheme | <https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/anywhere/rule/TalktoneAds.arrs> |
 | `TalktoneDirect.arrs` | 见下方 Scheme | <https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/anywhere/rule/TalktoneDirect.arrs> |
 | `TalktoneProxy.arrs` | 见下方 Scheme | <https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/anywhere/rule/TalktoneProxy.arrs> |
+| `muse_meta.arrs` | 见下方 Scheme | <https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/anywhere/rule/muse_meta.arrs> |
 | `myvideorule.arrs` | 见下方 Scheme | <https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/anywhere/rule/myvideorule.arrs> |
 | `prevent_dns.arrs` | 见下方 Scheme | <https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/anywhere/rule/prevent_dns.arrs> |
 | `steamCDN.arrs` | 见下方 Scheme | <https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/anywhere/rule/steamCDN.arrs> |
@@ -57,6 +58,8 @@ TalktoneDirect.arrs
 anywhere://add-rule-set?link=https%3A%2F%2Fraw.githubusercontent.com%2FLucasss1916%2FAgentSoftware%2Fmain%2Fanywhere%2Frule%2FTalktoneDirect.arrs
 TalktoneProxy.arrs
 anywhere://add-rule-set?link=https%3A%2F%2Fraw.githubusercontent.com%2FLucasss1916%2FAgentSoftware%2Fmain%2Fanywhere%2Frule%2FTalktoneProxy.arrs
+muse_meta.arrs
+anywhere://add-rule-set?link=https%3A%2F%2Fraw.githubusercontent.com%2FLucasss1916%2FAgentSoftware%2Fmain%2Fanywhere%2Frule%2Fmuse_meta.arrs
 myvideorule.arrs
 anywhere://add-rule-set?link=https%3A%2F%2Fraw.githubusercontent.com%2FLucasss1916%2FAgentSoftware%2Fmain%2Fanywhere%2Frule%2Fmyvideorule.arrs
 prevent_dns.arrs

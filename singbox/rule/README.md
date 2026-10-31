@@ -18,6 +18,7 @@
 | `TalktoneAds.json` | <https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/singbox/rule/TalktoneAds.json> |
 | `TalktoneDirect.json` | <https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/singbox/rule/TalktoneDirect.json> |
 | `TalktoneProxy.json` | <https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/singbox/rule/TalktoneProxy.json> |
+| `muse_meta.json` | <https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/singbox/rule/muse_meta.json> |
 | `myvideorule.json` | <https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/singbox/rule/myvideorule.json> |
 | `prevent_dns.json` | <https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/singbox/rule/prevent_dns.json> |
 | `steamCDN.json` | <https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/singbox/rule/steamCDN.json> |

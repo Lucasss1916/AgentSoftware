@@ -1,0 +1,89 @@
+# Muse / Meta AI - Loon 分流规则 (补全版 v2)
+# 整理日期: 2026-10-31
+# 用法: Loon -> 规则 -> 远程规则 -> 添加此文件, 并选择你的代理策略组 (建议美国节点)
+# 格式: 远程规则集格式, 规则后不带策略名, 策略在导入时统一指定
+#
+# 来源 (已逐一打开核对):
+# [1] 用户截图: hatch-api.meta.ai 等 8 个域名 + 198.18.x.x 共 8 个 IP
+# [2] juner922/muse-loon-rules MuseAI.list (更新: 2026-09-29, 目前最完整的 Muse 专用 Loon 规则)
+#     https://raw.githubusercontent.com/juner922/muse-loon-rules/main/MuseAI.list
+#     https://cdn.jsdelivr.net/gh/juner922/muse-loon-rules@main/MuseAI.list
+# [3] shenhuash01/loon-rules MuseAI.lsr - 补充 multimango.com
+# [4] ka1er/loon-rules MuseAI.list - 补充 production.museai.com
+# [5] Nixon-io-dev/loon-rules Muse.list - 补充 agent.meta.ai
+# [6] VPSDance/ai-proxy-rules meta-ai.list (每日同步, Meta AI / Llama 通用规则)
+#     https://cdn.jsdelivr.net/gh/VPSDance/ai-proxy-rules@main/rules/loon/meta-ai.list
+# [7] V2EX / Linux.do / NodeSeek 社区实测 - 核心仅 muse.ai / meta.com / metaaivm.com 等即可, 其余为登录与内容依赖
+#
+# 重要提示: Muse 有地区限制。即使域名全部走代理, 出口 IP 不是美区原生/家宽 IP 时,
+# 仍可能提示「尚未在你的国家或地区开放」。这不是补域名能解决的。
+#
+# 共计: DOMAIN-SUFFIX 21 条 + DOMAIN 23 条 + IP-CIDR 8 条 = 52 条 (已去重)
+# 说明: 部分精确域名已被上面的后缀规则覆盖, 仍保留是为了可追溯, 以及在你删掉某条后缀规则时仍能命中, 无副作用。
+
+# ===== 1. 核心: Muse 应用域名 =====
+DOMAIN-SUFFIX,muse.ai
+DOMAIN-SUFFIX,museai.com
+DOMAIN-SUFFIX,meta.ai
+DOMAIN-SUFFIX,meta.com
+DOMAIN-SUFFIX,atmeta.com
+DOMAIN-SUFFIX,multimango.com
+DOMAIN,auth.meta.com
+DOMAIN,agent.meta.ai
+DOMAIN,production.museai.com
+
+# ===== 2. 云端虚拟机 (Secure VM) 基础设施 =====
+DOMAIN-SUFFIX,metaaivm.com
+DOMAIN-SUFFIX,metaaiusercontent.com
+DOMAIN-SUFFIX,ecto1usercontent.com
+DOMAIN,hatch.ecto1.ai
+DOMAIN,node.hatch.one
+DOMAIN,meta.privacy-gateway.cloudflare.com
+DOMAIN,meta.hpke-keys.privacy-gateway.cloudflare.com
+DOMAIN,meta-ohttp-relay-prod.fastly-edge.com
+DOMAIN,meta-ohttp-config-prod.fastly-edge.com
+
+# ===== 3. Meta AI / Llama 通用域名 (来自 VPSDance meta-ai) =====
+DOMAIN-SUFFIX,llama.com
+DOMAIN-SUFFIX,llamameta.net
+DOMAIN,ai.developer.meta.com
+DOMAIN,ai.meta.com
+DOMAIN,aidemos.meta.com
+DOMAIN,developer.meta.com
+DOMAIN,llama.developer.meta.com
+
+# ===== 4. 用户截图实测域名 (iOS App 隐私报告) =====
+DOMAIN,hatch-api.meta.ai
+DOMAIN,ar.graph.meta.com
+DOMAIN,meta.graph.meta.com
+DOMAIN,graph.meta.ai
+DOMAIN,api.meta.ai
+DOMAIN,graph.facebook.com
+DOMAIN,hatch.metaaivm.com
+DOMAIN,scontent-dfw6-2.xx.fbcdn.net
+
+# ===== 5. Meta 账号 / Facebook / Instagram / WhatsApp 基础设施 =====
+# 如果你已经在用 blackmatrix7 等 Facebook 规则集, 这一节会重复, 可以整节删掉
+DOMAIN-SUFFIX,facebook.com
+DOMAIN-SUFFIX,facebook.net
+DOMAIN-SUFFIX,fbcdn.net
+DOMAIN-SUFFIX,fbsbx.com
+DOMAIN-SUFFIX,fbpigeon.com
+DOMAIN-SUFFIX,fb.com
+DOMAIN,connect.facebook.net
+DOMAIN-SUFFIX,instagram.com
+DOMAIN-SUFFIX,cdninstagram.com
+DOMAIN-SUFFIX,whatsapp.com
+DOMAIN-SUFFIX,whatsapp.net
+
+# ===== 6. IP 规则 (截图, 仅作补充) =====
+# 198.18.0.0/15 是保留的测试 / Fake-IP 常用网段, 以下很可能是代理工具分配的 Fake-IP, 并非 Meta 真实 IP
+# 请勿改成整个 /15 或 /16 网段, 真正起作用的主要是上面的域名规则
+IP-CIDR,198.18.71.186/32,no-resolve
+IP-CIDR,198.18.81.209/32,no-resolve
+IP-CIDR,198.18.71.185/32,no-resolve
+IP-CIDR,198.18.71.187/32,no-resolve
+IP-CIDR,198.18.71.190/32,no-resolve
+IP-CIDR,198.18.9.200/32,no-resolve
+IP-CIDR,198.18.71.228/32,no-resolve
+IP-CIDR,198.18.81.212/32,no-resolve

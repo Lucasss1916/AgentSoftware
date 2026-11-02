@@ -1,0 +1,441 @@
+# ============================================================
+#  honk 配置 —— 由 clash/yaml/urltest.yaml 移植
+#
+#  honk 是 daeuniverse 用 Rust 写的 Linux 透明代理（TC eBPF），
+#  配置语言是 dae 方言，不是 YAML。文档：
+#    https://github.com/daeuniverse/honk/tree/main/doc/zh
+#
+#  与 Clash 侧的对应关系、能力差异和未能等价移植的部分，见 honk/README.md。
+#  自有规则集由 sync_rules.py 从 loon/rule/*.list 生成到 honk/rule/*.dae，
+#  在文件末尾的 include 块里按顺序引入。
+# ============================================================
+
+global {
+    # honk 没有 Clash 的 TUN；接管范围由网卡决定，这是两者最大的部署差异。
+    #   本机使用：wan_interface 填 auto（跟随最低 metric 的 IPv4 默认路由网卡）。
+    #   作网关 / 旁路由：再把 lan_interface 填成面向内网那张网卡。
+    # 留空的 lan_interface 是字面意义的「不装 LAN 钩子」，honk 不会替你补 lo。
+    wan_interface: auto
+    # lan_interface: br-lan
+
+    log_level: info
+    log_file: 'honk.log'
+    data_dir: '/var/lib/honk'
+
+    # Clash 的 sniffer（override-destination: true）≈ domain++：
+    # 用嗅探到的 SNI / Host 重跑一遍路由，再按域名向代理拨号。
+    dial_mode: domain++
+
+    tproxy_port: 12345
+    auto_config_kernel_parameter: true
+    nfqueue_enable: true
+    store_subscribe: true
+
+    # 与 Clash 侧 health-check 对齐：interval 300、tolerance 30。
+    tcp_check_url: 'https://www.gstatic.com/generate_204'
+    tcp_check_http_method: HEAD
+    udp_check_dns: 'dns.google:53,8.8.8.8'
+    check_interval: 300s
+    # 地区组是 urltest，延迟改善不足这个阈值就不切节点。
+    check_tolerance: 30ms
+
+    # 解析节点域名与控制面拨号用的引导 DNS，走直连。
+    bootstrap_resolver: '223.5.5.5:53'
+}
+
+# ------------------------------------------------------------
+#  资源下载
+#
+#  geosite:/geoip: 条件读的是 geosite.dat / geoip.dat。这里显式钉住 Loyalsoldier
+#  版，因为 routing-tail.dae 用到的 gfw、以及 apple-cn 这类分类只有它才有，
+#  v2fly 上游没有；换成 v2fly 版会让那几条规则静默失效（只打一条缺分类告警）。
+#  route: direct 是为了避开「要先有 geosite.dat 才能判定 geosite:github」的死循环；
+#  若直连拉不动 GitHub，改成某个组名或换成国内镜像地址。
+# ------------------------------------------------------------
+assets {
+    geodata {
+        geosite: 'https://github.com/Loyalsoldier/v2ray-rules-dat/releases/latest/download/geosite.dat'
+        geoip: 'https://github.com/Loyalsoldier/v2ray-rules-dat/releases/latest/download/geoip.dat'
+        route: direct
+    }
+    subscription {
+        ua: 'clash.meta'
+        interval: 86400s
+    }
+}
+
+# ------------------------------------------------------------
+#  节点来源
+#
+#  和 clash/yaml/common_head.yaml 里注释掉的 proxy-providers 一样，这里默认留空：
+#  不填节点时各组为空，honk 会对代理流量 fail-closed（丢弃而非偷偷直连）。
+#  填法二选一。
+# ------------------------------------------------------------
+
+# subscription {
+#     Mitce: 'https://机场订阅地址'
+#     iku: 'https://机场订阅地址' {
+#         ua: 'clash.meta'
+#         interval: 86400s
+#     }
+# }
+
+# node {
+#     edge: 'socks5://10.10.10.1:2077'
+# }
+
+# ------------------------------------------------------------
+#  DNS
+#
+#  Clash 侧是 fake-ip + nameserver-policy；honk 没有 fake-ip，走真实解析加
+#  路由投影，所以 fake-ip-range / fake-ip-filter 整段没有对应物，无需移植。
+#  国内外分流用 request routing 表达，等价于 nameserver-policy。
+# ------------------------------------------------------------
+dns {
+    # Clash 侧 ipv6: false。honk 没有全局 IPv6 开关，只能用解析偏好近似：
+    # 两个族都仍可查，但有 IPv4 结果时抑制 AAAA。
+    ipversion_prefer: 4
+
+    # ≈ use-system-hosts: true
+    use_host: true
+
+    # 向上游带 ECS，改善 CDN 解析本地性；只在直连拨号时注入，经代理的查询不带。
+    client_subnet: auto
+
+    upstream {
+        # 国内上游直连。这里直接用 IP 拨号 + tls_server_name，就不必像 Clash 侧
+        # 那样在 hosts 里给 DoH 域名预置 IP——那段 hosts 的用途就是打破引导依赖。
+        alidns: 'https://223.5.5.5/dns-query?tls_server_name=dns.alidns.com'
+        dohpub: 'https://1.12.12.12/dns-query?tls_server_name=doh.pub'
+
+        # 国外上游经 media 组拨号，等价于 Clash 的 respect-rules
+        # 加 proxy-server-nameserver：查询不出境、也不形成循环依赖。
+        cloudflare: 'https://104.16.249.249/dns-query?tls_server_name=cloudflare-dns.com' -> media
+        google: 'https://8.8.8.8/dns-query?tls_server_name=dns.google' -> media
+
+        # 对应 nameserver-policy 的 "*.linux.do"
+        linuxdo: 'https://stellafortuna.ddd.oaifree.com/query-dns' -> sg
+
+        # 保留一个直连 UDP 兜底：私网 / 本地域名和引导场景走它。
+        # 第一个显式 upstream 块会顶掉内置的 default，所以这条必须自己声明。
+        default: 'udp://223.5.5.5:53'
+    }
+
+    routing {
+        request {
+            # 这条是 honk 特有、Clash 侧没有的：honk 靠嗅探 TLS 明文 SNI 决定
+            # 域名路由，而 HTTPS / SVCB 记录里的 ECH 会让客户端加密 ClientHello，
+            # 嗅探就拿不到域名、域名规则集体失效。不需要可以删掉这一行。
+            qtype(https, svcb) -> reject
+
+            # ≈ nameserver-policy 的 "+.local" / localhost / rule-set:PrivateDNS → system
+            qname(geosite: private) -> default
+            qname(suffix: local) -> default
+            qname(full: localhost) -> default
+
+            qname(suffix: linux.do) -> linuxdo
+
+            # DoH 服务器自身的域名必须走直连上游，否则循环依赖。
+            qname(suffix: alidns.com, suffix: doh.pub) -> default
+
+            # ≈ nameserver-policy 的 rule-set:ChinaDNS / "+.cn" → 国内 DoH
+            qname(geosite: cn, geosite: geolocation-cn) -> alidns
+
+            # ≈ Clash 的 nameserver（国外 DoH 为默认）
+            fallback: cloudflare
+        }
+        # Clash 侧没有响应段策略，这里也不加：response 默认 fallback 就是 accept。
+    }
+
+    optimistic_cache: true
+    max_cache_size: 10000
+}
+
+# ------------------------------------------------------------
+#  策略组
+#
+#  组名换成了 ASCII。honk 的组名同时是 routing 里的出口标识符，而 dae 方言下
+#  `-> 🍿 国外媒体` 这种带空格的目标会和动作解析打架，故不照搬 emoji 名。
+#  对应关系：
+#    proxy=✈️节点选择  manual=🚀我的节点  cn_direct=🌐全球直连
+#    media=🍿国外媒体  video=🎥视频       ai=📟智能助理
+#    telegram=📲电报信息 talktone=📞TalkTone
+#    microsoft=Ⓜ️微软服务 apple=🍎苹果服务 games=🎮游戏平台
+#    leftover=🐟漏网之鱼
+#    hk jp tw sg kr na asia eu = 对应地区组
+#
+#  业务组一律 selector（= Clash 的 type: select，手选，结果由 cache_file 记住）；
+#  地区组用 urltest（= urltest.yaml 的 type: url-test）。
+#  想换成 smart.yaml 那种自适应选路，把地区组的 policy 改成 score 即可——honk 的
+#  score 按真实流量的可靠性和目标质量选节点，不需要 LightGBM 模型。
+# ------------------------------------------------------------
+group {
+    # ---------------- 业务组 ----------------
+
+    # 🌐 全球直连：Clash 侧成员只有 DIRECT。name(direct) 是唯一能把内置
+    # direct 出口纳入组内的写法（取反或 keyword 过滤都不会选中它）。
+    cn_direct {
+        filter: name(direct)
+        policy: selector
+    }
+
+    # 🚀 我的节点：Clash 的 include-all + exclude-filter。
+    # 单条取反过滤 = 全部节点减去匹配到的；内置 direct/block 不会被选进来。
+    manual {
+        filter: !name(regex: '过期|剩余|流量|官网|套餐|返利|订阅|重置')
+        policy: selector
+    }
+
+    # ✈️ 节点选择
+    proxy {
+        filter: group('manual', 'cn_direct')
+        policy: selector
+        default: manual
+    }
+
+    # 📲 电报信息
+    telegram {
+        filter: group('sg', 'jp', 'tw', 'hk', 'proxy', 'na', 'kr', 'manual', 'asia', 'eu')
+        policy: selector
+        default: sg
+    }
+
+    # 📞 TalkTone：Clash 侧同样是 include-all 手选
+    talktone {
+        filter: !name(regex: '过期|剩余|流量|官网|套餐|返利|订阅|重置')
+        policy: selector
+    }
+
+    # 🎥 视频：Clash 侧既 include-all 又列了组，两种来源按 OR 合并
+    video {
+        filter: group('manual', 'proxy', 'kr', 'na', 'tw', 'sg', 'jp', 'cn_direct', 'asia', 'eu')
+        filter: !name(regex: '过期|剩余|流量|官网|套餐|返利|订阅|重置')
+        policy: selector
+        default: manual
+    }
+
+    # 🍿 国外媒体
+    media {
+        filter: group('proxy', 'hk', 'na', 'jp', 'kr', 'sg', 'tw', 'asia', 'eu')
+        policy: selector
+        default: proxy
+    }
+
+    # 📟 智能助理
+    ai {
+        filter: group('proxy', 'na', 'jp', 'kr', 'sg', 'tw', 'asia', 'eu')
+        policy: selector
+        default: proxy
+    }
+
+    # Ⓜ️ 微软服务
+    microsoft {
+        filter: group('cn_direct', 'proxy', 'hk', 'na', 'jp', 'kr', 'sg', 'tw', 'asia', 'eu')
+        policy: selector
+        default: cn_direct
+    }
+
+    # 🍎 苹果服务
+    apple {
+        filter: group('cn_direct', 'proxy', 'hk', 'na', 'jp', 'kr', 'sg', 'tw', 'asia', 'eu')
+        policy: selector
+        default: cn_direct
+    }
+
+    # 🎮 游戏平台
+    games {
+        filter: group('cn_direct', 'proxy', 'hk', 'na', 'jp', 'kr', 'sg', 'tw', 'asia', 'eu')
+        policy: selector
+        default: cn_direct
+    }
+
+    # 🐟 漏网之鱼：routing 的 fallback 指向它
+    leftover {
+        filter: group('sg', 'jp', 'tw', 'hk', 'manual', 'na', 'kr', 'asia', 'eu')
+        policy: selector
+        default: sg
+    }
+
+    # ---------------- 地区组 ----------------
+    #
+    # 过滤正则照搬 clash/yaml/gen.py 的 REGIONS。honk 的 name(regex: ...) 只按
+    # 逗号拆候选项，正则里的 | 原样保留；(?i) 与 Clash 侧同义。
+    # 这里用的是 Rust regex，不支持 (?!...) 之类的环视 —— 这几条都没用到。
+    # tolerance 不单独写，继承 global.check_tolerance（30ms）。
+
+    hk {
+        filter: name(regex: '(?i)(🇭🇰|香港|Hong|HK)') && !name(regex: '过期|剩余|流量|官网|套餐|返利|订阅|重置')
+        policy: urltest
+    }
+
+    # Clash 侧日本组额外排除「美国|美國」，避免中转节点误入。
+    jp {
+        filter: name(regex: '(?i)(🇯🇵|日本|Japan|JP)') && !name(regex: '过期|剩余|流量|官网|套餐|返利|订阅|重置|美国|美國')
+        policy: urltest
+    }
+
+    tw {
+        filter: name(regex: '(?i)(🇹🇼|台湾|臺灣|台灣|Taiwan|Tai|TW|mv)') && !name(regex: '过期|剩余|流量|官网|套餐|返利|订阅|重置')
+        policy: urltest
+    }
+
+    sg {
+        filter: name(regex: '(?i)(🇸🇬|新加坡|Singapore|SG)') && !name(regex: '过期|剩余|流量|官网|套餐|返利|订阅|重置')
+        policy: urltest
+    }
+
+    kr {
+        filter: name(regex: '(?i)(🇰🇷|韩国|韓國|Korea|KR)') && !name(regex: '过期|剩余|流量|官网|套餐|返利|订阅|重置')
+        policy: urltest
+    }
+
+    na {
+        filter: name(regex: '(?i)(🇺🇸|🇨🇦|🇲🇽|美国|美國|加拿大|墨西哥|States|Canada|Mexico|USA|(^|[^A-Za-z])US([^A-Za-z]|$)|(^|[^A-Za-z])CA([^A-Za-z]|$)|洛杉矶|圣何塞|西雅图|达拉斯|纽约|芝加哥|硅谷|凤凰城|亚特兰大|迈阿密|拉斯维加斯|波特兰|费利蒙|阿什本|多伦多|温哥华|蒙特利尔|Los Angeles|San Jose|Seattle|Dallas|New York|Chicago|Miami|Ashburn|Phoenix|Fremont|Portland|Las Vegas|Atlanta|Silicon Valley|Toronto|Vancouver|Montreal)') && !name(regex: '过期|剩余|流量|官网|套餐|返利|订阅|重置')
+        policy: urltest
+    }
+
+    asia {
+        filter: name(regex: '(?i)(🇲🇾|马来|大马|吉隆坡|Malaysia|🇹🇭|泰国|曼谷|Thailand|🇻🇳|越南|胡志明|Vietnam|🇵🇭|菲律宾|马尼拉|Philippines|🇮🇩|印尼|印度尼西亚|雅加达|Indonesia|🇮🇳|印度|孟买|India|🇰🇭|柬埔寨|金边|Cambodia|🇱🇦|老挝|Laos|🇲🇲|缅甸|Myanmar|🇧🇳|文莱|Brunei|🇧🇩|孟加拉|Bangladesh|🇵🇰|巴基斯坦|Pakistan|🇳🇵|尼泊尔|Nepal|🇱🇰|斯里兰卡|Lanka)') && !name(regex: '过期|剩余|流量|官网|套餐|返利|订阅|重置')
+        policy: urltest
+    }
+
+    eu {
+        filter: name(regex: '(?i)(🇬🇧|英国|伦敦|United Kingdom|Britain|London|(^|[^A-Za-z])UK([^A-Za-z]|$)|🇩🇪|德国|德國|法兰克福|Germany|Frankfurt|🇫🇷|法国|法國|巴黎|France|Paris|🇳🇱|荷兰|荷蘭|阿姆斯特丹|Netherlands|Amsterdam|🇷🇺|俄罗斯|俄羅斯|莫斯科|Russia|Moscow|🇹🇷|土耳其|Turkey|Istanbul|🇮🇹|意大利|米兰|Italy|Milan|🇪🇸|西班牙|马德里|Spain|Madrid|🇸🇪|瑞典|Sweden|🇨🇭|瑞士|Switzerland|Zurich|🇵🇱|波兰|Poland|Warsaw|🇺🇦|乌克兰|Ukraine|🇮🇪|爱尔兰|Ireland|Dublin|🇫🇮|芬兰|Finland|🇳🇴|挪威|Norway|🇩🇰|丹麦|Denmark|🇧🇪|比利时|Belgium|🇦🇹|奥地利|Austria|Vienna|🇵🇹|葡萄牙|Portugal|Lisbon|🇨🇿|捷克|Czech|Prague|🇷🇴|罗马尼亚|Romania|🇭🇺|匈牙利|Hungary|🇬🇷|希腊|Greece|Athens|🇷🇸|塞尔维亚|Serbia|🇧🇬|保加利亚|Bulgaria|🇱🇻|拉脱维亚|Latvia|🇱🇹|立陶宛|Lithuania|🇪🇪|爱沙尼亚|Estonia|🇲🇩|摩尔多瓦|Moldova|🇮🇸|冰岛|Iceland|欧洲|Europe)') && !name(regex: '过期|剩余|流量|官网|套餐|返利|订阅|重置')
+        policy: urltest
+    }
+}
+
+# ------------------------------------------------------------
+#  路由
+#
+#  规则逐条对应 clash/yaml/routes.yaml，顺序一致（两边都是首条命中即生效）。
+#
+#  注意合并顺序：入口文件的 routing 先合并，被 include 的片段依次追加在后面。
+#  所以本段只放「必须最先匹配」的具体规则，自有规则集和 geosite 大表分别由
+#  rule/*.dae 与 routing-tail.dae 接在后面。详见 honk/README.md。
+# ------------------------------------------------------------
+routing {
+    # ===== 自我保护（honk 特有，Clash 走 TUN 时不需要这些）=====
+    #
+    # honk 不再像早期 dae 那样自动插入本机地址的 direct(must) 规则，必须显式写。
+    # 漏写会让网关自身的 DNS、DHCP、路由管理流量被自己接管，容易把机器锁死。
+    pname(dnsmasq, systemd-resolved) && l4proto(udp) && dport(53) -> direct(must)
+    pname(NetworkManager, systemd-networkd, dhcpcd) -> direct(must)
+    pname(AdGuardHome, mosdns) -> direct(must)
+    # 同机跑着的其他代理客户端直连，防止互相套娃成环。
+    pname(mihomo, sing-box, clash, honk, honk-core) -> direct(must)
+
+    # ===== 以下逐条移植 clash/yaml/routes.yaml =====
+
+    domain(full: linux.do) -> sg
+    domain(full: agentrouter.org) -> media
+    # RULE-SET,Myairport → rule/MyAiport.dae
+
+    domain(suffix: alidns.com) -> direct
+    domain(suffix: doh.pub) -> direct
+    domain(suffix: cloudflare-dns.com) -> media
+    domain(suffix: dns.google) -> media
+
+    domain(geosite: private) -> direct
+    domain(full: localhost) -> direct
+    domain(suffix: local) -> direct
+
+    # Clash 侧那 8 条私网 / 保留网段 IP-CIDR 合成一条：geoip:private 是 honk 内置
+    # CIDR 集，不依赖 geoip.dat；100.64.0.0/10 单独补上。
+    # && !dport(53) 是 honk 特有的要紧细节：宽泛的 private must-direct 会把内网
+    # DNS 一起放过去，加上这条否定才保留 DNS 由 honk 接管（官方文档明确提示）。
+    dip(geoip: private, 100.64.0.0/10) && !dport(53) -> direct(must)
+
+    domain(keyword: emby.991600.xyz) -> direct
+    domain(keyword: osaka.991600.xyz) -> direct
+    dip(141.147.153.168/32) -> direct
+
+    domain(suffix: oraclecloud.com) -> proxy
+    domain(suffix: muyuan.do) -> media
+    domain(suffix: anyrouter.top) -> proxy
+    domain(suffix: hgemby.qzz.io) -> video
+
+    # RULE-SET,AI-category（geosite category-ai-!cn 的 .mrs 就是同一份数据）
+    domain(geosite: category-ai-!cn) -> ai
+    # RULE-SET,AI-fmz200 无 geosite 对应物，未移植；见 README 的「未等价移植」。
+
+    domain(suffix: lucky.991600.xyz) -> cn_direct
+    domain(suffix: e5.991600.xyz) -> cn_direct
+    domain(suffix: fnos.991600.xyz) -> proxy
+    # RULE-SET,DirectDomain → rule/DirectDomain.dae
+    domain(suffix: 991600.xyz) -> media
+
+    domain(suffix: netflav.com) -> video
+    domain(suffix: surrit.com) -> video
+
+    domain(geosite: duolingo) -> cn_direct
+    # RULE-SET,WeChat → geosite 没有 wechat 分类，用同集团的 tencent 近似（范围更宽）
+    domain(geosite: tencent) -> direct
+
+    domain(suffix: macapp.org.cn) -> media
+    domain(suffix: cloudflare.com) -> cn_direct
+    domain(suffix: sharepoint.com) -> microsoft
+
+    # RULE-SET,TalktoneProxy / TalktoneAds / TalktoneDirect → rule/Talktone*.dae
+    # RULE-SET,SailyAds / Saily                             → rule/Saily*.dae
+
+    domain(suffix: testflight.apple.com) -> media
+    domain(full: beta.itunes.apple.com) -> media
+    domain(full: iosapps.itunes.apple.com) -> cn_direct
+    domain(suffix: mzstatic.com) -> cn_direct
+
+    domain(geosite: apple) -> apple
+    domain(geosite: github) -> media
+    domain(geosite: microsoft) -> microsoft
+    domain(geosite: telegram) -> telegram
+    # Clash 侧是 Epic / Sony / Steam / Nintendo 四条，honk 侧同一条件组内并列即为「或」
+    domain(geosite: epicgames, geosite: playstation, geosite: steam, geosite: nintendo) -> games
+    domain(geosite: youtube) -> media
+    # RULE-SET,MyVideo → rule/myvideorule.dae
+
+    # 其余 geosite 大表与 fallback 在 routing-tail.dae，必须排在所有 include 之后。
+}
+
+experimental {
+    clash_api {
+        # Clash 侧是 0.0.0.0:9090。honk 的 Clash API 只有明文 HTTP、不提供 TLS，
+        # 官方文档明确要求绑回环或前置带认证的 TLS 反代，所以这里默认回环。
+        # 真要从内网访问，改成 '0.0.0.0:9090' 并务必设置 secret。
+        external_controller: '127.0.0.1:9090'
+        external_ui: 'zashboard'
+        # 必填且不要照抄 Clash 侧那个——它已经明文进了 git 历史，应当轮换。
+        secret: 'CHANGE_ME_at_least_8_bytes'
+        default_mode: 'Rule'
+    }
+    cache_file {
+        # ≈ Clash 的 profile.store-selected：记住各 selector 的手选结果
+        enabled: true
+    }
+}
+
+# ------------------------------------------------------------
+#  自有规则集
+#
+#  honk 不支持远程规则集（只认 geosite.dat / geoip.dat 加内联 domain()），
+#  所以 loon/rule/*.list 由 sync_rules.py 预编译成 dae 的 routing 片段。
+#
+#  这里按声明顺序逐个列出而不用 rule/*.dae 通配：include 的匹配顺序决定规则
+#  优先级，而通配是按文件名字典序的（"Saily.dae" 会排在 "SailyAds.dae" 前面，
+#  正好把拦截列表挤到功能列表之后）。拦截类一律排在前面。
+#
+#  honk/rule/ 下另有 11 个文件是 Clash 侧没引用的规则集，默认不在此列；
+#  需要启用就加进来，并先在 sync_rules.py 的 HONK_OUTBOUND 里确认出口。
+# ------------------------------------------------------------
+include {
+    rule/SailyAds.dae
+    rule/TalktoneAds.dae
+    rule/Saily.dae
+    rule/TalktoneProxy.dae
+    rule/TalktoneDirect.dae
+    rule/MyAiport.dae
+    rule/DirectDomain.dae
+    rule/myvideorule.dae
+
+    # 必须最后：里面是 geosite 大表与 fallback，排在自有规则前会把它们吃掉。
+    routing-tail.dae
+}

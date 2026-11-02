@@ -1,0 +1,20 @@
+# DirectDomain —— 由 sync_rules.py 生成，请改 loon/rule/DirectDomain.list，勿直接编辑。
+# 出口 `cn_direct` 取自 sync_rules.py 的 HONK_OUTBOUND 表，组名见 honk/config.dae。
+routing {
+    domain(
+        suffix: embyty.entertang.work,
+        suffix: wzw.pp.ua,
+        suffix: elysia.h-e.top,
+        suffix: npcodex.kiroxubei.tech,
+        suffix: yyds.215.im,
+        suffix: 88996.cloud,
+        suffix: windhub.cc,
+        suffix: free.nanohajimi.mom,
+        suffix: api.lianwusuoai.top,
+        suffix: x666.me,
+        suffix: api.2020111.xyz,
+        suffix: api.agentify.top,
+        suffix: runanytime.hxi.me,
+        suffix: emby.yusen.cc.cd
+    ) -> cn_direct
+}

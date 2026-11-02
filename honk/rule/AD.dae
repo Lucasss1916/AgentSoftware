@@ -1,0 +1,10 @@
+# AD —— 由 sync_rules.py 生成，请改 loon/rule/AD.list，勿直接编辑。
+# 出口 `block` 取自 sync_rules.py 的 HONK_OUTBOUND 表，组名见 honk/config.dae。
+routing {
+    domain(
+        suffix: jxna200.com,
+        suffix: kjkw050.xyz,
+        suffix: open.e.kuaishou.com,
+        suffix: discovery.gxapp.iydsj.com
+    ) -> block
+}

@@ -1,0 +1,14 @@
+# Saily —— 由 sync_rules.py 生成，请改 loon/rule/Saily.list，勿直接编辑。
+# 出口 `media` 取自 sync_rules.py 的 HONK_OUTBOUND 表，组名见 honk/config.dae。
+routing {
+    domain(
+        suffix: saily.com,
+        suffix: nordsecurity.com,
+        full: firebaseremoteconfigrealtime.googleapis.com,
+        full: firebaseinstallations.googleapis.com,
+        suffix: crashlytics.com,
+        full: oauth2.googleapis.com,
+        full: accounts.google.com,
+        full: firebasestorage.googleapis.com
+    ) -> media
+}

@@ -14,8 +14,11 @@
 """
 from __future__ import annotations
 import argparse, json, re, subprocess, sys
-from urllib.parse import quote
 from pathlib import Path
+
+# 只为复用 gen:import 标记常量 —— 导入清单归 gen_readme.py 生成，本脚本只负责
+# 在重写 singbox/config/README.md 时把那段原样带过去。导入时无副作用。
+import gen_readme
 
 ROOT = Path(__file__).resolve().parent
 ROUTES = ROOT / "routes.yaml"
@@ -291,6 +294,22 @@ def build_singbox(rule_sets, rules, old: dict | None):
     }
     return cfg, skipped, node_tags
 
+def _keep_import_block(path: Path) -> str:
+    """把 README 里 gen_readme.py 注入的导入清单原样取回。
+
+    这份 README 有两个写者：本脚本整份重写它，gen_readme.py 往标记块里注入订阅
+    地址与一键导入链接。谁后跑谁覆盖，于是必有一边的 --check 红。解法是本脚本
+    不生成那段内容，只把已注入的内容搬过来；没有标记时留一对空标记给它填。
+    """
+    text = path.read_text(encoding="utf-8") if path.exists() else ""
+    _, found, rest = text.partition(gen_readme.MARK_BEGIN)
+    if found:
+        body, closed, _ = rest.partition(gen_readme.MARK_END)
+        if closed:
+            return f"{gen_readme.MARK_BEGIN}{body}{gen_readme.MARK_END}"
+    return f"{gen_readme.MARK_BEGIN}\n{gen_readme.MARK_END}"
+
+
 def write_sb_readme(skipped) -> str:
     """生成 sing-box 配置说明（返回文本，不落盘）。
 
@@ -326,13 +345,7 @@ def write_sb_readme(skipped) -> str:
           "取舍:节点自动更新的同时,**分流以 sub-store 编排产出的那份为准**;",
           "本仓库 `routes.yaml` 仍负责 `config.json` 模板本身的分流。两者各自独立。", "",
           "## 导入", "",
-          f"订阅地址:<{SB_RAW}>", "",
-          "一键导入(官方 SFI / SFM / SFA)。sing-box 只有自定义协议头,",
-          "GitHub 会过滤掉非 http(s) 链接,需复制到地址栏或快捷指令打开:", "",
-          "```",
-          f"sing-box://import-remote-profile?url={quote(SB_RAW, safe='')}",
-          f"#{quote('AgentSoftware')}",
-          "```", ""]
+          _keep_import_block(SB_CONFIG.parent / "README.md"), ""]
     if skipped:
         L += ["## 与 clash 的差异", "",
               "以下规则集上游没有 sing-box `.srs` 格式，仅在 clash 侧生效：", ""]

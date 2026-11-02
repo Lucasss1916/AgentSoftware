@@ -1,0 +1,38 @@
+# ============================================================
+#  路由尾段 —— 必须是 config.dae 的 include 块里最后一个
+#
+#  这里放 clash/yaml/routes.yaml 末尾那几条「宽口径」规则和 MATCH 兜底。
+#  honk 的合并顺序是：入口文件 → 各 include 片段（按声明顺序），而这些 geosite
+#  大表口径极宽（gfw / cn / category-media 动辄数万条），一旦排在自有规则集前面，
+#  机场域名、Emby 站、Talktone 这些就会先被它们吃掉、再也到不了自己的规则。
+#  所以它们不能待在 config.dae 的 routing 段里，只能单独落到最后。
+#
+#  fallback 写在这里也行：dae 的 fallback 与位置无关，最后合并的那条生效，
+#  且总是在所有普通规则之后参与匹配。
+# ============================================================
+
+routing {
+    # RULE-SET,GlobalMedia,🍿 国外媒体
+    # blackmatrix7 的 GlobalMedia 没有 geosite 等价分类，用 category-media 近似。
+    domain(geosite: category-media) -> media
+
+    # RULE-SET,Proxy,🍿 国外媒体
+    # 同样没有等价分类；gfw 是 dae / honk 生态里惯用的「需要代理」合集。
+    # 注意 gfw 只存在于 Loyalsoldier 版 geosite.dat，v2fly 上游没有这个分类。
+    domain(geosite: gfw) -> media
+
+    # RULE-SET,ChinaMedia,🌐 全球直连
+    domain(geosite: category-media-cn) -> cn_direct
+
+    # RULE-SET,ChinaMax,🌐 全球直连
+    # ChinaMax ≈ 国内域名合集，用 cn + geolocation-cn 两个分类近似。
+    domain(geosite: cn, geosite: geolocation-cn) -> cn_direct
+
+    # GEOIP,CN,🌐 全球直连
+    # 位置与 Clash 侧一致（排在所有域名规则之后）。dial_mode 是 domain++，
+    # 先按 IP 判定的连接在嗅出 SNI 后还会重跑一次路由，域名规则仍有机会命中。
+    dip(geoip: cn) -> cn_direct
+
+    # MATCH,🐟漏网之鱼
+    fallback: leftover
+}

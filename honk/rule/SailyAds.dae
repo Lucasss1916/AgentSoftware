@@ -1,0 +1,32 @@
+# SailyAds —— 由 sync_rules.py 生成，请改 loon/rule/SailyAds.list，勿直接编辑。
+# 出口 `block` 取自 sync_rules.py 的 HONK_OUTBOUND 表，组名见 honk/config.dae。
+routing {
+    domain(
+        suffix: featureassets.org,
+        suffix: prodregistryv2.org,
+        suffix: app-ads-services.com,
+        suffix: adsensecustomsearchads.com,
+        suffix: googlesyndication.com,
+        suffix: googleadservices.com,
+        suffix: doubleclick.net,
+        suffix: googleads.g.doubleclick.net,
+        full: firebaselogging-pa.googleapis.com,
+        full: firebaselogging.googleapis.com,
+        full: app-measurement.com,
+        suffix: app-analytics-services.com,
+        suffix: google-analytics.com,
+        suffix: googletagmanager.com,
+        suffix: adjust.com,
+        suffix: appsflyer.com,
+        suffix: appier.net,
+        suffix: adsappier.com,
+        suffix: appiersig.com,
+        suffix: branch.io,
+        suffix: amplitude.com,
+        suffix: mixpanel.com,
+        suffix: segment.io,
+        suffix: sentry.io,
+        full: graph.facebook.com,
+        full: an.facebook.com
+    ) -> block
+}

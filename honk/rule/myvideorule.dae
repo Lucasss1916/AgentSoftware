@@ -1,0 +1,28 @@
+# myvideorule —— 由 sync_rules.py 生成，请改 loon/rule/myvideorule.list，勿直接编辑。
+# 出口 `video` 取自 sync_rules.py 的 HONK_OUTBOUND 表，组名见 honk/config.dae。
+routing {
+    domain(
+        suffix: embyplus.org,
+        suffix: 69yun69.com,
+        suffix: 114514.quest,
+        suffix: nubebelle.vip,
+        suffix: heisi.org,
+        suffix: mebimmer.de,
+        suffix: shrekmedia.org,
+        suffix: 3767483.xyz,
+        suffix: 910427.xyz,
+        suffix: zn.al,
+        suffix: 5msky.com,
+        suffix: dpdns.org,
+        suffix: emby.wtf,
+        suffix: emos.lol,
+        suffix: yxh20190608-my.sharepoint.com,
+        suffix: emby.dnscf.dpdns.org,
+        suffix: 101514.xyz,
+        suffix: hgemby.qzz.io,
+        suffix: emby.n150.asia,
+        suffix: llyemby.cc.cd,
+        suffix: eb.zzm.li,
+        suffix: okemby.org
+    ) -> video
+}

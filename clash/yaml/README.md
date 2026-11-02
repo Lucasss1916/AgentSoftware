@@ -9,16 +9,23 @@
 
 订阅地址与一键导入：
 
-| 文件 | 地址 / Scheme |
-| --- | --- |
-| `urltest.yaml` | <https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/clash/yaml/urltest.yaml> |
-| | `mihomo://install-config?url=https%3A%2F%2Fraw.githubusercontent.com%2FLucasss1916%2FAgentSoftware%2Fmain%2Fclash%2Fyaml%2Furltest.yaml&name=AgentSoftware-urltest` |
-| `smart.yaml` | <https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/clash/yaml/smart.yaml> |
-| | `mihomo://install-config?url=https%3A%2F%2Fraw.githubusercontent.com%2FLucasss1916%2FAgentSoftware%2Fmain%2Fclash%2Fyaml%2Fsmart.yaml&name=AgentSoftware-smart` |
+<!-- gen:import -->
+| 文件 | 一键导入 | 原始地址 |
+| --- | --- | --- |
+| `urltest.yaml` | [导入](https://lucasss1916.github.io/AgentSoftware/import.html?s=mihomo%3A%2F%2Finstall-config%3Furl%3Dhttps%253A%252F%252Fraw.githubusercontent.com%252FLucasss1916%252FAgentSoftware%252Fmain%252Fclash%252Fyaml%252Furltest.yaml%26name%3DAgentSoftware-urltest) | <https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/clash/yaml/urltest.yaml> |
+| `smart.yaml` | [导入](https://lucasss1916.github.io/AgentSoftware/import.html?s=mihomo%3A%2F%2Finstall-config%3Furl%3Dhttps%253A%252F%252Fraw.githubusercontent.com%252FLucasss1916%252FAgentSoftware%252Fmain%252Fclash%252Fyaml%252Fsmart.yaml%26name%3DAgentSoftware-smart) | <https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/clash/yaml/smart.yaml> |
 
-`mihomo://` 是 Clash Party（原 Mihomo Party）的 URL Scheme，ClashX 系可把协议头换成
-`clash://`。GitHub 会过滤非 http(s) 链接，所以只能复制上面的整行到地址栏打开。
-其余客户端（ClashMeta for Android、Stash 等）直接粘贴订阅地址即可。
+上面的「导入」经 [跳转页](https://lucasss1916.github.io/AgentSoftware/import.html) 唤起客户端 —— GitHub 会过滤非 http(s) 链接，自定义协议没法直接做成可点的。不想走跳转页的话，复制下面的原始 Scheme 到地址栏或快捷指令打开，效果相同：
+
+```
+urltest.yaml
+mihomo://install-config?url=https%3A%2F%2Fraw.githubusercontent.com%2FLucasss1916%2FAgentSoftware%2Fmain%2Fclash%2Fyaml%2Furltest.yaml&name=AgentSoftware-urltest
+smart.yaml
+mihomo://install-config?url=https%3A%2F%2Fraw.githubusercontent.com%2FLucasss1916%2FAgentSoftware%2Fmain%2Fclash%2Fyaml%2Fsmart.yaml&name=AgentSoftware-smart
+```
+
+> `mihomo://` 是 Clash Party（原 Mihomo Party）的 Scheme，ClashX 系把协议头换成 `clash://` 即可。其余客户端（ClashMeta for Android、Stash 等）直接粘贴原始地址。目录里其他文件是生成源或备查件，不单独导入。
+<!-- /gen:import -->
 
 ## JS 覆写（扩展脚本）
 

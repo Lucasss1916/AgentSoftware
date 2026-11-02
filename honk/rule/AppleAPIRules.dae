@@ -1,0 +1,45 @@
+# AppleAPIRules —— 由 sync_rules.py 生成，请改 loon/rule/AppleAPIRules.list，勿直接编辑。
+# 出口 `apple` 取自 sync_rules.py 的 HONK_OUTBOUND 表，组名见 honk/config.dae。
+# 10 条 no-resolve 修饰符已丢弃：honk 没有逐条开关，解析行为由 dns 段统一决定。
+routing {
+    domain(
+        full: guzzoni.apple.com,
+        full: apps.apple.com,
+        full: xp.apple.com,
+        full: bag.itunes.apple.com,
+        full: api-edge.apps.apple.com,
+        full: api.apps.apple.com,
+        full: play.itunes.apple.com,
+        full: se.itunes.apple.com,
+        full: se-edge.itunes.apple.com,
+        full: su.itunes.apple.com,
+        full: upp.itunes.apple.com,
+        full: beta.music.apple.com,
+        suffix: itunes-apple.com.akadns.net,
+        suffix: service.gc.apple.com,
+        suffix: setup.icloud.com,
+        suffix: appleid.apple.com,
+        suffix: gc.apple.com,
+        suffix: gsa.apple.com,
+        suffix: ess.apple.com,
+        suffix: service.ess.apple.com,
+        suffix: init.ess.apple.com,
+        suffix: static.ess.apple.com,
+        suffix: gateway.sandbox.push.apple.com,
+        suffix: gateway.push.apple.com,
+        suffix: swscan.apple.com,
+        suffix: swquery.apple.com
+    ) -> apple
+    dip(
+        17.0.0.0/8,
+        63.92.224.0/19,
+        65.199.22.0/23,
+        139.178.128.0/18,
+        144.178.0.0/19,
+        144.178.36.0/22,
+        144.178.48.0/20,
+        192.35.50.0/24,
+        198.183.17.0/24,
+        205.180.175.0/24
+    ) -> apple
+}

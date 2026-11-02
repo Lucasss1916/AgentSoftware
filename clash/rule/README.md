@@ -23,6 +23,6 @@
 | `prevent_dns.yaml` | <https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/clash/rule/prevent_dns.yaml> |
 | `steamCDN.yaml` | <https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/clash/rule/steamCDN.yaml> |
 
-> Clash 系没有导入单个规则集的 Scheme，需写进主配置的 `rule-providers`（`behavior: classical` + `format: yaml`）。主配置见 [`clash/yaml`](../yaml/README.md)。
+> Clash 系没有导入单个规则集的 Scheme，需写进主配置的 `rule-providers`（`behavior: classical` + `format: yaml`）。主配置见 [`clash/yaml`](../yaml/README.md)，那两份已经把本目录全部引用好了，一键导入主配置即可。
 
 <sub>本文件由 `gen_readme.py` 生成，勿直接编辑。</sub>

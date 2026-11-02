@@ -14,7 +14,8 @@ loon/rule/*.list  ──sync_rules.py──┬──►  clash/rule/*.yaml      
                                    ├──►  Egern/rule/*.yaml      Egern
                                    ├──►  singbox/rule/*.json    sing-box
                                    ├──►  Surge/rule/*.list      Surge
-                                   └──►  anywhere/rule/*.arrs  Anywhere
+                                   ├──►  anywhere/rule/*.arrs  Anywhere
+                                   └──►  honk/rule/*.dae        honk（dae 语法）
 ```
 
 **修改规则时只改 `loon/rule/` 下的文件**，然后：
@@ -28,25 +29,29 @@ python3 sync_rules.py --check  # 只校验不写入（CI 用）
 GitHub Actions 在 main 推送和 PR 中都只做校验，不会回填提交；
 若产物与源不一致会直接失败，需要在本地生成后一并提交。
 
-新增规则类型时，只需在 `sync_rules.py` 的 `TYPES` 表里加一行，六种格式同时生效。
+新增规则类型时，只需在 `sync_rules.py` 的 `TYPES` 表里加一行，七种格式同时生效。
 
 ### 格式能力差异
 
 部分规则类型在某些客户端没有对应字段，同步时会被跳过并在输出中统计：
 
-| 类型 | Clash | QX | Egern | sing-box | Surge | Anywhere |
-| --- | :-: | :-: | :-: | :-: | :-: | :-: |
-| DOMAIN | ✓ | ✓ | ✓ | ✓ | ✓ | 转为后缀匹配 |
-| DOMAIN-SUFFIX / DOMAIN-KEYWORD | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
-| DOMAIN-REGEX | ✓ | — | ✓ | ✓ | — | — |
-| IP-CIDR / IP-CIDR6 | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
-| GEOIP | ✓ | ✓ | ✓ | — | ✓ | — |
-| ASN | ✓ | — | ✓ | — | ✓ | — |
-| PROCESS-NAME | ✓ | — | — | ✓ | ✓ | — |
-| USER-AGENT | ✓ | ✓ | — | — | ✓ | — |
-| URL-REGEX | — | ✓ | ✓ | — | ✓ | — |
+| 类型 | Clash | QX | Egern | sing-box | Surge | Anywhere | honk |
+| --- | :-: | :-: | :-: | :-: | :-: | :-: | :-: |
+| DOMAIN | ✓ | ✓ | ✓ | ✓ | ✓ | 转为后缀匹配 | ✓ |
+| DOMAIN-SUFFIX / DOMAIN-KEYWORD | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
+| DOMAIN-REGEX | ✓ | — | ✓ | ✓ | — | — | ✓ |
+| IP-CIDR / IP-CIDR6 | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
+| GEOIP | ✓ | ✓ | ✓ | — | ✓ | — | ✓ |
+| ASN | ✓ | — | ✓ | — | ✓ | — | — |
+| PROCESS-NAME | ✓ | — | — | ✓ | ✓ | — | ✓ |
+| USER-AGENT | ✓ | ✓ | — | — | ✓ | — | — |
+| URL-REGEX | — | ✓ | ✓ | — | ✓ | — | — |
 
-目前 Apple 三件套里的 22 条 USER-AGENT 规则在 Egern、sing-box 与 Anywhere 中会被跳过，属预期行为。
+目前 Apple 三件套里的 22 条 USER-AGENT 规则在 Egern、sing-box、Anywhere 与 honk 中会被跳过，属预期行为。
+
+honk 的规则文件比其余六家多带一样东西：**出口**。dae 语法的一条 `routing` 规则就是
+「匹配 + 出口」，没有「规则集」这层可以让策略留在客户端配置里，所以 `honk/rule/*.dae`
+里的出口由 `sync_rules.py` 的 `HONK_OUTBOUND` 表决定，对应 Clash 侧 `routes.yaml` 的策略组。
 
 ### 不参与同步的文件
 
@@ -131,14 +136,45 @@ sing-box 配置的节点填法见 [`singbox/config/README.md`](singbox/config/RE
 | Surge | [配置](Surge/config/README.md) · [模块](Surge/module/README.md) · [规则](Surge/rule/README.md) · [BoxJS](Surge/boxjs/README.md) |
 | Clash / mihomo | [主配置](clash/yaml/README.md) · [规则](clash/rule/README.md) |
 | sing-box | [主配置](singbox/config/README.md) · [规则](singbox/rule/README.md) |
-| Anywhere | [规则订阅](anywhere/rule/README.md) |
+| Anywhere | [规则订阅](anywhere/rule/README.md) · [模块与 MITM](anywhere/module/README.md) |
+| honk | [主配置](honk/README.md) · [规则集](honk/rule/README.md) |
 
-只有 Loon、Quantumult X、Egern 有 Universal Link，能做成 GitHub 上可直接点的链接；
-Surge、Clash、sing-box、Anywhere 使用自定义协议头（`surge:///`、`mihomo://`、`sing-box://`、`anywhere://`），
-会被 GitHub 的 markdown 过滤掉，故以代码块形式给出，需自行复制到地址栏或快捷指令打开。
+### 跳转页
 
-各家能导入的粒度也不同：Surge 只能导入配置与模块，Clash / sing-box 只能导入主配置，
-它们的规则集需手写进主配置里，对应目录的 README 已注明写法。
+只有 Loon、Quantumult X、Egern 有 Universal Link。Surge、Clash、sing-box、Anywhere
+只有自定义协议头（`surge:///`、`mihomo://`、`sing-box://`、`anywhere://`），会被 GitHub 的
+markdown 过滤掉，没法直接做成可点的链接，于是加了一层自己的跳转页：
+
+```
+docs/import.html?s=<整条 scheme 经 encodeURIComponent>
+```
+
+页面校验协议头在白名单内后 `location.replace` 过去。表格里的「导入」指向
+<https://lucasss1916.github.io/AgentSoftware/import.html>，原始 scheme 仍在表格下方
+以代码块给出，不想经过跳转页就复制那一条。
+
+> 跳转页需在仓库 **Settings → Pages** 里把 Source 设为 `main` 分支的 `/docs` 目录才会生效，
+> 否则「导入」链接会 404。改动 `docs/import.html` 的协议白名单后记得同步
+> `gen_readme.py` 里新增的 scheme，`tests/` 有一条用例在卡这个一致性。
+
+### 导入粒度
+
+各家能导入的粒度不同，这不是本仓库的取舍，而是客户端 Scheme 的能力边界：
+
+| 客户端 | 可一键导入 | 只能手工接入 |
+| --- | --- | --- |
+| Loon | 规则集、插件 | — |
+| Quantumult X | 分流规则 | 重写 / 任务脚本（需在 `[rewrite_local]`、`[task_local]` 里引用） |
+| Egern | 规则集、模块 | — |
+| Surge | 配置、模块 | 规则集（手写 `RULE-SET`）、BoxJS 订阅 |
+| Clash / mihomo | 主配置 | 规则集（手写 `rule-providers`） |
+| sing-box | 主配置 | 规则集（手写 `route.rule_set`） |
+| Anywhere | 分流规则集、模块、MITM 规则集 | — |
+| honk | — | 全部（Linux 守护进程，`-c` 读本地文件，无 URL Scheme） |
+
+Surge / Clash / sing-box 的规则集没有对应的 Scheme（[Surge 官方只有 `install-config`
+与 `install-module`](https://manual.nssurge.com/tools/url-scheme.html)），但本仓库的
+Clash 主配置已把 `clash/rule/` 全部引用好，导入主配置即可；Surge 侧仍需手写一行。
 
 ## 目录
 
@@ -151,3 +187,4 @@ Surge、Clash、sing-box、Anywhere 使用自定义协议头（`surge:///`、`mi
 | `singbox/` | 规则、配置 |
 | `Surge/` | 规则、配置、模块、BoxJS |
 | `anywhere/` | Anywhere `.arrs` 分流规则订阅 |
+| `honk/` | honk 主配置与 dae 语法规则集 |

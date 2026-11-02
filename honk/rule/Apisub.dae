@@ -1,0 +1,10 @@
+# Apisub —— 由 sync_rules.py 生成，请改 loon/rule/Apisub.list，勿直接编辑。
+# 出口 `media` 取自 sync_rules.py 的 HONK_OUTBOUND 表，组名见 honk/config.dae。
+routing {
+    domain(
+        suffix: de5.net,
+        suffix: kfc-api.sxxe.net,
+        suffix: x666.me,
+        suffix: 529961.com
+    ) -> media
+}

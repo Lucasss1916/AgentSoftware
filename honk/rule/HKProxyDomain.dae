@@ -1,0 +1,5 @@
+# HKProxyDomain —— 由 sync_rules.py 生成，请改 loon/rule/HKProxyDomain.list，勿直接编辑。
+# 出口 `hk` 取自 sync_rules.py 的 HONK_OUTBOUND 表，组名见 honk/config.dae。
+routing {
+    domain(suffix: sxxe.net) -> hk
+}

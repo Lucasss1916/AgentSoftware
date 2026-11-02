@@ -1,0 +1,17 @@
+# steamCDN —— 由 sync_rules.py 生成，请改 loon/rule/steamCDN.list，勿直接编辑。
+# 出口 `cn_direct` 取自 sync_rules.py 的 HONK_OUTBOUND 表，组名见 honk/config.dae。
+routing {
+    domain(
+        suffix: st.dl.eccdnx.com,
+        suffix: st.dl.bscstorage.net,
+        suffix: st.dl.pinyuncloud.com,
+        suffix: dl.steam.clngaa.com,
+        suffix: cdn.mileweb.cs.steampowered.com.8686c.com,
+        suffix: cdn-ws.content.steamchina.com,
+        suffix: cdn-qc.content.steamchina.com,
+        suffix: cdn-ali.content.steamchina.com,
+        suffix: xz.pphimalayanrt.com,
+        suffix: lv.queniujq.cn,
+        suffix: alibaba.cdn.steampipe.steamcontent.com
+    ) -> cn_direct
+}

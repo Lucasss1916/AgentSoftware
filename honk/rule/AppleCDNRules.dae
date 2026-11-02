@@ -1,0 +1,23 @@
+# AppleCDNRules —— 由 sync_rules.py 生成，请改 loon/rule/AppleCDNRules.list，勿直接编辑。
+# 出口 `cn_direct` 取自 sync_rules.py 的 HONK_OUTBOUND 表，组名见 honk/config.dae。
+# 1 条规则 honk 没有对应匹配函数，已跳过；差异见仓库 README 的「格式能力差异」表。
+routing {
+    domain(
+        full: iosapps.itunes.apple.com,
+        full: osxapps.itunes.apple.com,
+        full: oscdn.apple.com,
+        full: supportdownload.apple.com,
+        full: appldnld.apple.com,
+        full: swcdn.apple.com,
+        full: apptrailers.itunes.apple.com,
+        full: updates-http.cdn-apple.com,
+        full: updates.cdn-apple.com,
+        suffix: mzstatic.com,
+        full: aod.itunes.apple.com,
+        full: mvod.itunes.apple.com,
+        full: streamingaudio.itunes.apple.com,
+        full: download.developer.apple.com,
+        full: downloaddispatch.itunes.apple.com,
+        full: app-site-association.cdn-apple.com
+    ) -> cn_direct
+}

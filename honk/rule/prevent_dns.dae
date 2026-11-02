@@ -1,0 +1,27 @@
+# prevent_dns —— 由 sync_rules.py 生成，请改 loon/rule/prevent_dns.list，勿直接编辑。
+# 出口 `block` 取自 sync_rules.py 的 HONK_OUTBOUND 表，组名见 honk/config.dae。
+routing {
+    domain(
+        suffix: dnsleaktest.com,
+        suffix: dnsleak.com,
+        suffix: expressvpn.com,
+        suffix: nordvpn.com,
+        suffix: surfshark.com,
+        suffix: ipleak.net,
+        suffix: perfect-privacy.com,
+        suffix: browserleaks.com,
+        suffix: browserleaks.org,
+        suffix: vpnunlimited.com,
+        suffix: whoer.net,
+        suffix: whrq.net,
+        suffix: astrill.com,
+        suffix: astrill.org,
+        suffix: dnsleak.asn247.net,
+        suffix: surfsharkdns.com,
+        suffix: pixelscan.net,
+        full: ipv4.ping0.cc,
+        full: ipv6.ping0.cc,
+        suffix: ipapi.co,
+        full: ip-scan.adspower.net
+    ) -> block
+}

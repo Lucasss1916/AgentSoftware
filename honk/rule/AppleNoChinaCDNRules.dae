@@ -1,0 +1,43 @@
+# AppleNoChinaCDNRules —— 由 sync_rules.py 生成，请改 loon/rule/AppleNoChinaCDNRules.list，勿直接编辑。
+# 出口 `media` 取自 sync_rules.py 的 HONK_OUTBOUND 表，组名见 honk/config.dae。
+# 5 条规则 honk 没有对应匹配函数，已跳过；差异见仓库 README 的「格式能力差异」表。
+routing {
+    domain(
+        suffix: hls.itunes.apple.com,
+        suffix: hls-amt.itunes.apple.com,
+        suffix: audio-ssl.itunes.apple.com,
+        suffix: cdn-apple.com,
+        full: cdn.apple-cloudkit.com,
+        full: devimages-cdn.apple.com,
+        full: devstreaming-cdn.apple.com,
+        full: js-cdn.music.apple.com,
+        full: docs-assets.developer.apple.com,
+        full: np-edge.itunes.apple.com,
+        full: play-edge.itunes.apple.com,
+        suffix: tv.apple.com,
+        full: tv.applemusic.com,
+        full: uts-api.itunes.apple.com,
+        suffix: ocsp.apple.com,
+        suffix: apple.news,
+        full: news-events.apple.com,
+        full: news-edge.apple.com,
+        full: apple.comscoreresearch.com,
+        full: gspe1-ssl.ls.apple.com,
+        full: news-assets.apple.com,
+        full: news-client.apple.com,
+        full: developer.apple.com,
+        suffix: digicert.com,
+        full: testflight.apple.com,
+        full: sandbox.itunes.apple.com,
+        suffix: blobstore.apple.com,
+        full: cvws.icloud-content.com,
+        full: hls-svod.itunes.apple.com,
+        full: mask-api.fe.apple-dns.net,
+        full: mask-api.icloud.com,
+        full: mask-h2.icloud.com,
+        full: mask-t.apple-dns.net,
+        full: mask.apple-dns.net,
+        full: mask.icloud.com,
+        suffix: apple-dns.net
+    ) -> media
+}

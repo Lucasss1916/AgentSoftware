@@ -44,15 +44,20 @@ sub-store 定时刷新节点。
 
 ## 导入
 
-订阅地址:<https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/singbox/config/config.json>
+<!-- gen:import -->
+| 文件 | 一键导入 | 原始地址 |
+| --- | --- | --- |
+| `config.json` | [导入](https://lucasss1916.github.io/AgentSoftware/import.html?s=sing-box%3A%2F%2Fimport-remote-profile%3Furl%3Dhttps%253A%252F%252Fraw.githubusercontent.com%252FLucasss1916%252FAgentSoftware%252Fmain%252Fsingbox%252Fconfig%252Fconfig.json%23AgentSoftware) | <https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/singbox/config/config.json> |
 
-一键导入(官方 SFI / SFM / SFA)。sing-box 只有自定义协议头,
-GitHub 会过滤掉非 http(s) 链接,需复制到地址栏或快捷指令打开:
+上面的「导入」经 [跳转页](https://lucasss1916.github.io/AgentSoftware/import.html) 唤起客户端 —— GitHub 会过滤非 http(s) 链接，自定义协议没法直接做成可点的。不想走跳转页的话，复制下面的原始 Scheme 到地址栏或快捷指令打开，效果相同：
 
 ```
-sing-box://import-remote-profile?url=https%3A%2F%2Fraw.githubusercontent.com%2FLucasss1916%2FAgentSoftware%2Fmain%2Fsingbox%2Fconfig%2Fconfig.json
-#AgentSoftware
+config.json
+sing-box://import-remote-profile?url=https%3A%2F%2Fraw.githubusercontent.com%2FLucasss1916%2FAgentSoftware%2Fmain%2Fsingbox%2Fconfig%2Fconfig.json#AgentSoftware
 ```
+
+> 官方 SFI / SFM / SFA 均支持。导入的是**不含节点的模板**，需按本页「填入机场节点」一节补上节点才会真正走代理。
+<!-- /gen:import -->
 
 ## 与 clash 的差异
 

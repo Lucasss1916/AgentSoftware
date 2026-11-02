@@ -18,6 +18,7 @@
 | `TalktoneAds.dae` | <https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/honk/rule/TalktoneAds.dae> |
 | `TalktoneDirect.dae` | <https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/honk/rule/TalktoneDirect.dae> |
 | `TalktoneProxy.dae` | <https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/honk/rule/TalktoneProxy.dae> |
+| `muse_meta.dae` | <https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/honk/rule/muse_meta.dae> |
 | `myvideorule.dae` | <https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/honk/rule/myvideorule.dae> |
 | `prevent_dns.dae` | <https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/honk/rule/prevent_dns.dae> |
 | `steamCDN.dae` | <https://raw.githubusercontent.com/Lucasss1916/AgentSoftware/main/honk/rule/steamCDN.dae> |

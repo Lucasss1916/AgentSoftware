@@ -1,0 +1,61 @@
+# muse_meta —— 由 sync_rules.py 生成，请改 loon/rule/muse_meta.list，勿直接编辑。
+# 出口 `ai` 取自 sync_rules.py 的 HONK_OUTBOUND 表，组名见 honk/config.dae。
+# 8 条 no-resolve 修饰符已丢弃：honk 没有逐条开关，解析行为由 dns 段统一决定。
+routing {
+    domain(
+        suffix: muse.ai,
+        suffix: museai.com,
+        suffix: meta.ai,
+        suffix: meta.com,
+        suffix: atmeta.com,
+        suffix: multimango.com,
+        full: auth.meta.com,
+        full: agent.meta.ai,
+        full: production.museai.com,
+        suffix: metaaivm.com,
+        suffix: metaaiusercontent.com,
+        suffix: ecto1usercontent.com,
+        full: hatch.ecto1.ai,
+        full: node.hatch.one,
+        full: meta.privacy-gateway.cloudflare.com,
+        full: meta.hpke-keys.privacy-gateway.cloudflare.com,
+        full: meta-ohttp-relay-prod.fastly-edge.com,
+        full: meta-ohttp-config-prod.fastly-edge.com,
+        suffix: llama.com,
+        suffix: llamameta.net,
+        full: ai.developer.meta.com,
+        full: ai.meta.com,
+        full: aidemos.meta.com,
+        full: developer.meta.com,
+        full: llama.developer.meta.com,
+        full: hatch-api.meta.ai,
+        full: ar.graph.meta.com,
+        full: meta.graph.meta.com,
+        full: graph.meta.ai,
+        full: api.meta.ai,
+        full: graph.facebook.com,
+        full: hatch.metaaivm.com,
+        full: scontent-dfw6-2.xx.fbcdn.net,
+        suffix: facebook.com,
+        suffix: facebook.net,
+        suffix: fbcdn.net,
+        suffix: fbsbx.com,
+        suffix: fbpigeon.com,
+        suffix: fb.com,
+        full: connect.facebook.net,
+        suffix: instagram.com,
+        suffix: cdninstagram.com,
+        suffix: whatsapp.com,
+        suffix: whatsapp.net
+    ) -> ai
+    dip(
+        198.18.71.186/32,
+        198.18.81.209/32,
+        198.18.71.185/32,
+        198.18.71.187/32,
+        198.18.71.190/32,
+        198.18.9.200/32,
+        198.18.71.228/32,
+        198.18.81.212/32
+    ) -> ai
+}

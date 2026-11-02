@@ -15,6 +15,7 @@ routing {
         suffix: api.2020111.xyz,
         suffix: api.agentify.top,
         suffix: runanytime.hxi.me,
-        suffix: emby.yusen.cc.cd
+        suffix: emby.yusen.cc.cd,
+        suffix: taotu.ink
     ) -> cn_direct
 }

@@ -128,6 +128,7 @@ HONK_OUTBOUND: dict[str, str] = {
     "AppleCDNRules":            "cn_direct",
     "AppleNoChinaCDNRules":     "media",
     "steamCDN":                 "cn_direct",
+    "muse_meta":                "ai",
 }
 
 # 新增规则集若忘了登记，用这个占位出口并在文件头打警告，而不是静默选一个策略。

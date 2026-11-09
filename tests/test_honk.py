@@ -6,7 +6,6 @@ honk 没有 validate 子命令、也只能跑在 Linux 上，所以这份配置�
 """
 import re
 import unittest
-import warnings
 from pathlib import Path
 
 import sync_rules
@@ -113,12 +112,9 @@ class RegionFilterTests(unittest.TestCase):
         self.assertTrue(self.patterns)
         for pattern in self.patterns:
             with self.subTest(pattern=pattern[:32]):
-                # honk 把 regex: 的值包成 (?:value) 后再用 | 拼接所有候选项。
-                # Python 的 re 对「(?i) 不在表达式开头」会告警，Rust 的 regex 允许
-                # 行内标志出现在任意位置，所以这里只借 Python 做语法冒烟，压掉告警。
-                with warnings.catch_warnings():
-                    warnings.simplefilter("ignore", DeprecationWarning)
-                    re.compile(f"(?:{pattern})")
+                # 保持开头的全局标志位置，兼容 Python 3.11+。
+                # 此处只检查原始表达式；Rust 特有约束由下面的测试检查。
+                re.compile(pattern)
 
     def test_filters_avoid_constructs_rust_regex_rejects(self):
         for pattern in self.patterns:

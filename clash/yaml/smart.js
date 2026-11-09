@@ -54,8 +54,7 @@ const override = {
     "sniff": {
       "HTTP": {
         "ports": [
-          80,
-          443
+          80
         ],
         "override-destination": true
       },
@@ -123,7 +122,6 @@ const override = {
     ],
     "nameserver-policy": {
       "*.linux.do": "https://stellafortuna.ddd.oaifree.com/query-dns",
-      "api64.ipify.org": "udp://[2001:4860:4860::8888]:53",
       "rule-set:ChinaDNS": [
         "https://dns.alidns.com/dns-query",
         "https://doh.pub/dns-query"
@@ -196,6 +194,16 @@ const override = {
       "proxies": [
         "DIRECT"
       ]
+    },
+    {
+      "name": "🌐 DNS容错",
+      "type": "fallback",
+      "include-all": true,
+      "exclude-filter": "过期|剩余|流量|官网|套餐|返利|订阅|重置",
+      "url": "https://www.gstatic.com/generate_204",
+      "interval": 120,
+      "timeout": 5000,
+      "lazy": false
     },
     {
       "name": "📲 电报信息",
@@ -357,7 +365,7 @@ const override = {
       "name": "🇨🇳 台湾节点",
       "type": "smart",
       "include-all": true,
-      "filter": "(?i)(🇹🇼|台湾|臺灣|台灣|Taiwan|Tai|TW|mv)",
+      "filter": "(?i)(🇹🇼|台湾|臺灣|台灣|Taiwan|Taipei|(^|[^A-Za-z])TW([^A-Za-z]|$))",
       "exclude-filter": "过期|剩余|流量|官网|套餐|返利|订阅|重置",
       "hidden": true,
       "interval": 300,
@@ -620,11 +628,10 @@ const override = {
   "rules": [
     "DOMAIN,linux.do,🇸🇬 新加坡节点",
     "DOMAIN,agentrouter.org,🍿 国外媒体",
-    "RULE-SET,Myairport,🍿 国外媒体",
     "DOMAIN-SUFFIX,alidns.com,DIRECT",
     "DOMAIN-SUFFIX,doh.pub,DIRECT",
-    "DOMAIN-SUFFIX,cloudflare-dns.com,🍿 国外媒体",
-    "DOMAIN-SUFFIX,dns.google,🍿 国外媒体",
+    "DOMAIN-SUFFIX,cloudflare-dns.com,🌐 DNS容错",
+    "DOMAIN-SUFFIX,dns.google,🌐 DNS容错",
     "RULE-SET,PrivateDNS,DIRECT",
     "DOMAIN,localhost,DIRECT",
     "DOMAIN-SUFFIX,local,DIRECT",
@@ -636,6 +643,8 @@ const override = {
     "IP-CIDR6,::1/128,DIRECT,no-resolve",
     "IP-CIDR6,fc00::/7,DIRECT,no-resolve",
     "IP-CIDR6,fe80::/10,DIRECT,no-resolve",
+    "RULE-SET,GitHub,🍿 国外媒体,no-resolve",
+    "RULE-SET,Myairport,🍿 国外媒体",
     "DOMAIN-KEYWORD,emby.991600.xyz,DIRECT",
     "DOMAIN-KEYWORD,osaka.991600.xyz,DIRECT",
     "IP-CIDR,141.147.153.168/32,DIRECT,no-resolve",
@@ -667,7 +676,6 @@ const override = {
     "DOMAIN,iosapps.itunes.apple.com,🌐 全球直连",
     "DOMAIN-SUFFIX,mzstatic.com,🌐 全球直连",
     "RULE-SET,Apple,🍎 苹果服务,no-resolve",
-    "RULE-SET,GitHub,🍿 国外媒体",
     "RULE-SET,Microsoft,Ⓜ️ 微软服务",
     "RULE-SET,Telegram,📲 电报信息",
     "RULE-SET,Epic,🎮 游戏平台",

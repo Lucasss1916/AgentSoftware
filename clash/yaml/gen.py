@@ -9,7 +9,7 @@ BUILD = Path(__file__).resolve().parent
 REGIONS = [
     ("🇭🇰 香港节点", r"🇭🇰|香港|Hong|HK"),
     ("🇯🇵 日本节点", r"🇯🇵|日本|Japan|JP"),
-    ("🇨🇳 台湾节点", r"🇹🇼|台湾|臺灣|台灣|Taiwan|Tai|TW|mv"),
+    ("🇨🇳 台湾节点", r"🇹🇼|台湾|臺灣|台灣|Taiwan|Taipei|(^|[^A-Za-z])TW([^A-Za-z]|$)"),
     ("🇸🇬 新加坡节点", r"🇸🇬|新加坡|Singapore|SG"),
     ("🇰🇷 韩国节点", r"🇰🇷|韩国|韓國|Korea|KR"),
     ("🇺🇲 北美节点", r"🇺🇸|🇨🇦|🇲🇽|美国|美國|加拿大|墨西哥|States|Canada|Mexico|USA|(^|[^A-Za-z])US([^A-Za-z]|$)|(^|[^A-Za-z])CA([^A-Za-z]|$)|洛杉矶|圣何塞|西雅图|达拉斯|纽约|芝加哥|硅谷|凤凰城|亚特兰大|迈阿密|拉斯维加斯|波特兰|费利蒙|阿什本|多伦多|温哥华|蒙特利尔|Los Angeles|San Jose|Seattle|Dallas|New York|Chicago|Miami|Ashburn|Phoenix|Fremont|Portland|Las Vegas|Atlanta|Silicon Valley|Toronto|Vancouver|Montreal"),
@@ -49,6 +49,11 @@ def build_groups(kind):
         {"name": manual, "type": "select", "include-all": True,
          "exclude-filter": NODE_EXCLUDE},
         select_group(direct, ["DIRECT"]),
+        # 直接检查订阅节点，避免嵌套地区组只检查其当前选中节点。
+        {"name": "🌐 DNS容错", "type": "fallback", "include-all": True,
+         "exclude-filter": NODE_EXCLUDE,
+         "url": "https://www.gstatic.com/generate_204",
+         "interval": 120, "timeout": 5000, "lazy": False},
         select_group("📲 电报信息", [sg, jp, tw, hk, node, na, kr, manual, asia, eu]),
         {"name": "📞 TalkTone", "type": "select", "include-all": True,
          "exclude-filter": NODE_EXCLUDE},

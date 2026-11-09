@@ -40,7 +40,7 @@ tcp-concurrent: true
 find-process-mode: strict
 keep-alive-interval: 30
 
-external-controller: 0.0.0.0:9090
+external-controller: 127.0.0.1:9090
 # external-ui: ui
 # external-ui-name: zashboard
 # external-ui-url: https://gh-proxy.com/github.com/Zephyruso/zashboard/archive/refs/heads/gh-pages.zip
@@ -100,7 +100,7 @@ sniffer:
   override-destination: true
   sniff:
     HTTP:
-      ports: [80, 443]
+      ports: [80]
       override-destination: true
     TLS:
       ports: [443]
@@ -142,8 +142,7 @@ dns:
   proxy-server-nameserver: [223.5.5.5, 119.29.29.29]
   nameserver-policy:
     "*.linux.do": https://stellafortuna.ddd.oaifree.com/query-dns
-    # Egern 的 value 是 DNS 服务器地址，并非将 api64 映射为该 IPv6。
-    "api64.ipify.org": "udp://[2001:4860:4860::8888]:53"
+    # api64.ipify.org 使用默认 DoH，避免依赖本机 IPv6 出站。
     "rule-set:ChinaDNS":
       - https://dns.alidns.com/dns-query
       - https://doh.pub/dns-query
@@ -202,6 +201,14 @@ proxy-groups:
   type: select
   proxies:
   - DIRECT
+- name: 🌐 DNS容错
+  type: fallback
+  include-all: true
+  exclude-filter: 过期|剩余|流量|官网|套餐|返利|订阅|重置
+  url: https://www.gstatic.com/generate_204
+  interval: 120
+  timeout: 5000
+  lazy: false
 - name: 📲 电报信息
   type: select
   proxies:
@@ -331,7 +338,7 @@ proxy-groups:
 - name: 🇨🇳 台湾节点
   type: smart
   include-all: true
-  filter: (?i)(🇹🇼|台湾|臺灣|台灣|Taiwan|Tai|TW|mv)
+  filter: (?i)(🇹🇼|台湾|臺灣|台灣|Taiwan|Taipei|(^|[^A-Za-z])TW([^A-Za-z]|$))
   exclude-filter: 过期|剩余|流量|官网|套餐|返利|订阅|重置
   hidden: true
   interval: 300
@@ -435,11 +442,10 @@ rule-providers:
 rules:
   - DOMAIN,linux.do,🇸🇬 新加坡节点
   - DOMAIN,agentrouter.org,🍿 国外媒体
-  - RULE-SET,Myairport,🍿 国外媒体
   - DOMAIN-SUFFIX,alidns.com,DIRECT
   - DOMAIN-SUFFIX,doh.pub,DIRECT
-  - DOMAIN-SUFFIX,cloudflare-dns.com,🍿 国外媒体
-  - DOMAIN-SUFFIX,dns.google,🍿 国外媒体
+  - DOMAIN-SUFFIX,cloudflare-dns.com,🌐 DNS容错
+  - DOMAIN-SUFFIX,dns.google,🌐 DNS容错
   - RULE-SET,PrivateDNS,DIRECT
   - DOMAIN,localhost,DIRECT
   - DOMAIN-SUFFIX,local,DIRECT
@@ -451,6 +457,10 @@ rules:
   - IP-CIDR6,::1/128,DIRECT,no-resolve
   - IP-CIDR6,fc00::/7,DIRECT,no-resolve
   - IP-CIDR6,fe80::/10,DIRECT,no-resolve
+
+  # ---- GitHub 优先匹配域名，避免前置 classical 规则触发真实 IP 解析 ----
+  - RULE-SET,GitHub,🍿 国外媒体,no-resolve
+  - RULE-SET,Myairport,🍿 国外媒体
   - DOMAIN-KEYWORD,emby.991600.xyz,DIRECT
   - DOMAIN-KEYWORD,osaka.991600.xyz,DIRECT
   - IP-CIDR,141.147.153.168/32,DIRECT,no-resolve
@@ -482,7 +492,6 @@ rules:
   - DOMAIN,iosapps.itunes.apple.com,🌐 全球直连
   - DOMAIN-SUFFIX,mzstatic.com,🌐 全球直连
   - RULE-SET,Apple,🍎 苹果服务,no-resolve
-  - RULE-SET,GitHub,🍿 国外媒体
   - RULE-SET,Microsoft,Ⓜ️ 微软服务
   - RULE-SET,Telegram,📲 电报信息
   - RULE-SET,Epic,🎮 游戏平台

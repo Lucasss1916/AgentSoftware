@@ -34,7 +34,7 @@ tcp-concurrent: true
 find-process-mode: strict
 keep-alive-interval: 30
 
-external-controller: 0.0.0.0:9090
+external-controller: 127.0.0.1:9090
 # external-ui: ui
 # external-ui-name: zashboard
 # external-ui-url: https://gh-proxy.com/github.com/Zephyruso/zashboard/archive/refs/heads/gh-pages.zip
@@ -88,7 +88,7 @@ sniffer:
   override-destination: true
   sniff:
     HTTP:
-      ports: [80, 443]
+      ports: [80]
       override-destination: true
     TLS:
       ports: [443]
@@ -130,8 +130,7 @@ dns:
   proxy-server-nameserver: [223.5.5.5, 119.29.29.29]
   nameserver-policy:
     "*.linux.do": https://stellafortuna.ddd.oaifree.com/query-dns
-    # Egern 的 value 是 DNS 服务器地址，并非将 api64 映射为该 IPv6。
-    "api64.ipify.org": "udp://[2001:4860:4860::8888]:53"
+    # api64.ipify.org 使用默认 DoH，避免依赖本机 IPv6 出站。
     "rule-set:ChinaDNS":
       - https://dns.alidns.com/dns-query
       - https://doh.pub/dns-query

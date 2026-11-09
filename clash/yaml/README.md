@@ -73,7 +73,7 @@ python3 sync_config.py  # 在仓库根目录运行
 ## 与 Egern 的对应关系
 
 业务组沿用 Egern 名称和默认顺序：Telegram、漏网之鱼默认新加坡，苹果、微软、游戏默认直连。
-GitHub / YouTube 统一走国外媒体，TalkTone 独立手选。地区组为香港、日本、台湾、新加坡、韩国、北美、其他亚洲、欧洲。
+GitHub / YouTube 跟随国外媒体选择的地区组，TalkTone 独立手选。地区组为香港、日本、台湾、新加坡、韩国、北美、其他亚洲、欧洲。
 北美包含美国、加拿大、墨西哥；欧洲覆盖原来的英国组。其他亚洲和欧洲也加入业务组备选项。
 
 - `urltest` 地区组全部使用 `url-test`；`smart` 地区组全部使用 `smart`。
@@ -84,8 +84,7 @@ GitHub / YouTube 统一走国外媒体，TalkTone 独立手选。地区组为香
 - DNS 默认 Cloudflare / Google DoH；`cn` 与 ChinaDNS 规则集使用阿里 / 腾讯 DoH。
   ChinaDNS 使用 MetaCubeX 国内域名集替代 Egern 的 Repcz 规则集，覆盖范围可能略有不同。
 - `*.linux.do` 使用指定 DoH；`linux.do` 本身的连接按原配置精确匹配到新加坡。
-- `api64.ipify.org` 使用 Google IPv6 DNS 服务器，并非固定 hosts；这项需要设备具备可用 IPv6 出站。
-  保留原配置全局 `ipv6: false`，不主动启用 IPv6 目标连接。
+- `api64.ipify.org` 使用默认 DoH，不再要求本机具备 IPv6 DNS 出站。
 - Apple CDN hosts、DNS 服务域名 hosts、游戏真实 IP 域名与私网 TUN 绕行已对应迁移；TLS 校验保留默认开启。
 - Mihomo 没有通用的 Egern `flatten` 对应项；通过 `include-all` 提供节点直选，地区组用节点过滤器聚合。
 - Kelee 的 AI / WeChat 链接在验证时返回 403 拦截页，分别改用 MetaCubeX AI 分类集和 blackmatrix7 WeChat 集；AI 仍叠加 fmz200 规则。
@@ -97,3 +96,16 @@ GitHub / YouTube 统一走国外媒体，TalkTone 独立手选。地区组为香
 Clash 的分流源现在是本目录 `routes.yaml`；根目录 `routes.yaml` 保留给 sing-box，
 本阶段不改变 sing-box 分流。`sync_config.py --from-clash` 只回写 Clash 源，
 `--from-singbox` 只回写根目录源，`--check` 校验各自产物。
+
+## GitHub 与 DNS 容错
+
+GitHub 继续走 `🍿 国外媒体`，沿用用户选择的地区；地区组自动选路，不跨地区切换。
+两版均保留独立的 `🌐 DNS容错`：直接纳入订阅节点，排除流量/到期信息项，
+每 120 秒检查一次，超时 5 秒，`lazy: false`。fallback 按订阅节点顺序选择可用节点，
+不承诺最快节点。DNS 组检查 gstatic 204，只验证代理基本连通性，
+不保证每个 DoH 服务都可用。已失败的请求仍需重试。
+GitHub 规则放在私网规则之后、其他 classical 规则集之前，并使用 `no-resolve`。
+Cloudflare / Google DoH 的路由在 classical 规则之前，节点域名仍使用独立国内 DNS 引导。
+
+完整 YAML 的控制接口默认只监听 `127.0.0.1:9090`；远程面板需自行设置监听地址与私有 secret。
+JS 覆写仍保留客户端的控制接口和 secret。仓库内示例 secret 不应作为远程访问凭据。
